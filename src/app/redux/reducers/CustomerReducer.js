@@ -1,5 +1,5 @@
 import {
-    
+    INSERT_CUSTOMER,
  GET_CUSTOMER_LIST,
  GET_SINGLE_CUSTOMER ,
 DELETE_CUSTOMER ,
@@ -12,6 +12,12 @@ const initialState = {
 
 const CustomerReducer = function (state = initialState, action) {
     switch (action.type) {
+        case INSERT_CUSTOMER: {
+            return {
+                ...state,
+                customerList: [...action.payload],
+            }
+        }
         case GET_CUSTOMER_LIST: {
             return {
                 ...state,

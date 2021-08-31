@@ -133,8 +133,8 @@ const SimpleForm = () => {
     }, [state.password])
 
     const handleSubmit = (event) => {
-        // console.log("submitted");
-        // console.log(event);
+        //console.log("submitted");
+        console.log(event);
     }
 
 
@@ -150,7 +150,7 @@ const SimpleForm = () => {
         password,
         confirmPassword,
         gender,
-        date,
+        date, customerName,
         email,
     } = state
 
