@@ -1,20 +1,11 @@
 
 
-
-
-
-
-
-
-
-
-
-
 import React, { Fragment, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { DataGrid } from '@material-ui/data-grid';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+    TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
     Grid, Card, Badge, Link,
     Divider, Icon, Button, IconButton, Fab
 } from '@material-ui/core'
@@ -39,7 +30,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 function Item(warehouseList) {
     const [anchorEl, setAnchorEl] = React.useState(null)
+    const [open, setOpen] = React.useState(false)
 
+    function handleClickOpen() {
+        setOpen(true)
+    }
+
+    function handleDialogClose() {
+        setOpen(false)
+    }
     function handleClick(event) {
         setAnchorEl(event.currentTarget)
     }
@@ -50,6 +49,45 @@ function Item(warehouseList) {
     const classes = useStyles()
     return (
         <Card className="w-full  flex justify-between py-2 px-2 mx-2 mb-4 bg-light-gray" elevation={3}>
+
+
+            <div>
+                <Dialog
+                    open={open}
+                    onClose={handleDialogClose}
+                    aria-labelledby="form-dialog-title"
+                >
+                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            To subscribe to this website, please enter your email
+                            address here. We will send updates occasionally.
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={handleDialogClose}
+                        >
+                            Cancel
+                        </Button>
+                        <Button onClick={handleDialogClose} color="primary">
+                            Subscribe
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+
+
             <div className="w-full  flex justify-between">
                 <div className="w-full  flex justify-between">
                     <div className="w-full text-muted">
@@ -69,7 +107,7 @@ function Item(warehouseList) {
                         </div>
                     </div>
                     <div className="w-full text-muted">
-                        <IconButton className={classes.button} aria-label="Delete">
+                        <IconButton className={classes.button} onClick={handleClickOpen}>
                             <Icon>mode_edit</Icon>
                         </IconButton>
                         <div>
@@ -102,7 +140,15 @@ const CustomerList = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const { warehouseList } = useSelector((state) => state.warehouse)
+    const [open, setOpen] = React.useState(false)
 
+    function handleClickOpen() {
+        setOpen(true)
+    }
+
+    function handleDialogClose() {
+        setOpen(false)
+    }
     const theme = useTheme()
     const classes = useStyles()
     if (!cartListLoaded) {
@@ -128,8 +174,59 @@ const CustomerList = () => {
 
                 <Card className="w-full" elevation={3}>
                     <div className="flex p-4">
-                        <h4 className="m-0">Warehouses</h4>
+                        <h4 className="mr-6">Warehouses</h4>
+
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleClickOpen}
+                        >
+                            New
+                        </Button>
                     </div>
+
+                    <div>
+                        <Dialog
+                            open={open}
+                            onClose={handleDialogClose}
+                            aria-labelledby="form-dialog-title"
+                        >
+                            <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                </DialogContentText>
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="name"
+                                    label="Email Address"
+                                    type="email"
+                                    fullWidth
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button
+                                    variant="outlined"
+                                    color="secondary"
+                                    onClick={handleDialogClose}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button onClick={handleDialogClose} color="primary">
+                                    Subscribe
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </div>
+
+
+
+
+
+
+
+
+
                     <Divider className="mb-2" />
                     <Grid className="m-4 w-full mb-6" container spacing={8} alignItems="left">
                         {warehouseList?.map((message) => (<Item key={message} message={message} />

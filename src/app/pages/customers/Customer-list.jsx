@@ -3,15 +3,12 @@ import { makeStyles } from '@material-ui/core/styles'
 import { DataGrid } from '@material-ui/data-grid';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    Grid, Card, Badge, Link,
-    Divider, Icon, Button, IconButton, Fab
+    Grid, Icon, IconButton,
 } from '@material-ui/core'
 import { useTheme } from '@material-ui/styles'
-import PaginationTable from '../../views/material-kit/tables/PaginationTable'
 import { useHistory } from 'react-router-dom'
 import { Breadcrumb } from 'app/components'
 import { getCustomerList } from '../../redux/actions/CustomerAction'
-import { ThemeProvider } from '@material-ui/core/styles'
 import MUIDataTable, { TableFilterList } from "mui-datatables";
 
 const columns = [
@@ -72,7 +69,6 @@ const CustomerList = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const { customerList } = useSelector((state) => state.customer)
-    console.log(customerList)
     const theme = useTheme()
     const classes = useStyles()
     if (!cartListLoaded) {

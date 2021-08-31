@@ -11,11 +11,13 @@ const initialState = {
 }
 
 const CustomerReducer = function (state = initialState, action) {
+    console.log(action)
     switch (action.type) {
+        
         case INSERT_CUSTOMER: {
             return {
                 ...state,
-                customerList: [...action.payload],
+                customerList: [...action.payload.values],
             }
         }
         case GET_CUSTOMER_LIST: {

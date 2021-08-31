@@ -8,11 +8,16 @@ import {
     MenuItem,
     Button,
 } from '@material-ui/core'
+import { useDispatch, useSelector } from 'react-redux';
+import { insertCustomer } from '../../redux/actions/CustomerAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 const InvoiceForm = () => {
-
+    const dispatch = useDispatch()
     const handleSubmit = async (values, { isSubmitting }) => {
         console.log(values)
+        const newcustomer = [];
+        newcustomer.push(values);
+        dispatch(insertCustomer(newcustomer))
     }
 
     return (
@@ -47,24 +52,6 @@ const InvoiceForm = () => {
                                 <Grid item md={3} sm={8} xs={12}>
                                     <TextField
                                         className="min-w-188"
-                                        label="salutation"
-                                        name="salutation"
-                                        size="small"
-                                        variant="outlined"
-                                        select
-                                        value={values.salutation || ''}
-                                        onChange={handleChange}
-                                    >
-                                        {customerList.map((item, ind) => (
-                                            <MenuItem value={item} key={item}>
-                                                {item}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                </Grid>
-                                <Grid item md={3} sm={8} xs={12}>
-                                    <TextField
-                                        className="min-w-188"
                                         label="First Name"
                                         name="first_name"
                                         size="small"
@@ -85,6 +72,8 @@ const InvoiceForm = () => {
                                         onChange={handleChange}
                                     >
                                     </TextField>
+                                </Grid>
+                                <Grid item md={3} sm={8} xs={12}>
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
@@ -130,11 +119,11 @@ const InvoiceForm = () => {
                                             className="mb-6 "
                                             variant="outlined"
                                             size="small"
-                                            label="workphone"
+                                            label="work_phone_no"
                                             onChange={handleChange}
                                             type="number"
-                                            name="workphone"
-                                            value={values.workphone}
+                                            name="work_phone_no"
+                                            value={values.work_phone_no}
                                         />
 
                                     </ValidatorForm>
@@ -146,11 +135,11 @@ const InvoiceForm = () => {
                                             className="mb-6 "
                                             variant="outlined"
                                             size="small"
-                                            label="phonenumber"
+                                            label="mobile_phone_no"
                                             onChange={handleChange}
                                             type="number"
-                                            name="phonenumber"
-                                            value={values.phonenumber}
+                                            name="mobile_phone_no"
+                                            value={values.mobile_phone_no}
                                         />
 
                                     </ValidatorForm>
@@ -217,29 +206,16 @@ const InvoiceForm = () => {
     )
 }
 
-const paymentTermList = [
-    'NET 15',
-    'NET 30',
-    'NET 45',
-    'NET 60',
-    'Due end of the month',
-    'Due on receive',
-]
 
 const customerList = [
-    'customer 1',
-    'customer 2',
-    'customer 3',
-    'customer 4',
-    'customer 5',
-    'customer 6',
-    'customer 7',
-    'customer 8',
+    'Mr.',
+    'Mrs.',
+    'Ms',
+    'Miss.',
+    'Dr',
 ]
 
 const initialValues = {
-    customerType: '',
-    otherField: 'Adjustment',
 }
 
 export default InvoiceForm
