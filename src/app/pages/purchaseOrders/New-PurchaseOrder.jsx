@@ -44,7 +44,7 @@ const InvoiceForm = () => {
         <div className="m-sm-30">
             <Card elevation={3}>
                 <div className="flex p-4">
-                    <h4 className="m-0">New SaleOrder</h4>
+                    <h4 className="m-0">New Purchase Order</h4>
                 </div>
                 <Divider className="mb-2" />
 
@@ -67,7 +67,7 @@ const InvoiceForm = () => {
                         <form className="p-4" onSubmit={handleSubmit}>
                             <Grid container spacing={3} alignItems="center">
                                 <Grid item md={2} sm={4} xs={12}>
-                                    Customer Name
+                                    Vendor Name
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -89,7 +89,7 @@ const InvoiceForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    Invoice#
+                                    Bill#
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -118,7 +118,7 @@ const InvoiceForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    Invoice Date
+                                    Purchse Order Date
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <div className="flex flex-wrap m--2">
@@ -128,7 +128,7 @@ const InvoiceForm = () => {
                                             <KeyboardDatePicker
                                                 className="m-2"
                                                 margin="none"
-                                                label="Invoice Date"
+                                                label="Purchse order Date"
                                                 inputVariant="outlined"
                                                 type="text"
                                                 size="small"
@@ -146,7 +146,7 @@ const InvoiceForm = () => {
 
                                         <TextField
                                             className="m-2 min-w-188"
-                                            label="Terms"
+                                            label="Due date"
                                             name="terms"
                                             size="small"
                                             variant="outlined"
@@ -172,7 +172,7 @@ const InvoiceForm = () => {
                                             <KeyboardDatePicker
                                                 className="m-2"
                                                 margin="none"
-                                                label="Due Date"
+                                                label="Expected Delivery Date"
                                                 inputVariant="outlined"
                                                 type="text"
                                                 size="small"
@@ -195,12 +195,12 @@ const InvoiceForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    Salesperson Name
+                                    Shippment Type
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
                                         className="min-w-188"
-                                        label="Salesperson Name"
+                                        label="Shippment Type"
                                         name="salesPersonName"
                                         size="small"
                                         variant="outlined"
@@ -208,7 +208,7 @@ const InvoiceForm = () => {
                                         onChange={handleChange}
                                         select
                                     >
-                                        {customerList.map((item, ind) => (
+                                        {shippmenttypeList.map((item, ind) => (
                                             <MenuItem value={item} key={item}>
                                                 {item}
                                             </MenuItem>
@@ -231,19 +231,7 @@ const InvoiceForm = () => {
 
                             <div className="mb-8">
                                 <Grid container spacing={3}>
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            label="Custom Notes"
-                                            name="notes"
-                                            size="small"
-                                            variant="outlined"
-                                            multiline
-                                            rows={6}
-                                            fullWidth
-                                            value={values.notes}
-                                            onChange={handleChange}
-                                        />
-                                    </Grid>
+                                    
                                     <Grid item xs={6}>
                                         <Card
                                             className="bg-default p-4"
@@ -342,7 +330,7 @@ const InvoiceForm = () => {
 
                                                 <Grid item xs={6}>
                                                     <h5 className="m-0">
-                                                        Total ( $ )
+                                                        Total ( birr )
                                                     </h5>
                                                 </Grid>
                                                 <Grid item xs={6}>
@@ -360,52 +348,6 @@ const InvoiceForm = () => {
                                 </Grid>
                             </div>
 
-                            <Card className="bg-default p-4" elevation={0}>
-                                <Grid container spacing={3}>
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            label="Terms & Conditions"
-                                            name="terms_conditions"
-                                            size="small"
-                                            variant="outlined"
-                                            multiline
-                                            rows={6}
-                                            fullWidth
-                                            value={values.terms_conditions}
-                                            onChange={handleChange}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <label htmlFor="upload-multiple-file">
-                                            <Button
-                                                className="capitalize"
-                                                color="primary"
-                                                component="span"
-                                                variant="contained"
-                                            >
-                                                <div className="flex items-center">
-                                                    <Icon className="pr-8">
-                                                        cloud_upload
-                                                    </Icon>
-                                                    <span>Upload File</span>
-                                                </div>
-                                            </Button>
-                                        </label>
-                                        <input
-                                            className="hidden"
-                                            onChange={(e) =>
-                                                setFieldValue(
-                                                    'files',
-                                                    e.target.files
-                                                )
-                                            }
-                                            id="upload-multiple-file"
-                                            type="file"
-                                            multiple
-                                        />
-                                    </Grid>
-                                </Grid>
-                            </Card>
 
                             <div className="mt-6">
                                 <Button
@@ -434,14 +376,19 @@ const paymentTermList = [
 ]
 
 const customerList = [
-    'customer 1',
-    'customer 2',
-    'customer 3',
-    'customer 4',
-    'customer 5',
-    'customer 6',
-    'customer 7',
-    'customer 8',
+    'vendor 1',
+    'vendor 2',
+    'vendor 3',
+    'vendor 4',
+    'vendor 5',
+]
+
+const shippmenttypeList = [
+
+    'Shippment Type 1',
+    'Shippment Type 2',
+    'Shippment Type 3',
+    'Shippment Type 4',
 ]
 
 const initialValues = {
