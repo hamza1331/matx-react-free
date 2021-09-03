@@ -10,7 +10,7 @@ import { useTheme } from '@material-ui/styles'
 import PaginationTable from '../../views/material-kit/tables/PaginationTable'
 import { useHistory } from 'react-router-dom'
 import { Breadcrumb } from 'app/components'
-import { getCustomerList } from '../../redux/actions/CustomerAction'
+import { getInvoiceList } from '../../redux/actions/InvoiceAction'
 import { ThemeProvider } from '@material-ui/core/styles'
 import MUIDataTable, { TableFilterList } from "mui-datatables";
 
@@ -75,7 +75,7 @@ const CustomerList = () => {
     const theme = useTheme()
     const classes = useStyles()
     if (!cartListLoaded) {
-        dispatch(getCustomerList())
+        dispatch(getInvoiceList())
         cartListLoaded = true
     }
 

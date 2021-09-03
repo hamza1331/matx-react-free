@@ -14,7 +14,6 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 const InvoiceForm = () => {
     const dispatch = useDispatch()
     const handleSubmit = async (values, { isSubmitting }) => {
-        console.log(values)
         const newcustomer = [];
         newcustomer.push(values);
         dispatch(insertCustomer(newcustomer))
