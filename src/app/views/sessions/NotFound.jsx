@@ -8,7 +8,7 @@ const NotFound = () => {
             <div className="flex-column justify-center items-center max-w-320">
                 <img
                     className="mb-8 w-full"
-                    src="../../../../public/assets/images/illustrations/404.svg"
+                    src="../../../../../public/assets/images/illustrations/404.svg"
                     alt=""
                 />
                 <Link to="/">

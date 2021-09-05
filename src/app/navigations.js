@@ -147,10 +147,10 @@ export const navigations = [
         icon: 'account_circle',
         path: '/page-layouts/user-profile',
     },
-    {
-        name: 'Setting',
-        icon: 'settings',
-        path: '/session/signup',
-    },
+    // {
+    //     name: 'Setting',
+    //     icon: 'settings',
+    //     path: '/session/signup',
+    // },
     
 ]
