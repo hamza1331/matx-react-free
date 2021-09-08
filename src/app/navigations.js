@@ -9,12 +9,12 @@ export const navigations = [
     {
         name: 'Alternative',
         path: '/dashbord/alternative',
-        icon: 'dashboard',
+        icon: 'assessment',
     },
     {
         name: 'Inventory Managment',
         path: '/dashbord/inventory-management',
-        icon: 'dashboard',
+        icon: 'domain',
     },
     {
         label: 'Pages',
@@ -22,7 +22,7 @@ export const navigations = [
     },
     {
         name: 'Products',
-        icon: 'security',
+        icon: 'local_grocery_store',
         children: [
             {
                 name: 'Product list',
@@ -38,11 +38,11 @@ export const navigations = [
     },
     {
         name: 'Customers',
-        icon: 'security',
+        icon: 'group',
         children: [
             {
                 name: 'Customer list',
-                iconText: 'SI',
+                iconText: 'group',
                 path: '/pages/customer-list',
             },
             {
@@ -54,7 +54,7 @@ export const navigations = [
     },
     {
         name: 'Vendors',
-        icon: 'security',
+        icon: 'store',
         children: [
             {
                 name: 'Vendors list',
@@ -70,7 +70,7 @@ export const navigations = [
     },
     {
         name: 'Sale Orders',
-        icon: 'security',
+        icon: 'folder',
         children: [
             {
                 name: 'SaleOrder list',
@@ -86,7 +86,7 @@ export const navigations = [
     },
     {
         name: 'Invoice',
-        icon: 'security',
+        icon: 'insert_drive_files',
         children: [
             {
                 name: 'Invoice list',
@@ -102,7 +102,7 @@ export const navigations = [
     },
     {
         name: 'Purchase Orders',
-        icon: 'security',
+        icon: 'shopping_basket',
         children: [
             {
                 name: 'PurchaseOrder list',
@@ -118,7 +118,7 @@ export const navigations = [
     },
     {
         name: 'Bills',
-        icon: 'security',
+        icon: 'content_paste',
         children: [
             {
                 name: 'Bill list',
@@ -134,7 +134,7 @@ export const navigations = [
     },
     {
         name: 'Reports',
-        icon: 'security',
+        icon: 'show_chart',
         path: '/pages/reports',
     },
     {
@@ -144,13 +144,13 @@ export const navigations = [
     },
     {
         name: 'User Profile',
-        icon: 'security',
+        icon: 'account_circle',
         path: '/page-layouts/user-profile',
     },
-    {
-        name: 'Setting',
-        icon: 'security',
-        path: '/session/signup',
-    },
+    // {
+    //     name: 'Setting',
+    //     icon: 'settings',
+    //     path: '/session/signup',
+    // },
     
 ]

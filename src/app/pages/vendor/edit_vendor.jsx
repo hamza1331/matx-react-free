@@ -9,7 +9,7 @@ import {
     Button,
 } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
-import { insertVendor } from '../../redux/actions/VendorAction'
+import { updateVendor } from '../../redux/actions/VendorAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 const InvoiceForm = () => {
     const dispatch = useDispatch()
@@ -17,14 +17,14 @@ const InvoiceForm = () => {
         console.log(values)
         const newvendor = [];
         newvendor.push(values);
-        dispatch(insertVendor(newvendor))
+        dispatch(updateVendor(newvendor))
     }
 
     return (
         <div className="m-sm-30">
             <Card elevation={3}>
                 <div className="flex p-4">
-                    <h4 className="m-0">New Vendor</h4>
+                    <h4 className="m-0">Update Vendor</h4>
                 </div>
                 <Divider className="mb-2" />
 
