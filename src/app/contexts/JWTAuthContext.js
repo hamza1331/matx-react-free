@@ -2,6 +2,10 @@ import React, { createContext, useEffect, useReducer } from 'react'
 import jwtDecode from 'jwt-decode'
 import axios from 'axios.js'
 import { MatxLoading } from 'app/components'
+ import api from '../../axios'
+import reducer from '../redux/reducers/authReducer'
+import toastReducer from '../redux/reducers/toastReducer'
+import { useDispatch } from 'react-redux';
 
 const initialState = {
     isAuthenticated: false,
@@ -9,69 +13,28 @@ const initialState = {
     user: null,
 }
 
-const isValidToken = (accessToken) => {
-    if (!accessToken) {
-        return false
-    }
+// const isValidToken = (accessToken) => {
+//     if (!accessToken) {
+//         return false
+//     }
 
-    const decodedToken = jwtDecode(accessToken)
-    const currentTime = Date.now() / 1000
-    console.log(decodedToken)
-    return decodedToken.exp > currentTime
-}
+//     const decodedToken = jwtDecode(accessToken)
+//     const currentTime = Date.now() / 1000
+//     console.log(decodedToken)
+//     return decodedToken.exp > currentTime
+// }
 
 const setSession = (accessToken) => {
     if (accessToken) {
-        localStorage.setItem('accessToken', accessToken)
+        localStorage.setItem('token', accessToken)
         axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`
     } else {
-        localStorage.removeItem('accessToken')
+        localStorage.removeItem('token')
         delete axios.defaults.headers.common.Authorization
     }
 }
 
-const reducer = (state, action) => {
-    switch (action.type) {
-        case 'INIT': {
-            const { isAuthenticated, user } = action.payload
 
-            return {
-                ...state,
-                isAuthenticated,
-                isInitialised: true,
-                user,
-            }
-        }
-        case 'LOGIN': {
-            const { user } = action.payload
-
-            return {
-                ...state,
-                isAuthenticated: true,
-                user,
-            }
-        }
-        case 'LOGOUT': {
-            return {
-                ...state,
-                isAuthenticated: false,
-                user: null,
-            }
-        }
-        case 'REGISTER': {
-            const { user } = action.payload
-
-            return {
-                ...state,
-                isAuthenticated: true,
-                user,
-            }
-        }
-        default: {
-            return { ...state }
-        }
-    }
-}
 
 const AuthContext = createContext({
     ...initialState,
@@ -79,67 +42,128 @@ const AuthContext = createContext({
     login: () => Promise.resolve(),
     logout: () => {},
     register: () => Promise.resolve(),
+    verifiy:() => Promise.resolve(),
+    forgetPasswordL:() => Promise.resolve(),
+    restPassword:() => Promise.resolve()
 })
 
 export const AuthProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, initialState)
+    const [state, dispatch] = useReducer(reducer, initialState);
+    
 
-    const login = async (email, password) => {
-        const response = await axios.post('/api/auth/login', {
-            email,
-            password,
-        })
-        const { accessToken, user } = response.data
-
-        setSession(accessToken)
-
-        dispatch({
-            type: 'LOGIN',
-            payload: {
-                user,
-            },
-        })
+    const login = ( email, password) => (dispatch) => {
+        api
+            .post('auth/login', {email, password })
+            .then((res) => {
+                
+                setSession(res.data.token)
+                console.log(res.data.token)
+                dispatch({
+                    type: 'LOGIN',
+    
+                    payload: {
+                        isAuthenticated:true,
+                      user:  res.data
+                    }
+    
+                })
+            })
     }
+     
+     const register = ( email, password,confirmPassword) => (dispatch) => {
+        api
+            .post('auth/signup', {email, password,confirmPassword })
+            .then((res) => {
+                console.log(res)
+                dispatch({
+                    type: 'REGISTER',
+                    payload: res.data,
+    
+                })
+            }).catch(e=>{ 
+                dispatch({
+                    type: 'SET_ALL',
+                    payload: { message: e.message, title: "AUTH" }
+                })
 
-    const register = async (email, username, password) => {
-        const response = await axios.post('/api/auth/register', {
-            email,
-            username,
-            password,
-        })
-
-        const { accessToken, user } = response.data
-
-        setSession(accessToken)
-
-        dispatch({
-            type: 'REGISTER',
-            payload: {
-                user,
-            },
-        })
+                // throw e;
+//                console.log(e.message)
+            })
+            
     }
+ 
 
-    const logout = () => {
-        setSession(null)
-        dispatch({ type: 'LOGOUT' })
+    const verifiy = (code,email) => (dispatch) => {
+        
+        api
+            .patch('auth/activate', {code,email})
+            .then((res) => {
+                dispatch({
+                    type: 'VERFIY',
+                    payload: res.data,
+    
+                })
+            })
     }
+    const forgetPassword = (email) => (dispatch) => {
+        api.patch('auth/forgot', {email})
+            .then((res) => {
+                dispatch({
+                    type: 'FORGETPASSWORD',
+                    payload: res.data,
+    
+                })
+            })
+    }
+ 
+    const restPassword = (newPassword,confirmPassword) => (dispatch) => {
+        
+        api
+            .patch('auth/reset', {newPassword,confirmPassword})
+            .then((res) => {
+                console.log(res)
+                dispatch({
+                    type: 'RESETPASSWORD',
+                    payload: res.data,
+                })
+            }).catch(e=>{
+                console.log(e)
+            })
+    }
+    const logout = () => (dispatch) => {
+        
+        api
+            .patch('auth/logout')
+            .then((res) => {
+                setSession(null)
+                dispatch({
+                    type: 'LOGOUT',
+                    payload: res.data,
+    
+                })
+            })
+    }
+   
 
     useEffect(() => {
         ;(async () => {
             try {
-                const accessToken = window.localStorage.getItem('accessToken')
+                const accessToken = window.localStorage.getItem('token')
 
-                if (accessToken && isValidToken(accessToken)) {
+                if (accessToken){
+                    console.log(accessToken)
                     setSession(accessToken)
-                    const response = await axios.get('/api/auth/profile')
-                    const { user } = response.data
+                    
+                    const response =  api.get('/auth/profile')
+                    console.log(response.data)
+                  
+                    
 
                     dispatch({
                         type: 'INIT',
                         payload: {
                             isAuthenticated: true,
-                            user,
+                            user:window.localStorage.getItem('email')
                         },
                     })
                 } else {
@@ -176,6 +200,9 @@ export const AuthProvider = ({ children }) => {
                 login,
                 logout,
                 register,
+                verifiy,
+                forgetPassword,
+                restPassword
             }}
         >
             {children}

@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
 import {
     Card,
-    Checkbox,
-    FormControlLabel,
     Grid,
     Button,
     CircularProgress,
 } from '@material-ui/core'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
-
 import { makeStyles } from '@material-ui/core/styles'
 import history from 'history.js'
 import clsx from 'clsx'
 import useAuth from 'app/hooks/useAuth'
-
+import { useDispatch } from 'react-redux';
 const useStyles = makeStyles(({ palette, ...theme }) => ({
     cardHolder: {
         background: '#1A2038',
@@ -33,34 +30,35 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
 }))
 
 const JwtLogin = () => {
+  
     const [loading, setLoading] = useState(false)
-    const [userInfo, setUserInfo] = useState({
-        email: 'jason@ui-lib.com',
-        password: 'dummyPass',
-    })
+    const [ state, setState] = useState({})
     const [message, setMessage] = useState('')
     const { login } = useAuth()
-
+    const dispatch = useDispatch()
     const classes = useStyles()
 
     const handleChange = ({ target: { name, value } }) => {
-        let temp = { ...userInfo }
-        temp[name] = value
-        setUserInfo(temp)
+        setState({
+            ...state,
+            [name]: value,
+        })
     }
 
     const handleFormSubmit = async (event) => {
         setLoading(true)
         try {
-            await login(userInfo.email, userInfo.password)
-            history.push('/')
+            console.log( state.email,state.password)
+            dispatch(login(state.email,state.password))
+            history.push('/dashboard/default')
         } catch (e) {
             console.log(e)
             setMessage(e.message)
             setLoading(false)
         }
+        
     }
-
+    let { email, password } = state
     return (
         <div
             className={clsx(
@@ -90,7 +88,7 @@ const JwtLogin = () => {
                                     onChange={handleChange}
                                     type="email"
                                     name="email"
-                                    value={userInfo.email}
+                                    value={email|| ''}
                                     validators={['required', 'isEmail']}
                                     errorMessages={[
                                         'this field is required',
@@ -105,36 +103,13 @@ const JwtLogin = () => {
                                     onChange={handleChange}
                                     name="password"
                                     type="password"
-                                    value={userInfo.password}
+                                    value={password|| ''}
                                     validators={['required']}
                                     errorMessages={['this field is required']}
                                 />
-                                <FormControlLabel
-                                    className="mb-3 min-w-288"
-                                    name="agreement"
-                                    onChange={handleChange}
-                                    control={
-                                        <Checkbox
-                                            size="small"
-                                            onChange={({
-                                                target: { checked },
-                                            }) =>
-                                                handleChange({
-                                                    target: {
-                                                        name: 'agreement',
-                                                        value: checked,
-                                                    },
-                                                })
-                                            }
-                                            checked={userInfo.agreement || true}
-                                        />
-                                    }
-                                    label="Remeber me"
-                                />
-
                                 {message && (
                                     <p className="text-error">{message}</p>
-                                )}
+                                    )}
 
                                 <div className="flex flex-wrap items-center mb-4">
                                     <div className="relative">

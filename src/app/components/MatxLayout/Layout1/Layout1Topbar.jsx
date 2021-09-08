@@ -15,8 +15,9 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import clsx from 'clsx'
 import useAuth from 'app/hooks/useAuth'
 import useSettings from 'app/hooks/useSettings'
+import history from 'history.js'
 import { NotificationProvider } from 'app/contexts/NotificationContext'
-
+import { useDispatch } from 'react-redux';
 const useStyles = makeStyles(({ palette, ...theme }) => ({
     topbar: {
         top: 0,
@@ -63,6 +64,7 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
 }))
 
 const Layout1Topbar = () => {
+    const dispatch = useDispatch()
     const theme = useTheme()
     const classes = useStyles()
     const { settings, updateSettings } = useSettings()
@@ -79,7 +81,7 @@ const Layout1Topbar = () => {
             },
         })
     }
-
+    
     const handleSidebarToggle = () => {
         let { layout1Settings } = settings
         let mode
@@ -96,7 +98,15 @@ const Layout1Topbar = () => {
 
         updateSidebarMode({ mode })
     }
-
+    const handleFormSubmit = async (event) => {
+        try {
+            dispatch(logout())
+            history.push('/session/signin')
+        } catch (e) {
+            console.log(e)
+        }
+        
+    }
     return (
         <div className={classes.topbar}>
             <div className={clsx({ 'topbar-hold': true, fixed: fixed })}>
@@ -138,13 +148,9 @@ const Layout1Topbar = () => {
                                 <div className={classes.userMenu}>
                                     <Hidden xsDown>
                                         <span>
-                                            Hi <strong>{user.name}</strong>
+                                            Hi <strong>{user}</strong>
                                         </span>
                                     </Hidden>
-                                    <Avatar
-                                        className="cursor-pointer"
-                                        src={user.avatar}
-                                    />
                                 </div>
                             }
                         >
@@ -168,7 +174,7 @@ const Layout1Topbar = () => {
                                 <span className="pl-4"> Settings </span>
                             </MenuItem>
                             <MenuItem
-                                onClick={logout}
+                                onClick={handleFormSubmit}
                                 className={classes.menuItem}
                             >
                                 <Icon> power_settings_new </Icon>

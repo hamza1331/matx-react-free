@@ -44,7 +44,7 @@ const InvoiceForm = () => {
         <div className="m-sm-30">
             <Card elevation={3}>
                 <div className="flex p-4">
-                    <h4 className="m-0">New SaleOrder</h4>
+                    <h4 className="m-0">New Product</h4>
                 </div>
                 <Divider className="mb-2" />
 
@@ -66,49 +66,133 @@ const InvoiceForm = () => {
                     }) => (
                         <form className="p-4" onSubmit={handleSubmit}>
                             <Grid container spacing={3} alignItems="center">
-                                <Grid item md={2} sm={4} xs={12}>
-                                    Customer Name
-                                </Grid>
-                                <Grid item md={10} sm={8} xs={12}>
-                                    <TextField
-                                        className="min-w-188"
-                                        label="Name"
-                                        name="customerName"
-                                        size="small"
-                                        variant="outlined"
-                                        select
-                                        value={values.customerName || ''}
-                                        onChange={handleChange}
-                                    >
-                                        {customerList.map((item, ind) => (
-                                            <MenuItem value={item} key={item}>
-                                                {item}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                </Grid>
+                                
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    Invoice#
+                                    ProductName
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="Invoice No"
-                                        name="invoiceNo"
+                                        label="ProductName"
+                                        name="ProductName"
                                         size="small"
                                         variant="outlined"
-                                        defaultValue="INV-000001"
-                                        value={values.invoiceNo}
+                                        defaultValue=" "
+                                        value={values.productDescription}
+
                                         onChange={handleChange}
                                     />
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
+                                    ProductDescription
+                                </Grid>
+                                <Grid item md={10} sm={8} xs={12}>
+                                    <TextField
+                                        label="productDescription"
+                                        name="productDescription"
+                                        size="small"
+                                        variant="outlined"
+                                        defaultValue=" "
+                                        value={values.productName}
+
+                                        onChange={handleChange}
+                                    />
+                                </Grid>
+
+
+
+                                <Grid item md={2} sm={4} xs={12}>
+                                    SUK
+                                </Grid>
+                                <Grid item md={10} sm={8} xs={12}>
+                                    <TextField
+                                        label="SUK"
+                                        name="SUK"
+                                        size="small"
+                                        variant="outlined"
+                                        defaultValue="00000"
+                                        value={values.SUK}
+                                    
+                                        onChange={handleChange}
+                                    />
+                                </Grid>
+
+                                <Grid item md={2} sm={4} xs={12}>
+                                   unit
+                                </Grid>
+                                <Grid item md={10} sm={8} xs={12}>
+                                    <TextField
+                                        label="unit"
+                                        name="unit"
+                                        size="small"
+                                        variant="outlined"
+                                        defaultValue=" "
+                                        value={values.unit}
+                                        type="number"
+                                        unique={true}
+                                        onChange={handleChange}
+                                    />
+                                </Grid>
+
+                                <Grid item md={2} sm={4} xs={12}>
+                                   quantity
+                                </Grid>
+                                <Grid item md={10} sm={8} xs={12}>
+                                    <TextField
+                                        label="quantity"
+                                        name="quantity"
+                                        size="small"
+                                        variant="outlined"
+                                        defaultValue=" "
+                                        type="number"
+                                        value={values.quantity}
+                                        
+                                        onChange={handleChange}
+                                    />
+                                </Grid>
+
+                                <Grid item md={2} sm={4} xs={12}>
+                                  available
+                                </Grid>
+                                <Grid item md={10} sm={8} xs={12}>
+                                    <TextField
+                                        label="available"
+                                        name="available"
+                                        size="small"
+                                        variant="outlined"
+                                        defaultValue=" "
+                                        value={values.available}
+                                        
+                                        onChange={handleChange}
+                                    />  
+                                </Grid>
+
+                                
+
+
+                                <Grid item md={2} sm={4} xs={12}>
+                                   price
+                                </Grid>
+                                <Grid item md={10} sm={8} xs={12}>
+                                    <TextField
+                                        label="price"
+                                        name="price"
+                                        size="small"
+                                        variant="outlined"
+                                        defaultValue=" "
+                                        value={values.price}
+                                        type="number"
+                                        unique={true}
+                                        onChange={handleChange}
+                                    />
+                                </Grid>
+                                <Grid item md={2} sm={4} xs={12}>
                                     Order Number
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="Invoice No"
+                                        label="order number"
                                         name="orderNo"
                                         size="small"
                                         variant="outlined"
@@ -118,7 +202,7 @@ const InvoiceForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    Invoice Date
+                                    production to Expiration
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <div className="flex flex-wrap m--2">
@@ -128,60 +212,39 @@ const InvoiceForm = () => {
                                             <KeyboardDatePicker
                                                 className="m-2"
                                                 margin="none"
-                                                label="Invoice Date"
+                                                label="production Date"
                                                 inputVariant="outlined"
                                                 type="text"
                                                 size="small"
                                                 autoOk={true}
-                                                value={values.invoiceDate}
+                                                value={values.productionDate}
                                                 format="MMMM dd, yyyy"
                                                 onChange={(date) =>
                                                     setFieldValue(
-                                                        'invoiceDate',
+                                                        'productionDate',
                                                         date
                                                     )
                                                 }
                                             />
                                         </MuiPickersUtilsProvider>
 
-                                        <TextField
-                                            className="m-2 min-w-188"
-                                            label="Terms"
-                                            name="terms"
-                                            size="small"
-                                            variant="outlined"
-                                            value={values.terms || ''}
-                                            onChange={handleChange}
-                                            select
-                                        >
-                                            {paymentTermList.map(
-                                                (item, ind) => (
-                                                    <MenuItem
-                                                        value={item}
-                                                        key={item}
-                                                    >
-                                                        {item}
-                                                    </MenuItem>
-                                                )
-                                            )}
-                                        </TextField>
-
+                                        
                                         <MuiPickersUtilsProvider
                                             utils={DateFnsUtils}
                                         >
                                             <KeyboardDatePicker
                                                 className="m-2"
                                                 margin="none"
-                                                label="Due Date"
+                                                label="Expiration Date"
                                                 inputVariant="outlined"
                                                 type="text"
                                                 size="small"
                                                 autoOk={true}
-                                                value={values.dueDate}
+                                                value={values.ExpirationDate}
                                                 format="MMMM dd, yyyy"
                                                 onChange={(date) =>
                                                     setFieldValue(
-                                                        'dueDate',
+                                                        'ExpirationDate',
                                                         date
                                                     )
                                                 }
@@ -194,220 +257,23 @@ const InvoiceForm = () => {
                                     <Divider />
                                 </Grid>
 
-                                <Grid item md={2} sm={4} xs={12}>
-                                    Salesperson Name
+                                
+
+                                <Grid item xs={12}>
+                                    <Divider />
                                 </Grid>
-                                <Grid item md={10} sm={8} xs={12}>
-                                    <TextField
-                                        className="min-w-188"
-                                        label="Salesperson Name"
-                                        name="salesPersonName"
-                                        size="small"
-                                        variant="outlined"
-                                        value={values.salesPersonName || ''}
-                                        onChange={handleChange}
-                                        select
-                                    >
-                                        {customerList.map((item, ind) => (
-                                            <MenuItem value={item} key={item}>
-                                                {item}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                </Grid>
+
+                                
 
                                 <Grid item xs={12}>
                                     <Divider />
                                 </Grid>
                             </Grid>
 
-                            <div className="mb-8">
-                                <InvoiceItemTable
-                                    values={values}
-                                    setFieldValue={setFieldValue}
-                                    handleChange={handleChange}
-                                />
-                            </div>
 
-                            <div className="mb-8">
-                                <Grid container spacing={3}>
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            label="Custom Notes"
-                                            name="notes"
-                                            size="small"
-                                            variant="outlined"
-                                            multiline
-                                            rows={6}
-                                            fullWidth
-                                            value={values.notes}
-                                            onChange={handleChange}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Card
-                                            className="bg-default p-4"
-                                            elevation={0}
-                                        >
-                                            <Grid
-                                                container
-                                                spacing={3}
-                                                justify="space-between"
-                                                alignItems="center"
-                                            >
-                                                <Grid item xs={6}>
-                                                    Sub Total
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="text-right">
-                                                        {calculateSubTotal(
-                                                            values.items
-                                                        ).toFixed(2)}
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="flex items-center">
-                                                        <span className="whitespace-pre">
-                                                            Shipping Charges
-                                                        </span>
-                                                        <TextField
-                                                            className="ml-3"
-                                                            name="shippingCharge"
-                                                            size="small"
-                                                            type="number"
-                                                            variant="outlined"
-                                                            value={
-                                                                values.shippingCharge ||
-                                                                ''
-                                                            }
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="text-right">
-                                                        {(
-                                                            values.shippingCharge ||
-                                                            0
-                                                        ).toFixed(2)}
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="flex items-center">
-                                                        <TextField
-                                                            name="otherField"
-                                                            size="small"
-                                                            variant="outlined"
-                                                            value={
-                                                                values.otherField ||
-                                                                ''
-                                                            }
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                        />
+                            
 
-                                                        <TextField
-                                                            className="ml-3"
-                                                            name={
-                                                                values.otherField
-                                                            }
-                                                            size="small"
-                                                            variant="outlined"
-                                                            type="number"
-                                                            value={
-                                                                values[
-                                                                values
-                                                                    .otherField
-                                                                ] || ''
-                                                            }
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="text-right">
-                                                        {(
-                                                            values[
-                                                            values
-                                                                .otherField
-                                                            ] || 0
-                                                        ).toFixed(2)}
-                                                    </div>
-                                                </Grid>
-
-                                                <Grid item xs={6}>
-                                                    <h5 className="m-0">
-                                                        Total ( $ )
-                                                    </h5>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="text-right">
-                                                        <h5 className="m-0">
-                                                            {calculateTotal(
-                                                                values
-                                                            ).toFixed(2)}
-                                                        </h5>
-                                                    </div>
-                                                </Grid>
-                                            </Grid>
-                                        </Card>
-                                    </Grid>
-                                </Grid>
-                            </div>
-
-                            <Card className="bg-default p-4" elevation={0}>
-                                <Grid container spacing={3}>
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            label="Terms & Conditions"
-                                            name="terms_conditions"
-                                            size="small"
-                                            variant="outlined"
-                                            multiline
-                                            rows={6}
-                                            fullWidth
-                                            value={values.terms_conditions}
-                                            onChange={handleChange}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <label htmlFor="upload-multiple-file">
-                                            <Button
-                                                className="capitalize"
-                                                color="primary"
-                                                component="span"
-                                                variant="contained"
-                                            >
-                                                <div className="flex items-center">
-                                                    <Icon className="pr-8">
-                                                        cloud_upload
-                                                    </Icon>
-                                                    <span>Upload File</span>
-                                                </div>
-                                            </Button>
-                                        </label>
-                                        <input
-                                            className="hidden"
-                                            onChange={(e) =>
-                                                setFieldValue(
-                                                    'files',
-                                                    e.target.files
-                                                )
-                                            }
-                                            id="upload-multiple-file"
-                                            type="file"
-                                            multiple
-                                        />
-                                    </Grid>
-                                </Grid>
-                            </Card>
-
-                            <div className="mt-6">
+                           <div className="mt-6">
                                 <Button
                                     color="primary"
                                     variant="contained"

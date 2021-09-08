@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Card, Grid, Button } from '@material-ui/core'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
-import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
-import { useDispatch } from 'react-redux';
 import useAuth from 'app/hooks/useAuth'
 import history from 'history.js'
+import { Store } from 'app/redux/Store'
+import { useDispatch} from 'react-redux';
 const useStyles = makeStyles(({ palette, ...theme }) => ({
     cardHolder: {
         background: '#1A2038',
@@ -18,31 +18,29 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
     },
 }))
 
-const ForgotPassword = () => {
+const VerfiyCode = (props) => {
+    
     const [state, setState] = useState({})
     const classes = useStyles()
-    const { forgetPassword } = useAuth()
-    const dispatch = useDispatch()  
-     const [message, setMessage] = useState('')
+    const { verifiy } = useAuth()
+    const dispatch = useDispatch()
     const handleChange = ({ target: { name, value } }) => {
         setState({
             ...state,
             [name]: value,
         })
-    }
 
+    }
     const handleFormSubmit = (event) => {
         try {
-            console.log( state.email,state.password)
-            dispatch(forgetPassword(state.email))
-            history.push('/session/restpassword')
+            const email =  localStorage.getItem('email')
+            dispatch(verifiy(state.code,email))
+            history.push('/')   
         } catch (e) {
             console.log(e)
-            setMessage(e.message)
         }
     }
-
-    let { email } = state
+    let { code } = state
 
     return (
         <div
@@ -68,35 +66,27 @@ const ForgotPassword = () => {
                                 <TextValidator
                                     className="mb-6 w-full"
                                     variant="outlined"
-                                    label="Email"
+                                    label="Verfiy Account"
                                     onChange={handleChange}
-                                    type="email"
-                                    name="email"
+                                    type="text"
+                                    name="code"
                                     size="small"
-                                    value={email || ''}
-                                    validators={['required', 'isEmail']}
+                                    value={code || ''}
+                                    validators={['required']}
                                     errorMessages={[
                                         'this field is required',
-                                        'email is not valid',
                                     ]}
                                 />
-                                 {message && (
-                                    <p className="text-error">{message}</p>
-                                    )}
                                 <div className="flex items-center">
                                     <Button
                                         variant="contained"
                                         color="primary"
                                         type="submit"
                                     >
-                                        Reset Password
+                                       Verfiy Account
                                     </Button>
-                                    <span className="ml-4 mr-2">or</span>
-                                    <Link to="/session/signin">
-                                        <Button className="capitalize">
-                                            Sign in
-                                        </Button>
-                                    </Link>
+                                   
+                                    
                                 </div>
                             </ValidatorForm>
                         </div>
@@ -107,4 +97,4 @@ const ForgotPassword = () => {
     )
 }
 
-export default ForgotPassword
+export default VerfiyCode

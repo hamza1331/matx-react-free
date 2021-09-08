@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
-import { Breadcrumb, SimpleCard } from 'app/components'
+import { Breadcrumb,  } from 'app/components'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     Button,
     Icon,
@@ -8,21 +9,18 @@ import {
     Grid,
     Card,
     Divider,
-    TextField,
-    Radio,
-    RadioGroup,
-    FormControlLabel,
-    Checkbox,
     Tabs,
     Tab,
-    Popover,
-    MenuItem,
     Table,
     TableHead,
     TableCell,
     TableBody,
     TableRow,
-
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
     TablePagination,
 } from '@material-ui/core'
 import PropTypes from 'prop-types';
@@ -32,14 +30,14 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { withStyles } from "@material-ui/core/styles";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-
+import { deleteCustomer } from '../../redux/actions/CustomerAction'
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers'
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
-
+import { useHistory } from 'react-router-dom'
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -164,10 +162,23 @@ var styles = {
 }
 
 const SimpleForm = () => {
+    const id = localStorage.getItem('id')
     const [inputList, setInputList] = useState([{ firstName: "", lastName: "" }]);
     const [rowsPerPage, setRowsPerPage] = React.useState(5)
+    const history = useHistory()
     const [page, setPage] = React.useState(0)
+    const dispatch = useDispatch()
+    const [open, setOpen] = React.useState(false)
+    function handleClickOpen() {
+        setOpen(true)
+    }
 
+    function handleDialogClose() {
+        dispatch(deleteCustomer(id))
+        localStorage.removeItem('id')
+        history.push('/pages/Customer-list')
+        setOpen(false)
+    }
     const handleChangePage = (event, newPage) => {
         setPage(newPage)
     }
@@ -242,6 +253,35 @@ const SimpleForm = () => {
     return (
         <div className="m-sm-30">
             <div className="m-sm-30">
+            <div>
+                <Dialog
+                    open={open}
+                    onClose={handleDialogClose}
+                    aria-labelledby="form-dialog-title"
+                >
+                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Sure You want to delete this customer.
+                        </DialogContentText>
+                        
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={handleDialogClose}
+                        >
+                            Cancel
+                        </Button>
+                        <Button onClick={handleDialogClose} color="primary">
+                            Delete
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+
+
                 <div className="mb-sm-30">
                     <Breadcrumb
                         routeSegments={[
@@ -566,105 +606,14 @@ const SimpleForm = () => {
 
                             </Card>
 
-                            <Card className=" mx-0 my-6" elevation={2}>
-                                <Grid item md={3} sm={12} xs={12}>
-                                    <Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Email</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">uilib@example.com</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid>
-                                    <Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Phone</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">+1439327546</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={6} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Country</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={12} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">USA</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">State/Region</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">NewYork</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Address 1</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">StreetTailwood,No.17</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Address 2</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">House#19</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid>
-
-                                </Grid>
-
-                            </Card>
-
+                            <Button
+                                                    className=" m-4 py-2 flex"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleClickOpen}
+                ><Icon >delete</Icon>
+                    Delete customer
+                </Button>
                         </Grid>
 
                     </TabPanel>
@@ -770,6 +719,11 @@ const SimpleForm = () => {
 }
 
 export default SimpleForm
+
+
+
+
+
 
 
 

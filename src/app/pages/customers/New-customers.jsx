@@ -5,21 +5,20 @@ import {
     Card,
     Divider,
     TextField,
-    MenuItem,
     Button,
 } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import { insertCustomer } from '../../redux/actions/CustomerAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 const InvoiceForm = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() 
     const handleSubmit = async (values, { isSubmitting }) => {
         console.log(values)
         const newcustomer = [];
         newcustomer.push(values);
         dispatch(insertCustomer(newcustomer))
     }
-
+    
     return (
         <div className="m-sm-30">
             <Card elevation={3}>

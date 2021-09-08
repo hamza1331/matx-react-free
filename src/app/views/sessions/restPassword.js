@@ -6,15 +6,14 @@ import {
     Grid,
     Button,
 } from '@material-ui/core'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 import useAuth from 'app/hooks/useAuth'
 import history from 'history.js'
-import reducer from '../../../redux/reducers/authReducer'
-import toastReducer from '../../../redux/reducers/toastReducer';
+
 const useStyles = makeStyles(({ palette, ...theme }) => ({
     cardHolder: {
         background: '#1A2038',
@@ -26,12 +25,11 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
     },
 }))
 
-const JwtRegister = () => {
+const RestPassword = () => {
     const classes = useStyles()
-    const toast = useSelector((state) => state.toast);
     const [ state, setState] = useState({})
     const [message, setMessage] = useState('')
-    const { register } = useAuth()
+    const { restPassword } = useAuth()
     const dispatch = useDispatch()
     const handleChange = ({ target: { name, value } }) => {
         setState({
@@ -41,23 +39,21 @@ const JwtRegister = () => {
     }
 
     const handleFormSubmit = (event) => {
-        
+   
         try {
             localStorage.setItem('email',state.email)
             console.log(state.email)
             console.log( localStorage.getItem('email'))
-            dispatch(register(state.email,state.password,state.confirmPassword))
-            // if(!toast.message)
-               history.push('/session/verfiy-code')   
+            dispatch(restPassword(state.newPassword,state.confirmPassword))
+            history.push('/session/signin')   
         } catch (e) {
             console.log(e)
             setMessage(e.message)
-           
+           debugger
         }
-        console.log(reducer)
     }
 
-    let { email, password, agreement,confirmPassword } = state
+    let {  newPassword,confirmPassword } = state
 
     return (
         <div
@@ -66,15 +62,6 @@ const JwtRegister = () => {
                 classes.cardHolder
             )}
         >
-            {
-                !!toast.message?
-                <>
-                    <div>{toast.title}</div>
-                    <div>{toast.message}</div>
-                </>
-                : null
-                
-            }
             <Card className={classes.card}>
                 <Grid container>
                     <Grid item lg={5} md={5} sm={5} xs={12}>
@@ -90,29 +77,14 @@ const JwtRegister = () => {
                         <div className="p-8 h-full">
                             <ValidatorForm onSubmit={handleFormSubmit}>
                                 <TextValidator
-                                    className="mb-6 w-full"
-                                    variant="outlined"
-                                    size="small"
-                                    label="Email"
-                                    onChange={handleChange}
-                                    type="email"
-                                    name="email"
-                                    value={email || ''}
-                                    validators={['required', 'isEmail']}
-                                    errorMessages={[
-                                        'this field is required',
-                                        'email is not valid',
-                                    ]}
-                                />
-                                <TextValidator
                                     className="mb-4 w-full"
-                                    label="Password"
+                                    label="newPassword"
                                     variant="outlined"
                                     size="small"
                                     onChange={handleChange}
-                                    name="password"
+                                    name="newPassword"
                                     type="password"
-                                    value={password || ''}
+                                    value={newPassword || ''}
                                     validators={['required']}
                                     errorMessages={['this field is required']}
                                 />
@@ -133,25 +105,6 @@ const JwtRegister = () => {
                                     errorMessages={['this field is required',
                                                     'passs']}
                                 />
-                                <FormControlLabel
-                                    className="mb-4"
-                                    name="agreement"
-                                    onChange={(e) =>
-                                        handleChange({
-                                            target: {
-                                                name: 'agreement',
-                                                value: e.target.checked,
-                                            },
-                                        })
-                                    }
-                                    control={
-                                        <Checkbox
-                                            size="small"
-                                            checked={agreement || false}
-                                        />
-                                    }
-                                    label="I have read and agree to the terms of service."
-                                />
                                 <div className="flex items-center">
                                     <Button
                                         className="capitalize"
@@ -159,7 +112,7 @@ const JwtRegister = () => {
                                         color="primary"
                                         type="submit"
                                     >
-                                        Sign up
+                                        Reset
                                     </Button>
                                     <span className="mx-2 ml-5">or</span>
                                     <Link to="/session/signin">
@@ -177,4 +130,5 @@ const JwtRegister = () => {
     )
 }
 
-export default JwtRegister
+export default RestPassword
+

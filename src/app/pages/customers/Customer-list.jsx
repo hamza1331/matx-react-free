@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom'
 import { Breadcrumb } from 'app/components'
 import { getCustomerList } from '../../redux/actions/CustomerAction'
 import MUIDataTable, { TableFilterList } from "mui-datatables";
-
+var id
 const columns = [
     {
         name: "first_name",
@@ -49,12 +49,15 @@ const columns = [
         label: "Action"
     },
 ];
+
 const options = {
     filter: true,
     filterType: "dropdown",
     responsive: true,
-    selectableRows: false
+    selectableRows: false,
+   
 };
+
 const useStyles = makeStyles((theme) => ({
     button: {
         margin: theme.spacing(1),
@@ -84,15 +87,25 @@ const CustomerList = () => {
             company_Name: customerList.company_Name,
             city: customerList.city,
             state: customerList.state,
-            Action: <div><IconButton className={classes.button} onClick={() => history.push('/pages/edit-customer')}>
+            Action: <div>
+                <IconButton className={classes.button} onClick={
+                    (e) =>{
+                        localStorage.setItem('id',customerList._id)
+                        console.log(customerList._id)
+                        history.push("/pages/edit-customer")}
+                    }>
+                        
                 <Icon>create</Icon>
             </IconButton>
-                <IconButton className={classes.button} onClick={() => history.push('/pages/customer-profile')}>
+                <IconButton className={classes.button} onClick={(event) =>{ 
+                    console.log(columns)
+                    localStorage.setItem('id',customerList._id)
+                    history.push('/pages/customer-profile')}}>
                     <Icon>arrow_forward</Icon>
                 </IconButton></div>
         }
     })
-
+ 
     return (
 
         <Fragment>
