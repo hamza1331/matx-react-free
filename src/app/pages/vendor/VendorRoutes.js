@@ -1,7 +1,7 @@
 import React from 'react'
 import { authRoles } from '../../auth/authRoles'
 
-const CustomerRoutes = [
+const VendorRoutes = [
     {
         path: '/pages/vendor-list',
         component: React.lazy(() => import('./vendor-list')),
@@ -24,4 +24,4 @@ const CustomerRoutes = [
     },
 ]
 
-export default CustomerRoutes
+export default VendorRoutes

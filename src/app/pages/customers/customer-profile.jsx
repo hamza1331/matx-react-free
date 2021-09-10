@@ -260,7 +260,7 @@ const SimpleForm = () => {
                     <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Sure You want to delete this customer.
+                            Sure You want to delete this customer!.
                         </DialogContentText>
                         
                     </DialogContent>

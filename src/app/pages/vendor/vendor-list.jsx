@@ -78,7 +78,7 @@ const VendorList = () => {
 
     const rows = vendorList.map((vendorList) => {
         return {
-            // assuming atributes
+            // assuming attributes
             first_name: <div> <div className="font-bold">{vendorList.firstName} 
             </div><div className="text-small">{vendorList.email}</div></div>,
             company_Name: vendorList.company_Name,
