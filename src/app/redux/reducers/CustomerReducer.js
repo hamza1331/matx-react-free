@@ -11,7 +11,6 @@ const initialState = {
 }
 
 const CustomerReducer = function (state = initialState, action) {
-    console.log(action)
     switch (action.type) {
         
         case INSERT_CUSTOMER: {
@@ -41,7 +40,7 @@ const CustomerReducer = function (state = initialState, action) {
         case UPDATE_CUSTOMER: {
             return {
                 ...state,
-                customerList: [...action.payload],
+                customerList: [...action.payload.values],
             }
         }
         default: {

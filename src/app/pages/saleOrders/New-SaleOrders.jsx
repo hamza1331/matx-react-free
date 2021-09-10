@@ -231,7 +231,7 @@ const InvoiceForm = () => {
 
                             <div className="mb-8">
                                 <Grid container spacing={3}>
-                                    
+                                    <Grid item xs={6}></Grid>
                                     <Grid item xs={6}>
                                         <Card
                                             className="bg-default p-4"

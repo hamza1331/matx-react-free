@@ -16,6 +16,7 @@ export const insertCustomer = ( data) => (dispatch) => {
                 payload: res.data,
 
             })
+            dispatch(getCustomerList())
         })
 }
 export const getCustomerList = () => (dispatch) => {
@@ -38,26 +39,32 @@ export const getSingleCustomer = (uid, customerId) => (dispatch) => {
         })
 }
 
-export const deleteCustomer = (uid, customerId) => (dispatch) => {
+export const deleteCustomer = (customerId) => (dispatch) => {
+    console.log(customerId)
     api
-        .delete('/customer/remove-customer/:customerId', { uid, customerId })
+        .delete(`/customer/remove-customer/${customerId}`,{customerId})
         .then((res) => {
             dispatch({
                 type: DELETE_CUSTOMER,
                 payload: res.data,
             })
+           
         })
 }
 
-export const updateCustomer = (uid, customerId, data) => (dispatch) => {
+export const updateCustomer = ( data,customerId ) => (dispatch) => {
     api
-        .patch('/customer/patch-customer/:customerId', { uid, customerId, data })
+        .patch(`/customer/patch-customer/${customerId}`, { data, customerId})
         .then((res) => {
             dispatch({
+                
                 type: UPDATE_CUSTOMER,
+              
                 payload: res.data,
             })
+            dispatch(getCustomerList())
         })
+       
 }
 
 

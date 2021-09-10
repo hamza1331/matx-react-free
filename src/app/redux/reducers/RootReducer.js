@@ -12,8 +12,11 @@ import PurchaseOrderReducer from './PurchaseOrderReducer'
 import UserReducer from './UserReducer'
 import VendorReducer from './VendorReducer'
 import WarehouseReducer from './WarehouseReducer'
+import reducer from '../../redux/reducers/authReducer'
+import ToastReducer from './toastReducer'
 
 const RootReducer = combineReducers({
+    toast: ToastReducer,
     notifications: NotificationReducer,
     navigations: NavigationReducer,
     scrumboard: ScrumBoardReducer,
@@ -27,6 +30,7 @@ const RootReducer = combineReducers({
     user: UserReducer,
     vendor: VendorReducer,
     warehouse: WarehouseReducer,
+    authReducer:reducer
 })
 
 export default RootReducer

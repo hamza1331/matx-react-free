@@ -7,7 +7,6 @@ import {
     Card,
     Divider,
     TextField,
-    MenuItem,
     Button,
 } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,7 +35,7 @@ const InvoiceForm = () => {
         
     }
 
-     return (
+    return (
         <div className="m-sm-30">
             <Card elevation={3}>
                 <div className="flex p-4">
@@ -96,7 +95,7 @@ const InvoiceForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    company Name
+                                    Company Name
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -110,7 +109,7 @@ const InvoiceForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    email
+                                    Email
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -127,7 +126,7 @@ const InvoiceForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    phone
+                                    Phone
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
                                         <TextField
@@ -156,7 +155,7 @@ const InvoiceForm = () => {
 
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
-                                    country
+                                    Country
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -169,7 +168,7 @@ const InvoiceForm = () => {
                                     />
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
-                                    state
+                                    State
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -182,7 +181,7 @@ const InvoiceForm = () => {
                                     />
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
-                                    city
+                                    City
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField

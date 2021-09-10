@@ -102,7 +102,6 @@ const InvoiceForm = () => {
                                         onChange={handleChange}
                                     />
                                 </Grid>
-
                                 <Grid item md={2} sm={4} xs={12}>
                                     Order Number
                                 </Grid>
@@ -165,7 +164,6 @@ const InvoiceForm = () => {
                                                 )
                                             )}
                                         </TextField>
-
                                         <MuiPickersUtilsProvider
                                             utils={DateFnsUtils}
                                         >
@@ -228,7 +226,6 @@ const InvoiceForm = () => {
                                     handleChange={handleChange}
                                 />
                             </div>
-
                             <div className="mb-8">
                                 <Grid container spacing={3}>
                                     
@@ -347,8 +344,6 @@ const InvoiceForm = () => {
                                     </Grid>
                                 </Grid>
                             </div>
-
-
                             <div className="mt-6">
                                 <Button
                                     color="primary"

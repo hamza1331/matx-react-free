@@ -229,8 +229,7 @@ const vendorList = [
 ]
 
 const initialValues = {
-    customerType: '',
-    otherField: 'Adjustment',
+    
 }
 
 export default InvoiceForm

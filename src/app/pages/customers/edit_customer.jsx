@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik } from 'formik'
 import {
     Grid,
@@ -8,16 +8,33 @@ import {
     MenuItem,
     Button,
 } from '@material-ui/core'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import { updateCustomer } from '../../redux/actions/CustomerAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
-const InvoiceForm = () => {
+
+const CustomerForm = () => {
+    const id = localStorage.getItem('id')
+    const [state, setState] = useState({})
     const dispatch = useDispatch()
+    const { customerList } = useSelector((state) => state.customer)
+    console.log(customerList)
+   
+    for (let i = 0; i < customerList.length; i++) {
+        if (customerList[i]._id === id) {
+            state.first_name = customerList[i].first_name
+            state.email = customerList[i].email
+            state.work_phone_no = customerList[i].work_phone_no
+            state.mobile_phone_no = customerList[i].mobile_phone_no
+            state.country = customerList[i].country
+            state.city = customerList[i].city
+            state.company_Name = customerList[i].company_Name
+            state.state = customerList[i].city
+        }
+    }
+  
     const handleSubmit = async (values, { isSubmitting }) => {
-        console.log(values)
-        const newcustomer = [];
-        newcustomer.push(values);
-        dispatch(updateCustomer(newcustomer))
+        dispatch(updateCustomer(values, id))
+        localStorage.removeItem('id')
     }
 
     return (
@@ -56,10 +73,9 @@ const InvoiceForm = () => {
                                         name="first_name"
                                         size="small"
                                         variant="outlined"
-                                        value={values.first_name || ''}
+                                        value={state.first_name}
                                         onChange={handleChange}
-                                    >
-                                    </TextField>
+                                    ></TextField>
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
                                     <TextField
@@ -68,13 +84,11 @@ const InvoiceForm = () => {
                                         name="last_name"
                                         size="small"
                                         variant="outlined"
-                                        value={values.last_name || ''}
+                                        value={state.last_name || ''}
                                         onChange={handleChange}
-                                    >
-                                    </TextField>
+                                    ></TextField>
                                 </Grid>
-                                <Grid item md={3} sm={8} xs={12}>
-                                </Grid>
+                                <Grid item md={3} sm={8} xs={12}></Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
                                     company Name
@@ -85,7 +99,7 @@ const InvoiceForm = () => {
                                         name="company_Name"
                                         size="small"
                                         variant="outlined"
-                                        value={values.company_Name}
+                                        value={state.company_Name}
                                         onChange={handleChange}
                                     />
                                 </Grid>
@@ -103,11 +117,9 @@ const InvoiceForm = () => {
                                             onChange={handleChange}
                                             type="email"
                                             name="email"
-                                            value={values.email}
+                                            value={state.email}
                                         />
-
                                     </ValidatorForm>
-
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
@@ -123,11 +135,9 @@ const InvoiceForm = () => {
                                             onChange={handleChange}
                                             type="number"
                                             name="work_phone_no"
-                                            value={values.work_phone_no}
+                                            value={state.work_phone_no}
                                         />
-
                                     </ValidatorForm>
-
                                 </Grid>
                                 <Grid item md={7} sm={8} xs={12}>
                                     <ValidatorForm>
@@ -139,11 +149,9 @@ const InvoiceForm = () => {
                                             onChange={handleChange}
                                             type="number"
                                             name="mobile_phone_no"
-                                            value={values.mobile_phone_no}
+                                            value={state.mobile_phone_no}
                                         />
-
                                     </ValidatorForm>
-
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
                                     country
@@ -154,7 +162,7 @@ const InvoiceForm = () => {
                                         name="country"
                                         size="small"
                                         variant="outlined"
-                                        value={values.country}
+                                        value={state.country}
                                         onChange={handleChange}
                                     />
                                 </Grid>
@@ -167,7 +175,7 @@ const InvoiceForm = () => {
                                         name="state"
                                         size="small"
                                         variant="outlined"
-                                        value={values.state}
+                                        value={state.state}
                                         onChange={handleChange}
                                     />
                                 </Grid>
@@ -180,7 +188,7 @@ const InvoiceForm = () => {
                                         name="city"
                                         size="small"
                                         variant="outlined"
-                                        value={values.city}
+                                        value={state.city}
                                         onChange={handleChange}
                                     />
                                 </Grid>
@@ -206,16 +214,6 @@ const InvoiceForm = () => {
     )
 }
 
+const initialValues = {}
 
-const customerList = [
-    'Mr.',
-    'Mrs.',
-    'Ms',
-    'Miss.',
-    'Dr',
-]
-
-const initialValues = {
-}
-
-export default InvoiceForm
+export default CustomerForm

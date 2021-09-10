@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
-import { Breadcrumb, SimpleCard } from 'app/components'
+import { Breadcrumb,  } from 'app/components'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     Button,
     Icon,
@@ -8,21 +9,18 @@ import {
     Grid,
     Card,
     Divider,
-    TextField,
-    Radio,
-    RadioGroup,
-    FormControlLabel,
-    Checkbox,
     Tabs,
     Tab,
-    Popover,
-    MenuItem,
     Table,
     TableHead,
     TableCell,
     TableBody,
     TableRow,
-
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
     TablePagination,
 } from '@material-ui/core'
 import PropTypes from 'prop-types';
@@ -32,14 +30,14 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { withStyles } from "@material-ui/core/styles";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-
+import { deleteCustomer } from '../../redux/actions/CustomerAction'
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers'
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
-
+import { useHistory } from 'react-router-dom'
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -127,8 +125,6 @@ const subscribarList = [
 ]
 
 
-
-
 TabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.any.isRequired,
@@ -164,10 +160,23 @@ var styles = {
 }
 
 const SimpleForm = () => {
+    const id = localStorage.getItem('id')
     const [inputList, setInputList] = useState([{ firstName: "", lastName: "" }]);
     const [rowsPerPage, setRowsPerPage] = React.useState(5)
+    const history = useHistory()
     const [page, setPage] = React.useState(0)
+    const dispatch = useDispatch()
+    const [open, setOpen] = React.useState(false)
+    function handleClickOpen() {
+        setOpen(true)
+    }
 
+    function handleDialogClose() {
+        dispatch(deleteCustomer(id))
+        localStorage.removeItem('id')
+        history.push('/pages/Customer-list')
+        setOpen(false)
+    }
     const handleChangePage = (event, newPage) => {
         setPage(newPage)
     }
@@ -242,6 +251,35 @@ const SimpleForm = () => {
     return (
         <div className="m-sm-30">
             <div className="m-sm-30">
+            <div>
+                <Dialog
+                    open={open}
+                    onClose={handleDialogClose}
+                    aria-labelledby="form-dialog-title"
+                >
+                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Sure You want to delete this customer.
+                        </DialogContentText>
+                        
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={handleDialogClose}
+                        >
+                            Cancel
+                        </Button>
+                        <Button onClick={handleDialogClose} color="primary">
+                            Delete
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+
+
                 <div className="mb-sm-30">
                     <Breadcrumb
                         routeSegments={[
@@ -272,7 +310,6 @@ const SimpleForm = () => {
                             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 " 
                              />
                             
-                    
                         <Card className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 MuiGrid-grid-lg-4">
                                   <Grid container >
                                   <Grid item md={12} sm={12} xs={12}>
@@ -354,7 +391,7 @@ const SimpleForm = () => {
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-right">+251912345678</p>
+                                                <p className="mx-4 text-13 text-right">+251912345678</p>
                                                 </div>
                                             </Grid>
                                         </div>
@@ -380,11 +417,14 @@ const SimpleForm = () => {
                                             <Grid item md={5} sm={12} xs={12} alignItems="left">
                                                 <div >
                                                     <p className="mx-4 text-14 font-bold  text-left">State/Region</p>
+
                                                 </div>
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
+
                                                     <p className="mx-4 text-13  text-right">ETHIOPIA</p>
+
                                                 </div>
                                             </Grid>
                                         </div>
@@ -419,8 +459,19 @@ const SimpleForm = () => {
                                             </Grid>
                                         </div>
                                     </Grid>
+
                                 </Grid>
                             </Card>
+
+                            <Button
+                                className=" m-4 py-2 flex"
+                                variant="contained"
+                                color="secondary"
+                                onClick={handleClickOpen}
+                                ><Icon >delete</Icon>
+                                Delete customer
+                            </Button>
+
                         </Grid>
 
                     </TabPanel>
@@ -525,6 +576,11 @@ const SimpleForm = () => {
 }
 
 export default SimpleForm
+
+
+
+
+
 
 
 

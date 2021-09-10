@@ -148,11 +148,11 @@ export const navigations = [
         path: '/pages/userprofile',
     },
 
-
     {
         name: 'Setting',
         icon: 'settings',
         path: '/session/signup',
     },
+
     
 ]

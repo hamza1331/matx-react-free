@@ -11,7 +11,7 @@ import sessionRoutes from './views/sessions/SessionRoutes'
 import AuthGuard from './auth/AuthGuard'
 import { AuthProvider } from 'app/contexts/JWTAuthContext'
 import { SettingsProvider } from 'app/contexts/SettingsContext'
-
+import dashboardRoutes from './views/dashboard/DashboardRoutes'
 const App = () => {
     return (
         <AppContext.Provider value={{ routes }}>
@@ -22,6 +22,7 @@ const App = () => {
                         <BrowserRouter basename={process.env.PUBLIC_URL}>
                         <Router history={history}>
                             <AuthProvider>
+                                
                                 <MatxSuspense>
                                     <Switch>
                                         {/* AUTHENTICATION PAGES (SIGNIN, SIGNUP ETC.) */}
@@ -35,7 +36,7 @@ const App = () => {
                                         {/* AUTH PROTECTED DASHBOARD PAGES */}
                                         <AuthGuard>
                                             <MatxLayout />{' '}
-                                            {/* RETURNS <Layout1/> component */}
+                                            
                                         </AuthGuard>
                                     </Switch>
                                 </MatxSuspense>
