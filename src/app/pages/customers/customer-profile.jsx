@@ -125,8 +125,6 @@ const subscribarList = [
 ]
 
 
-
-
 TabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.any.isRequired,
@@ -262,7 +260,7 @@ const SimpleForm = () => {
                     <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Sure You want to delete this customer.
+                            Sure You want to delete this customer!.
                         </DialogContentText>
                         
                     </DialogContent>
@@ -308,21 +306,61 @@ const SimpleForm = () => {
                     </AppBar>
                     <TabPanel value={value} index={0}>
                         <Grid className="mb-6" container spacing={3} alignItems="left">
-                            <Card className="py-2" elevation={2}>
+                            <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 " 
+                             />
+                            
+                        <Card className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 MuiGrid-grid-lg-4">
+                                  <Grid container >
+                                  <Grid item md={12} sm={12} xs={12}>
+                                  
+                                    <div class="flex-column items-center mb-6" >
+                                    <div class="MuiAvatar-root MuiAvatar-circle w-84 h-84"> 
+                                        <img
+                                            className="w-full"
+                                            src="/assets/images/Userprofile.png"
+                                            alt=""
+                                                />
+                                   </div>
+                                     </div>
+                                   </Grid>
 
-                                <Grid item md={3} sm={12} xs={12}>
+                                   <Grid item md={12} sm={12} xs={12}>
+                                       <div class="flex-column items-center mb-6">
+                                       <div className="text-20 font-bold"> Customer Full-name
+                                       </div>
+                                       </div>
+                                       
+                                     </Grid>
+                                     <Divider className="min-w-300" /> 
+                                    
+                                    <Grid container >
+                                        <div className="flex justify-between">
+                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
+                                                <div >
+                                                    <p className="mx-4 text-14 font-bold text-left"> CompanyName</p>
+                                                </div>
+                                            </Grid>
+                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
+                                                <div >
+                                                    <p className="mx-4 text-13 text-right">ZTE,PLC</p>
+                                                </div>
+                                            </Grid>
+                                        </div>
+                                    </Grid>
                                     <Divider className="min-w-300" />
+
 
                                     <Grid container >
                                         <div className="flex justify-between">
                                             <Grid item md={5} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-left">Email</p>
+                                                    <p className="mx-4 text-14 font-bold  text-left"> Email</p>
                                                 </div>
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-right">uilib@example.com</p>
+                                                    <p className="mx-4 text-13  text-right">babikumelachew@gmail.com</p>
                                                 </div>
                                             </Grid>
                                         </div>
@@ -333,12 +371,27 @@ const SimpleForm = () => {
                                         <div className="flex justify-between">
                                             <Grid item md={5} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-left">Phone</p>
+                                                    <p className="mx-4 text-14 font-bold  text-left">WorkPhone</p>
                                                 </div>
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-right">+1439327546</p>
+                                                    <p className="mx-4 text-13  text-right">+25119890087</p>
+                                                </div>
+                                            </Grid>
+                                        </div>
+                                    </Grid><Divider className="min-w-300" />
+
+                                    <Grid container >
+                                        <div className="flex justify-between">
+                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
+                                                <div >
+                                                    <p className="mx-4 text-14 font-bold  text-left">MobilePhone</p>
+                                                </div>
+                                            </Grid>
+                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
+                                                <div >
+                                                <p className="mx-4 text-13 text-right">+251912345678</p>
                                                 </div>
                                             </Grid>
                                         </div>
@@ -348,12 +401,12 @@ const SimpleForm = () => {
                                         <div className="flex justify-between">
                                             <Grid item md={6} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-left">Country</p>
+                                                    <p className="mx-4 text-14 font-bold text-left">Country</p>
                                                 </div>
                                             </Grid>
                                             <Grid item md={12} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-right">USA</p>
+                                                    <p className="mx-4 text-13  text-right">ETHIOPIA</p>
                                                 </div>
                                             </Grid>
                                         </div>
@@ -363,12 +416,15 @@ const SimpleForm = () => {
                                         <div className="flex justify-between">
                                             <Grid item md={5} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-left">State/Region</p>
+                                                    <p className="mx-4 text-14 font-bold  text-left">State/Region</p>
+
                                                 </div>
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-right">NewYork</p>
+
+                                                    <p className="mx-4 text-13  text-right">ETHIOPIA</p>
+
                                                 </div>
                                             </Grid>
                                         </div>
@@ -378,12 +434,12 @@ const SimpleForm = () => {
                                         <div className="flex justify-between">
                                             <Grid item md={5} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-left">Address 1</p>
+                                                    <p className="mx-4 text-14 font-bold text-left">City</p>
                                                 </div>
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-right">StreetTailwood,No.17</p>
+                                                    <p className="mx-4 text-13 text-right">AddisAbaba</p>
                                                 </div>
                                             </Grid>
                                         </div>
@@ -393,227 +449,29 @@ const SimpleForm = () => {
                                         <div className="flex justify-between">
                                             <Grid item md={5} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-left">Address 2</p>
+                                                    <p className="mx-4 text-14 font-bold  text-left">Street</p>
                                                 </div>
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-right">House#19</p>
+                                                    <p className="mx-4 text-13  text-right">Piassa-12</p>
                                                 </div>
                                             </Grid>
                                         </div>
                                     </Grid>
 
                                 </Grid>
-
-                            </Card>
-                            <Card className="mx-4 py-2" elevation={2}>
-
-                                <Grid item md={3} sm={12} xs={12}>
-                                    <Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Email</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">uilib@example.com</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid>
-                                    <Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Phone</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">+1439327546</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={6} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Country</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={12} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">USA</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">State/Region</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">NewYork</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Address 1</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">StreetTailwood,No.17</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Address 2</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">House#19</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid>
-
-                                </Grid>
-
-                            </Card>
-
-                            <Card className=" mx-4 py-2" elevation={2}>
-                                <Grid item md={3} sm={12} xs={12}>
-                                    <Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Email</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">uilib@example.com</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid>
-                                    <Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Phone</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">+1439327546</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={6} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Country</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={12} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">USA</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">State/Region</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">NewYork</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Address 1</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">StreetTailwood,No.17</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-left">Address 2</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">House#19</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid>
-
-                                </Grid>
-
                             </Card>
 
                             <Button
-                                                    className=" m-4 py-2 flex"
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleClickOpen}
-                ><Icon >delete</Icon>
-                    Delete customer
-                </Button>
+                                className=" m-4 py-2 flex"
+                                variant="contained"
+                                color="secondary"
+                                onClick={handleClickOpen}
+                                ><Icon >delete</Icon>
+                                Delete customer
+                            </Button>
+
                         </Grid>
 
                     </TabPanel>
@@ -697,7 +555,6 @@ const SimpleForm = () => {
                     </TabPanel>
                     <TabPanel value={value} index={2}>
                     </TabPanel>
-
 
                 </div>
 

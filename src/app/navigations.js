@@ -145,12 +145,14 @@ export const navigations = [
     {
         name: 'User Profile',
         icon: 'account_circle',
-        path: '/page-layouts/user-profile',
+        path: '/pages/userprofile',
     },
-    // {
-    //     name: 'Setting',
-    //     icon: 'settings',
-    //     path: '/session/signup',
-    // },
+
+    {
+        name: 'Setting',
+        icon: 'settings',
+        path: '/session/signup',
+    },
+
     
 ]

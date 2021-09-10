@@ -7,13 +7,11 @@ import {
     Divider, Icon, Button, IconButton, Fab
 } from '@material-ui/core'
 import { useTheme } from '@material-ui/styles'
-import PaginationTable from '../../views/material-kit/tables/PaginationTable'
 import { useHistory } from 'react-router-dom'
 import { Breadcrumb } from 'app/components'
 import { getVendorList } from '../../redux/actions/VendorAction'
-import { ThemeProvider } from '@material-ui/core/styles'
 import MUIDataTable, { TableFilterList } from "mui-datatables";
-
+var id
 const columns = [
     {
         name: "first_name",
@@ -67,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 let cartListLoaded = false;
-const CustomerList = () => {
+const VendorList = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const { vendorList } = useSelector((state) => state.vendor)
@@ -80,16 +78,26 @@ const CustomerList = () => {
 
     const rows = vendorList.map((vendorList) => {
         return {
-            // assuming atributes
-            first_name: <div> <div className="font-bold">{vendorList.firstName}
+            // assuming attributes
+            first_name: <div> <div className="font-bold">{vendorList.firstName} 
             </div><div className="text-small">{vendorList.email}</div></div>,
             company_Name: vendorList.company_Name,
             city: vendorList.city,
             state: vendorList.state,
-            Action: <div><IconButton className={classes.button} onClick={() => history.push('/pages/edit-vendor')}>
+            Action: <div><IconButton className={classes.button} onClick={
+                (e) =>{
+                    localStorage.setItem('id',vendorList._id)
+                    console.log(vendorList._id)
+                    history.push('/pages/edit-vendor')}
+                }>
+
                 <Icon>create</Icon>
             </IconButton>
-                <IconButton className={classes.button} onClick={() => history.push('/pages/vendor-profile')}>
+                <IconButton className={classes.button} onClick={(event) => {
+                    console.log(columns)
+                    localStorage.setItem('id',vendorList._id)
+                    history.push('/pages/vendor-profile')}
+                }>
                     <Icon>arrow_forward</Icon>
                 </IconButton></div>
         }
@@ -125,7 +133,7 @@ const CustomerList = () => {
     )
 }
 
-export default CustomerList
+export default VendorList
 
 
 

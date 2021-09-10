@@ -14,10 +14,12 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import InvoiceItemTable from '../../views/forms/invoice-form/InvoiceItemTable'
 import { calculateAmount } from '../../views/forms/invoice-form/InvoiceFormService'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { insertProduct } from '../../redux/actions/ProductAction'
+import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 const InvoiceForm = () => {
+
     const calculateSubTotal = (itemList = []) => {
         let subTotal = 0
         itemList.forEach((item) => {
@@ -36,8 +38,12 @@ const InvoiceForm = () => {
         return total
     }
 
+    const dispatch = useDispatch()
     const handleSubmit = async (values, { isSubmitting }) => {
         console.log(values)
+        const newproduct = [];
+        newproduct.push(values);
+        dispatch(insertProduct(newproduct))
     }
 
     return (
@@ -69,38 +75,34 @@ const InvoiceForm = () => {
                                 
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    ProductName
+                                    Product Name
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="ProductName"
-                                        name="ProductName"
+                                        label="Product Name"
+                                        name="name"
                                         size="small"
                                         variant="outlined"
                                         defaultValue=" "
-                                        value={values.productDescription}
-
+                                        value={values.name || ''}
                                         onChange={handleChange}
                                     />
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    ProductDescription
+                                    Product Description
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="productDescription"
-                                        name="productDescription"
+                                        label="product Description"
+                                        name="description"
                                         size="small"
                                         variant="outlined"
                                         defaultValue=" "
-                                        value={values.productName}
-
+                                        value={values.description || ''}
                                         onChange={handleChange}
                                     />
                                 </Grid>
-
-
 
                                 <Grid item md={2} sm={4} xs={12}>
                                     SUK
@@ -108,27 +110,26 @@ const InvoiceForm = () => {
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
                                         label="SUK"
-                                        name="SUK"
+                                        name="suk"
                                         size="small"
                                         variant="outlined"
                                         defaultValue="00000"
-                                        value={values.SUK}
-                                    
+                                        value={values.suk || ''}
                                         onChange={handleChange}
                                     />
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                   unit
+                                   Unit
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="unit"
+                                        label="Unit"
                                         name="unit"
                                         size="small"
                                         variant="outlined"
                                         defaultValue=" "
-                                        value={values.unit}
+                                        value={values.unit || ''}
                                         type="number"
                                         unique={true}
                                         onChange={handleChange}
@@ -136,73 +137,57 @@ const InvoiceForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                   quantity
+                                   Quantity
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="quantity"
+                                        label="Quantity"
                                         name="quantity"
                                         size="small"
                                         variant="outlined"
                                         defaultValue=" "
                                         type="number"
-                                        value={values.quantity}
-                                        
+                                        value={values.quantity || ''}
                                         onChange={handleChange}
                                     />
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                  available
+                                  Available
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="available"
+                                        label="Available"
                                         name="available"
                                         size="small"
                                         variant="outlined"
                                         defaultValue=" "
-                                        value={values.available}
+                                        value={values.available || ''}
                                         
                                         onChange={handleChange}
                                     />  
                                 </Grid>
 
                                 
-
-
                                 <Grid item md={2} sm={4} xs={12}>
-                                   price
+                                   Price
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="price"
+                                        label="Price"
                                         name="price"
                                         size="small"
                                         variant="outlined"
                                         defaultValue=" "
-                                        value={values.price}
+                                        value={values.price || ''}
                                         type="number"
                                         unique={true}
                                         onChange={handleChange}
                                     />
                                 </Grid>
-                                <Grid item md={2} sm={4} xs={12}>
-                                    Order Number
-                                </Grid>
-                                <Grid item md={10} sm={8} xs={12}>
-                                    <TextField
-                                        label="order number"
-                                        name="orderNo"
-                                        size="small"
-                                        variant="outlined"
-                                        value={values.orderNo}
-                                        onChange={handleChange}
-                                    />
-                                </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    production to Expiration
+                                    Production to Expiration
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <div className="flex flex-wrap m--2">
@@ -212,12 +197,13 @@ const InvoiceForm = () => {
                                             <KeyboardDatePicker
                                                 className="m-2"
                                                 margin="none"
-                                                label="production Date"
+                                                label="Production Date"
+                                                name="productionDate"
                                                 inputVariant="outlined"
                                                 type="text"
                                                 size="small"
                                                 autoOk={true}
-                                                value={values.productionDate}
+                                                value={values.productionDate || ''}
                                                 format="MMMM dd, yyyy"
                                                 onChange={(date) =>
                                                     setFieldValue(
@@ -236,11 +222,12 @@ const InvoiceForm = () => {
                                                 className="m-2"
                                                 margin="none"
                                                 label="Expiration Date"
+                                                name="expiryDate"
                                                 inputVariant="outlined"
                                                 type="text"
                                                 size="small"
                                                 autoOk={true}
-                                                value={values.ExpirationDate}
+                                                value={values.expiryDate}
                                                 format="MMMM dd, yyyy"
                                                 onChange={(date) =>
                                                     setFieldValue(
@@ -256,22 +243,7 @@ const InvoiceForm = () => {
                                 <Grid item xs={12}>
                                     <Divider />
                                 </Grid>
-
-                                
-
-                                <Grid item xs={12}>
-                                    <Divider />
-                                </Grid>
-
-                                
-
-                                <Grid item xs={12}>
-                                    <Divider />
-                                </Grid>
-                            </Grid>
-
-
-                            
+ 
 
                            <div className="mt-6">
                                 <Button
@@ -282,6 +254,7 @@ const InvoiceForm = () => {
                                     Submit
                                 </Button>
                             </div>
+                         </Grid>
                         </form>
                     )}
                 </Formik>

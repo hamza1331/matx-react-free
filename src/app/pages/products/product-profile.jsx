@@ -30,7 +30,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { withStyles } from "@material-ui/core/styles";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { deleteVendor } from '../../redux/actions/VendorAction'
+import { deleteProduct } from '../../redux/actions/ProductAction'
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
@@ -172,9 +172,9 @@ const SimpleForm = () => {
     }
 
     function handleDialogClose() {
-        dispatch(deleteVendor(id))
+        dispatch(deleteProduct(id))
         localStorage.removeItem('id')
-        history.push('/pages/Vendor-list')
+        history.push('/pages/product-list')
         setOpen(false)
     }
     const handleChangePage = (event, newPage) => {
@@ -260,7 +260,7 @@ const SimpleForm = () => {
                     <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Sure You want to delete this vendor!.
+                            Sure You want to delete this Item!.
                         </DialogContentText>
                         
                     </DialogContent>
@@ -327,7 +327,7 @@ const SimpleForm = () => {
 
                                    <Grid item md={12} sm={12} xs={12}>
                                        <div class="flex-column items-center mb-6">
-                                       <div className="text-20 font-bold"> Vendor Full-name
+                                       <div className="text-20 font-bold"> Product name
                                        </div>
                                        </div>
                                        
@@ -338,12 +338,12 @@ const SimpleForm = () => {
                                         <div className="flex justify-between">
                                             <Grid item md={5} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-14 font-bold text-left"> CompanyName</p>
+                                                    <p className="mx-4 text-14 font-bold text-left"> Description</p>
                                                 </div>
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-right">ZTE,PLC</p>
+                                                    <p className="mx-4 text-13 text-right">This Item is yyyyyyrrrrr.</p>
                                                 </div>
                                             </Grid>
                                         </div>
@@ -355,12 +355,12 @@ const SimpleForm = () => {
                                         <div className="flex justify-between">
                                             <Grid item md={5} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-14 font-bold  text-left"> Email</p>
+                                                    <p className="mx-4 text-14 font-bold  text-left"> SUK</p>
                                                 </div>
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                    <p className="mx-4 text-13  text-right">babikumelachew@gmail.com</p>
+                                                    <p className="mx-4 text-13  text-right">000112123</p>
                                                 </div>
                                             </Grid>
                                         </div>
@@ -371,12 +371,28 @@ const SimpleForm = () => {
                                         <div className="flex justify-between">
                                             <Grid item md={5} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-14 font-bold  text-left">WorkPhone</p>
+                                                    <p className="mx-4 text-14 font-bold text-left">Unit</p>
                                                 </div>
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                    <p className="mx-4 text-13  text-right">+25119890087</p>
+                                                    <p className="mx-4 text-13 text-right">Kg</p>
+                                                </div>
+                                            </Grid>
+                                        </div>
+                                    </Grid><Divider className="min-w-300" />
+
+
+                                    <Grid container >
+                                        <div className="flex justify-between">
+                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
+                                                <div >
+                                                    <p className="mx-4 text-14 font-bold  text-left">Quantity</p>
+                                                </div>
+                                            </Grid>
+                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
+                                                <div >
+                                                    <p className="mx-4 text-13  text-right">500</p>
                                                 </div>
                                             </Grid>
                                         </div>
@@ -386,12 +402,12 @@ const SimpleForm = () => {
                                         <div className="flex justify-between">
                                             <Grid item md={5} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-14 font-bold  text-left">MobilePhone</p>
+                                                    <p className="mx-4 text-14 font-bold  text-left">Price</p>
                                                 </div>
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                <p className="mx-4 text-13 text-right">+251912345678</p>
+                                                <p className="mx-4 text-13 text-right">1000</p>
                                                 </div>
                                             </Grid>
                                         </div>
@@ -401,12 +417,12 @@ const SimpleForm = () => {
                                         <div className="flex justify-between">
                                             <Grid item md={6} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-14 font-bold text-left">Country</p>
+                                                    <p className="mx-4 text-14 font-bold text-left">Production Date</p>
                                                 </div>
                                             </Grid>
                                             <Grid item md={12} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                    <p className="mx-4 text-13  text-right">ETHIOPIA</p>
+                                                    <p className="mx-4 text-13  text-right">03/05/2020</p>
                                                 </div>
                                             </Grid>
                                         </div>
@@ -416,45 +432,31 @@ const SimpleForm = () => {
                                         <div className="flex justify-between">
                                             <Grid item md={5} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-14 font-bold  text-left">State/Region</p>
+                                                    <p className="mx-4 text-14 font-bold  text-left">Expiry Date</p>
 
                                                 </div>
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
 
-                                                    <p className="mx-4 text-13  text-right">ETHIOPIA</p>
+                                                    <p className="mx-4 text-13  text-right">03/05/2021</p>
 
                                                 </div>
                                             </Grid>
                                         </div>
                                     </Grid><Divider className="min-w-300" />
 
+                                    
                                     <Grid container >
                                         <div className="flex justify-between">
                                             <Grid item md={5} sm={12} xs={12} alignItems="left">
                                                 <div >
-                                                    <p className="mx-4 text-14 font-bold text-left">City</p>
+                                                    <p className="mx-4 text-14 font-bold  text-left">Available</p>
                                                 </div>
                                             </Grid>
                                             <Grid item md={7} sm={12} xs={12} alignItems="right">
                                                 <div >
-                                                    <p className="mx-4 text-13 text-right">AddisAbaba</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-14 font-bold  text-left">Street</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13  text-right">Piassa-12</p>
+                                                    <p className="mx-4 text-13  text-right">Yes</p>
                                                 </div>
                                             </Grid>
                                         </div>
@@ -469,7 +471,7 @@ const SimpleForm = () => {
                                 color="secondary"
                                 onClick={handleClickOpen}
                                 ><Icon >delete</Icon>
-                                Delete vendor
+                                Delete product
                             </Button>
 
                         </Grid>

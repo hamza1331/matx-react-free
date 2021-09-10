@@ -82,7 +82,7 @@ const CustomerList = () => {
     console.log(customerList)
     const rows = customerList.map((customerList) => {
         return {
-            // assuming atributes
+            // assuming attributes
             first_name: <div> <div className="font-bold">{customerList.first_name}
             </div><div className="text-small">{customerList.email}</div></div>,
             company_Name: customerList.company_Name,

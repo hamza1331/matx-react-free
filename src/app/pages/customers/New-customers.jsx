@@ -1,5 +1,7 @@
 import React from 'react'
-import { Formik } from 'formik'
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { customerValidationschema } from "../../pages/Validations/customerValidation"
 import {
     Grid,
     Card,
@@ -11,14 +13,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { insertCustomer } from '../../redux/actions/CustomerAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 const InvoiceForm = () => {
-    const dispatch = useDispatch() 
+    
+    const dispatch = useDispatch()
     const handleSubmit = async (values, { isSubmitting }) => {
         console.log(values)
+
+        let formData ={
+            fname: values.first_name,
+            lname: values.last_name,
+            cname: values.company_Name,
+            wphone: values.work_phone_no,
+            mphone: values.mobile_phone_no,
+            email: values.email,
+            country: values.country,
+            }
+        const isValid = await customerValidationschema.isValid(formData);
+        console.log(isValid)
         const newcustomer = [];
         newcustomer.push(values);
         dispatch(insertCustomer(newcustomer))
+        
     }
-    
+
     return (
         <div className="m-sm-30">
             <Card elevation={3}>
@@ -49,16 +65,18 @@ const InvoiceForm = () => {
                                     Customer Name
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
-                                    <TextField
+                                <TextField
                                         className="min-w-188"
                                         label="First Name"
                                         name="first_name"
+                                        type="text"
                                         size="small"
                                         variant="outlined"
                                         value={values.first_name || ''}
                                         onChange={handleChange}
-                                    >
-                                    </TextField>
+                                        >
+                                     </TextField>
+                                
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
                                     <TextField
@@ -76,7 +94,7 @@ const InvoiceForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    company Name
+                                    Company Name
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -90,11 +108,10 @@ const InvoiceForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    email
+                                    Email
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
-                                    <ValidatorForm>
-                                        <TextValidator
+                                    <TextField
                                             className="mb-6 "
                                             variant="outlined"
                                             size="small"
@@ -105,16 +122,13 @@ const InvoiceForm = () => {
                                             value={values.email}
                                         />
 
-                                    </ValidatorForm>
-
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    phone
+                                    Phone
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
-                                    <ValidatorForm>
-                                        <TextValidator
+                                        <TextField
                                             className="mb-6 "
                                             variant="outlined"
                                             size="small"
@@ -125,12 +139,9 @@ const InvoiceForm = () => {
                                             value={values.work_phone_no}
                                         />
 
-                                    </ValidatorForm>
-
                                 </Grid>
                                 <Grid item md={7} sm={8} xs={12}>
-                                    <ValidatorForm>
-                                        <TextValidator
+                                        <TextField
                                             className="mb-6 "
                                             variant="outlined"
                                             size="small"
@@ -141,11 +152,9 @@ const InvoiceForm = () => {
                                             value={values.mobile_phone_no}
                                         />
 
-                                    </ValidatorForm>
-
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
-                                    country
+                                    Country
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -158,7 +167,7 @@ const InvoiceForm = () => {
                                     />
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
-                                    state
+                                    State
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -171,7 +180,7 @@ const InvoiceForm = () => {
                                     />
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
-                                    city
+                                    City
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -204,7 +213,6 @@ const InvoiceForm = () => {
         </div>
     )
 }
-
 
 const customerList = [
     'Mr.',

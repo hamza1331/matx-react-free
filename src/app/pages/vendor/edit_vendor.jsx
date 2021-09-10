@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik } from 'formik'
 import {
     Grid,
@@ -11,13 +11,29 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { updateVendor } from '../../redux/actions/VendorAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
-const InvoiceForm = () => {
+const VendorForm = () => {
+    const id = localStorage.getItem('id')
+    const [state, setState] = useState({})
     const dispatch = useDispatch()
+    const { vendorList } = useSelector((state) => state.vendor)
+    console.log(vendorList)
+   
+    for (let i = 0; i < vendorList.length; i++) {
+        if (vendorList[i]._id === id) {
+            state.first_name = vendorList[i].first_name
+            state.email = vendorList[i].email
+            state.work_phone_no = vendorList[i].work_phone_no
+            state.mobile_phone_no = vendorList[i].mobile_phone_no
+            state.country = vendorList[i].country
+            state.city = vendorList[i].city
+            state.company_Name = vendorList[i].company_Name
+            state.state = vendorList[i].city
+        }
+    }
+  
     const handleSubmit = async (values, { isSubmitting }) => {
-        console.log(values)
-        const newvendor = [];
-        newvendor.push(values);
-        dispatch(updateVendor(newvendor))
+        dispatch(updateVendor(values, id))
+        localStorage.removeItem('id')
     }
 
     return (
@@ -233,4 +249,4 @@ const initialValues = {
     otherField: 'Adjustment',
 }
 
-export default InvoiceForm
+export default VendorForm
