@@ -70,7 +70,6 @@ const InvoiceForm = () => {
                                         label="First Name"
                                         name="first_name"
                                         type="text"
-                                        pattern="[A-Za-z]"
                                         size="small"
                                         variant="outlined"
                                         value={values.first_name || ''}

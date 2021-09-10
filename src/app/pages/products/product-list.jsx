@@ -1,14 +1,15 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { DataGrid } from '@material-ui/data-grid';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     Grid, Card,
     Divider, Icon, Button, IconButton, Fab
 } from '@material-ui/core'
 import { useTheme } from '@material-ui/styles'
-import PaginationTable from '../../views/material-kit/tables/PaginationTable'
+import { useHistory } from 'react-router-dom'
 import { Breadcrumb } from 'app/components'
-
+import { getProductList } from '../../redux/actions/ProductAction'
 import MUIDataTable from "mui-datatables";
 
 
@@ -65,9 +66,49 @@ const useStyles = makeStyles((theme) => ({
         display: 'none',
     },
 }))
-const CustomerList = () => {
+
+let cartListLoaded = false;
+const ProductList = () => {
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const { productList } = useSelector((state) => state.product)
     const theme = useTheme()
     const classes = useStyles()
+    if (!cartListLoaded) {
+        dispatch(getProductList())
+        cartListLoaded = true
+    }
+
+    const rows = productList.map((customerList) => {
+        return {
+            // assuming attributes
+            name: <div> <div className="font-bold">{productList.name}
+            </div><div className="text-small">{productList.description}</div></div>,
+            quantity: productList.quantity,
+            price: productList.price,
+            productionDate: productList.productionDate,
+            expiryDate: productList.expiryDate,
+            suk: productList.suk,
+            unit: productList.unit,
+            Action: <div>
+                <IconButton className={classes.button} onClick={
+                    (e) =>{
+                        localStorage.setItem('id',productList._id)
+                        console.log(productList._id)
+                        history.push("/pages/edit-product")}
+                    }>
+                        
+                <Icon>create</Icon>
+            </IconButton>
+                <IconButton className={classes.button} onClick={(event) =>{ 
+                    console.log(columns)
+                    localStorage.setItem('id',productList._id)
+                    history.push('/pages/product-profile')}}>
+                    <Icon>arrow_forward</Icon>
+                </IconButton></div>
+        }
+    })
+
 
     return (
 
@@ -86,7 +127,7 @@ const CustomerList = () => {
                 <Grid container spacing={3}>
                     <Grid item lg={12} md={12} sm={12} xs={12}>
                         <MUIDataTable
-                            title={"Customers List"}
+                            title={"Products List"}
                             data={data}
                             columns={columns}
                             options={options}
@@ -99,7 +140,7 @@ const CustomerList = () => {
     )
 }
 
-export default CustomerList
+export default ProductList
 
 
 
