@@ -14,7 +14,7 @@ import VendorReducer from './VendorReducer'
 import WarehouseReducer from './WarehouseReducer'
 import reducer from '../../redux/reducers/authReducer'
 import ToastReducer from './toastReducer'
-
+import RoleReducer from './RoleReducer'
 const RootReducer = combineReducers({
     toast: ToastReducer,
     notifications: NotificationReducer,
@@ -30,7 +30,8 @@ const RootReducer = combineReducers({
     user: UserReducer,
     vendor: VendorReducer,
     warehouse: WarehouseReducer,
-    authReducer:reducer
+    authReducer:reducer,
+    role:RoleReducer
 })
 
 export default RootReducer

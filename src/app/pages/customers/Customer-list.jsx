@@ -79,6 +79,7 @@ const CustomerList = () => {
         cartListLoaded = true
     }
 
+    console.log(customerList)
     const rows = customerList.map((customerList) => {
         return {
             // assuming atributes

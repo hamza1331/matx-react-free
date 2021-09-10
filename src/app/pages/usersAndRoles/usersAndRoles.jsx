@@ -1,452 +1,152 @@
-import React from 'react'
-import { Formik } from 'formik'
+import React, { Fragment, useState } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import { DataGrid } from '@material-ui/data-grid'
+import { useDispatch, useSelector } from 'react-redux'
+import { Grid, Icon, IconButton } from '@material-ui/core'
+import { useTheme } from '@material-ui/styles'
+import { useHistory } from 'react-router-dom'
+import { Breadcrumb } from 'app/components'
+import { getRole } from '../../redux/actions/roleAction'
+import MUIDataTable, { TableFilterList } from 'mui-datatables'
+import Checkbox from '@material-ui/core/Checkbox'
 import {
-    Grid,
-    Card,
-    Divider,
-    TextField,
-    MenuItem,
-    Button,
-    Icon,
+    Table,
+    TableHead,
+    TableCell,
+    TableBody,
+    TableRow,
 } from '@material-ui/core'
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-} from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns'
-import InvoiceItemTable from '../../views/forms/invoice-form/InvoiceItemTable'
-import { calculateAmount } from '../../views/forms/invoice-form/InvoiceFormService'
 
-const InvoiceForm = () => {
-    const calculateSubTotal = (itemList = []) => {
-        let subTotal = 0
-        itemList.forEach((item) => {
-            subTotal += calculateAmount(item)
-        })
+const users = [
+    {
+        id: 1,
+        name: 'Item',
+        permission: { read: true, write: true, update: true, delete: true },
+    },
+    {
+        id: 2,
+        name: 'Composite Items',
+        permission: { read: true, write: true, update: true, delete: true },
+    },
+    {
+        id: 3,
+        name: 'Transfer Orders',
+        permission: { write: true, read: true, update: true, delete: true },
+    },
+    {
+        id: 4,
+        name: 'Price List',
+        permission: { write: true, read: true, update: true, delete: true },
+    },
+]
+const useStyles = makeStyles((theme) => ({
+    button: {
+        margin: theme.spacing(1),
+    },
+    input: {
+        display: 'none',
+    },
+}))
 
-        return subTotal
+let cartListLoaded = false
+const CustomerList = () => {
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const { roleList } = useSelector((state) => state.role)
+    const theme = useTheme()
+    const classes = useStyles()
+    var newroleList = []
+    var rightList = []
+    const [state, setState] = React.useState({
+        read: true,
+        checkedB: true,
+        checkedF: true,
+    })
+
+    if (!cartListLoaded) {
+        dispatch(getRole())
+        cartListLoaded = true
     }
 
-    const calculateTotal = (values) => {
-        let total = 0
-        total += calculateSubTotal(values.items)
-        total += values.shippingCharge || 0
-        total += values[values.otherField] || 0
+    //console.log(roleList)
+    // for (var i = 0; i < roleList.length; i++) {
+    //     //console.log(roleList[0][1])
+    //     for (var j = 0; j < roleList[i].length; j++) {
+    //         newroleList.push(roleList[i][j])
+    //         rightList.push(newroleList[i].url[i].right)
+    //     }
 
-        return total
-    }
-
-    const handleSubmit = async (values, { isSubmitting }) => {
-        console.log(values)
+    //     console.log(rightList)
+    // }
+    const handleChange = (name) => (event) => {
+        setState({ ...state, [name]: event.target.value })
+        console.log(name)
     }
 
     return (
-        <div className="m-sm-30">
-            <Card elevation={3}>
-                <div className="flex p-4">
-                    <h4 className="m-0">New SaleOrder</h4>
-                </div>
-                <Divider className="mb-2" />
-
-                <Formik
-                    initialValues={initialValues}
-                    onSubmit={handleSubmit}
-                    enableReinitialize={true}
-                >
-                    {({
-                        values,
-                        errors,
-                        touched,
-                        handleChange,
-                        handleBlur,
-                        handleSubmit,
-                        isSubmitting,
-                        setSubmitting,
-                        setFieldValue,
-                    }) => (
-                        <form className="p-4" onSubmit={handleSubmit}>
-                            <Grid container spacing={3} alignItems="center">
-                                <Grid item md={2} sm={4} xs={12}>
-                                    Customer Name
-                                </Grid>
-                                <Grid item md={10} sm={8} xs={12}>
-                                    <TextField
-                                        className="min-w-188"
-                                        label="Name"
-                                        name="customerName"
-                                        size="small"
-                                        variant="outlined"
-                                        select
-                                        value={values.customerName || ''}
-                                        onChange={handleChange}
+        <Fragment>
+            <div className="analytics m-sm-30 mt-6">
+                <div className="w-full overflow-auto">
+                    <Table className="whitespace-pre">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell className="px-0">Name</TableCell>
+                                <TableCell className="px-0">Company</TableCell>
+                                <TableCell className="px-0">
+                                    Start Date
+                                </TableCell>
+                                <TableCell className="px-0">Status</TableCell>
+                                <TableCell className="px-0">Amount</TableCell>
+                                <TableCell className="px-0">Action</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {users.map((subscriber, index) => (
+                                <TableRow key={index}>
+                                    <TableCell
+                                        className="px-0 capitalize"
+                                        align="left"
                                     >
-                                        {customerList.map((item, ind) => (
-                                            <MenuItem value={item} key={item}>
-                                                {item}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                </Grid>
+                                        {subscriber.name}
+                                    </TableCell>
 
-                                <Grid item md={2} sm={4} xs={12}>
-                                    Invoice#
-                                </Grid>
-                                <Grid item md={10} sm={8} xs={12}>
-                                    <TextField
-                                        label="Invoice No"
-                                        name="invoiceNo"
-                                        size="small"
-                                        variant="outlined"
-                                        defaultValue="INV-000001"
-                                        value={values.invoiceNo}
-                                        onChange={handleChange}
-                                    />
-                                </Grid>
-
-                                <Grid item md={2} sm={4} xs={12}>
-                                    Order Number
-                                </Grid>
-                                <Grid item md={10} sm={8} xs={12}>
-                                    <TextField
-                                        label="Invoice No"
-                                        name="orderNo"
-                                        size="small"
-                                        variant="outlined"
-                                        value={values.orderNo}
-                                        onChange={handleChange}
-                                    />
-                                </Grid>
-
-                                <Grid item md={2} sm={4} xs={12}>
-                                    Invoice Date
-                                </Grid>
-                                <Grid item md={10} sm={8} xs={12}>
-                                    <div className="flex flex-wrap m--2">
-                                        <MuiPickersUtilsProvider
-                                            utils={DateFnsUtils}
-                                        >
-                                            <KeyboardDatePicker
-                                                className="m-2"
-                                                margin="none"
-                                                label="Invoice Date"
-                                                inputVariant="outlined"
-                                                type="text"
-                                                size="small"
-                                                autoOk={true}
-                                                value={values.invoiceDate}
-                                                format="MMMM dd, yyyy"
-                                                onChange={(date) =>
-                                                    setFieldValue(
-                                                        'invoiceDate',
-                                                        date
-                                                    )
-                                                }
-                                            />
-                                        </MuiPickersUtilsProvider>
-
-                                        <TextField
-                                            className="m-2 min-w-188"
-                                            label="Terms"
-                                            name="terms"
-                                            size="small"
-                                            variant="outlined"
-                                            value={values.terms || ''}
-                                            onChange={handleChange}
-                                            select
-                                        >
-                                            {paymentTermList.map(
-                                                (item, ind) => (
-                                                    <MenuItem
-                                                        value={item}
-                                                        key={item}
-                                                    >
-                                                        {item}
-                                                    </MenuItem>
-                                                )
+                                    <TableCell
+                                        className="px-0 capitalize"
+                                        align="left"
+                                    >
+                                        <Checkbox
+                                            checked={state.read}
+                                            value={subscriber.permission.read}
+                                            onChange={handleChange(
+                                                subscriber.permission.read
                                             )}
-                                        </TextField>
-
-                                        <MuiPickersUtilsProvider
-                                            utils={DateFnsUtils}
-                                        >
-                                            <KeyboardDatePicker
-                                                className="m-2"
-                                                margin="none"
-                                                label="Due Date"
-                                                inputVariant="outlined"
-                                                type="text"
-                                                size="small"
-                                                autoOk={true}
-                                                value={values.dueDate}
-                                                format="MMMM dd, yyyy"
-                                                onChange={(date) =>
-                                                    setFieldValue(
-                                                        'dueDate',
-                                                        date
-                                                    )
-                                                }
-                                            />
-                                        </MuiPickersUtilsProvider>
-                                    </div>
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <Divider />
-                                </Grid>
-
-                                <Grid item md={2} sm={4} xs={12}>
-                                    Salesperson Name
-                                </Grid>
-                                <Grid item md={10} sm={8} xs={12}>
-                                    <TextField
-                                        className="min-w-188"
-                                        label="Salesperson Name"
-                                        name="salesPersonName"
-                                        size="small"
-                                        variant="outlined"
-                                        value={values.salesPersonName || ''}
-                                        onChange={handleChange}
-                                        select
-                                    >
-                                        {customerList.map((item, ind) => (
-                                            <MenuItem value={item} key={item}>
-                                                {item}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <Divider />
-                                </Grid>
-                            </Grid>
-
-                            <div className="mb-8">
-                                <InvoiceItemTable
-                                    values={values}
-                                    setFieldValue={setFieldValue}
-                                    handleChange={handleChange}
-                                />
-                            </div>
-
-                            <div className="mb-8">
-                                <Grid container spacing={3}>
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            label="Custom Notes"
-                                            name="notes"
-                                            size="small"
-                                            variant="outlined"
-                                            multiline
-                                            rows={6}
-                                            fullWidth
-                                            value={values.notes}
-                                            onChange={handleChange}
                                         />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Card
-                                            className="bg-default p-4"
-                                            elevation={0}
-                                        >
-                                            <Grid
-                                                container
-                                                spacing={3}
-                                                justify="space-between"
-                                                alignItems="center"
-                                            >
-                                                <Grid item xs={6}>
-                                                    Sub Total
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="text-right">
-                                                        {calculateSubTotal(
-                                                            values.items
-                                                        ).toFixed(2)}
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="flex items-center">
-                                                        <span className="whitespace-pre">
-                                                            Shipping Charges
-                                                        </span>
-                                                        <TextField
-                                                            className="ml-3"
-                                                            name="shippingCharge"
-                                                            size="small"
-                                                            type="number"
-                                                            variant="outlined"
-                                                            value={
-                                                                values.shippingCharge ||
-                                                                ''
-                                                            }
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="text-right">
-                                                        {(
-                                                            values.shippingCharge ||
-                                                            0
-                                                        ).toFixed(2)}
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="flex items-center">
-                                                        <TextField
-                                                            name="otherField"
-                                                            size="small"
-                                                            variant="outlined"
-                                                            value={
-                                                                values.otherField ||
-                                                                ''
-                                                            }
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                        />
-
-                                                        <TextField
-                                                            className="ml-3"
-                                                            name={
-                                                                values.otherField
-                                                            }
-                                                            size="small"
-                                                            variant="outlined"
-                                                            type="number"
-                                                            value={
-                                                                values[
-                                                                values
-                                                                    .otherField
-                                                                ] || ''
-                                                            }
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="text-right">
-                                                        {(
-                                                            values[
-                                                            values
-                                                                .otherField
-                                                            ] || 0
-                                                        ).toFixed(2)}
-                                                    </div>
-                                                </Grid>
-
-                                                <Grid item xs={6}>
-                                                    <h5 className="m-0">
-                                                        Total ( $ )
-                                                    </h5>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="text-right">
-                                                        <h5 className="m-0">
-                                                            {calculateTotal(
-                                                                values
-                                                            ).toFixed(2)}
-                                                        </h5>
-                                                    </div>
-                                                </Grid>
-                                            </Grid>
-                                        </Card>
-                                    </Grid>
-                                </Grid>
-                            </div>
-
-                            <Card className="bg-default p-4" elevation={0}>
-                                <Grid container spacing={3}>
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            label="Terms & Conditions"
-                                            name="terms_conditions"
-                                            size="small"
-                                            variant="outlined"
-                                            multiline
-                                            rows={6}
-                                            fullWidth
-                                            value={values.terms_conditions}
-                                            onChange={handleChange}
+                                    </TableCell>
+                                    <TableCell className="px-0 capitalize"></TableCell>
+                                    <TableCell className="px-0 capitalize">
+                                        <Checkbox
+                                            checked={state.read}
+                                            onChange={handleChange('read')}
+                                            value="read"
+                                            inputProps={{
+                                                'aria-label':
+                                                    'primary checkbox',
+                                            }}
                                         />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <label htmlFor="upload-multiple-file">
-                                            <Button
-                                                className="capitalize"
-                                                color="primary"
-                                                component="span"
-                                                variant="contained"
-                                            >
-                                                <div className="flex items-center">
-                                                    <Icon className="pr-8">
-                                                        cloud_upload
-                                                    </Icon>
-                                                    <span>Upload File</span>
-                                                </div>
-                                            </Button>
-                                        </label>
-                                        <input
-                                            className="hidden"
-                                            onChange={(e) =>
-                                                setFieldValue(
-                                                    'files',
-                                                    e.target.files
-                                                )
-                                            }
-                                            id="upload-multiple-file"
-                                            type="file"
-                                            multiple
-                                        />
-                                    </Grid>
-                                </Grid>
-                            </Card>
-
-                            <div className="mt-6">
-                                <Button
-                                    color="primary"
-                                    variant="contained"
-                                    type="submit"
-                                >
-                                    Submit
-                                </Button>
-                            </div>
-                        </form>
-                    )}
-                </Formik>
-            </Card>
-        </div>
+                                    </TableCell>
+                                    <TableCell className="px-0">
+                                        <IconButton>
+                                            <Icon color="error">close</Icon>
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+            </div>
+        </Fragment>
     )
 }
 
-const paymentTermList = [
-    'NET 15',
-    'NET 30',
-    'NET 45',
-    'NET 60',
-    'Due end of the month',
-    'Due on receive',
-]
-
-const customerList = [
-    'customer 1',
-    'customer 2',
-    'customer 3',
-    'customer 4',
-    'customer 5',
-    'customer 6',
-    'customer 7',
-    'customer 8',
-]
-
-const initialValues = {
-    customerType: '',
-    otherField: 'Adjustment',
-}
-
-export default InvoiceForm
+export default CustomerList
