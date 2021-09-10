@@ -13,6 +13,7 @@ import organizationRoutes from './pages/organizationalProfile/organizationRoutes
 import warehouseRoutes from './pages/warehouses/warehouseRoutes'
 import branchesRoutes from './pages/branches/branches'
 import usersAndRoutes from './pages/usersAndRoles/usersRoutes'
+import profileRoutes from './pages/userprofile/userProfileRoutes'
 import utilitiesRoutes from './views/utilities/UtilitiesRoutes'
 
 import materialRoutes from './views/material-kit/MaterialRoutes'
@@ -50,6 +51,7 @@ const routes = [
     ...warehouseRoutes,
     ...branchesRoutes,
     ...usersAndRoutes,
+    ...profileRoutes,
     ...materialRoutes,
     ...utilitiesRoutes,
     ...chartsRoute,
