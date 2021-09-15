@@ -1,5 +1,7 @@
 import React from 'react'
 import { Formik } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import {
     Grid,
     Card,
@@ -16,8 +18,10 @@ import {
 import DateFnsUtils from '@date-io/date-fns'
 import InvoiceItemTable from '../../views/forms/invoice-form/InvoiceItemTable'
 import { calculateAmount } from '../../views/forms/invoice-form/InvoiceFormService'
-
+import {addSaleOrder} from '../../redux/actions/SaleOrderAction'
 const InvoiceForm = () => {
+    const dispatch = useDispatch()
+    const history = useHistory()
     const calculateSubTotal = (itemList = []) => {
         let subTotal = 0
         itemList.forEach((item) => {
@@ -37,7 +41,9 @@ const InvoiceForm = () => {
     }
 
     const handleSubmit = async (values, { isSubmitting }) => {
-        console.log(values)
+        
+        dispatch(addSaleOrder(values)) 
+        history.push('/pages/saleorder-list')
     }
 
     return (

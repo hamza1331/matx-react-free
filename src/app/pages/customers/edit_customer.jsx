@@ -11,30 +11,35 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { updateCustomer } from '../../redux/actions/CustomerAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
+import { history } from 'history.js';
+import { useHistory } from 'react-router-dom';
 
 const CustomerForm = () => {
     const id = localStorage.getItem('id')
     const [state, setState] = useState({})
     const dispatch = useDispatch()
+    const history = useHistory()
     const { customerList } = useSelector((state) => state.customer)
     console.log(customerList)
    
-    for (let i = 0; i < customerList.length; i++) {
-        if (customerList[i]._id === id) {
-            state.first_name = customerList[i].first_name
-            state.email = customerList[i].email
-            state.work_phone_no = customerList[i].work_phone_no
-            state.mobile_phone_no = customerList[i].mobile_phone_no
-            state.country = customerList[i].country
-            state.city = customerList[i].city
-            state.company_Name = customerList[i].company_Name
-            state.state = customerList[i].city
-        }
-    }
+    // for (let i = 0; i < customerList.length; i++) {
+    //     if (customerList[i]._id === id) {
+    //         state.first_name = customerList[i].first_name
+    //         state.last_name= customerList[i].last_name
+    //         state.email = customerList[i].email
+    //         state.work_phone_no = customerList[i].work_phone_no
+    //         state.mobile_phone_no = customerList[i].mobile_phone_no
+    //         state.country = customerList[i].country
+    //         state.city = customerList[i].city
+    //         state.company_Name = customerList[i].company_Name
+    //         state.state = customerList[i].city
+    //     }
+    // }
   
     const handleSubmit = async (values, { isSubmitting }) => {
         dispatch(updateCustomer(values, id))
         localStorage.removeItem('id')
+        history.push('/pages/customer-list')
     }
 
     return (
@@ -84,7 +89,7 @@ const CustomerForm = () => {
                                         name="last_name"
                                         size="small"
                                         variant="outlined"
-                                        value={state.last_name || ''}
+                                        value={values.last_name || ''}
                                         onChange={handleChange}
                                     ></TextField>
                                 </Grid>
@@ -99,7 +104,7 @@ const CustomerForm = () => {
                                         name="company_Name"
                                         size="small"
                                         variant="outlined"
-                                        value={state.company_Name}
+                                        value={values.company_Name}
                                         onChange={handleChange}
                                     />
                                 </Grid>
@@ -117,7 +122,7 @@ const CustomerForm = () => {
                                             onChange={handleChange}
                                             type="email"
                                             name="email"
-                                            value={state.email}
+                                            value={values.email}
                                         />
                                     </ValidatorForm>
                                 </Grid>
@@ -135,7 +140,7 @@ const CustomerForm = () => {
                                             onChange={handleChange}
                                             type="number"
                                             name="work_phone_no"
-                                            value={state.work_phone_no}
+                                            value={values.work_phone_no}
                                         />
                                     </ValidatorForm>
                                 </Grid>
@@ -149,7 +154,7 @@ const CustomerForm = () => {
                                             onChange={handleChange}
                                             type="number"
                                             name="mobile_phone_no"
-                                            value={state.mobile_phone_no}
+                                            value={values.mobile_phone_no}
                                         />
                                     </ValidatorForm>
                                 </Grid>
@@ -162,7 +167,7 @@ const CustomerForm = () => {
                                         name="country"
                                         size="small"
                                         variant="outlined"
-                                        value={state.country}
+                                        value={values.country}
                                         onChange={handleChange}
                                     />
                                 </Grid>
@@ -175,7 +180,7 @@ const CustomerForm = () => {
                                         name="state"
                                         size="small"
                                         variant="outlined"
-                                        value={state.state}
+                                        value={values.state}
                                         onChange={handleChange}
                                     />
                                 </Grid>
@@ -188,7 +193,7 @@ const CustomerForm = () => {
                                         name="city"
                                         size="small"
                                         variant="outlined"
-                                        value={state.city}
+                                        value={values.city}
                                         onChange={handleChange}
                                     />
                                 </Grid>

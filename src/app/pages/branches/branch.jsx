@@ -56,16 +56,20 @@ function Item(branchList) {
                     onClose={handleDialogClose}
                     aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Edit Branch</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            To subscribe to this website, please enter your email
-                            address here. We will send updates occasionally.
-                        </DialogContentText>
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="name"
+                            id="email"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="email"
                             label="Email Address"
                             type="email"
                             fullWidth
@@ -190,11 +194,27 @@ const CustomerList = () => {
                             onClose={handleDialogClose}
                             aria-labelledby="form-dialog-title"
                         >
-                            <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                            <DialogTitle id="form-dialog-title">New Branch</DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
                                 </DialogContentText>
                                 <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="name"
+                                    label="Email Address"
+                                    type="email"
+                                    fullWidth
+                                />
+                                 <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="name"
+                                    label="Email Address"
+                                    type="email"
+                                    fullWidth
+                                />
+                                 <TextField
                                     autoFocus
                                     margin="dense"
                                     id="name"

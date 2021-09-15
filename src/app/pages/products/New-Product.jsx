@@ -17,7 +17,7 @@ import DateFnsUtils from '@date-io/date-fns'
 import { calculateAmount } from '../../views/forms/invoice-form/InvoiceFormService'
 import { useDispatch, useSelector } from 'react-redux';
 import { insertProduct } from '../../redux/actions/ProductAction'
-import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
+import { useHistory } from 'react-router-dom'
 const InvoiceForm = () => {
 
     const calculateSubTotal = (itemList = []) => {
@@ -39,11 +39,13 @@ const InvoiceForm = () => {
     }
 
     const dispatch = useDispatch()
+    const history = useHistory()
     const handleSubmit = async (values, { isSubmitting }) => {
         console.log(values)
         const newproduct = [];
         newproduct.push(values);
         dispatch(insertProduct(newproduct))
+        history.push('/pages/product-list')
     }
 
     return (

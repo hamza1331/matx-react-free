@@ -18,8 +18,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns'
 import InvoiceItemTable from '../../views/forms/invoice-form/InvoiceItemTable'
 import { calculateAmount } from '../../views/forms/invoice-form/InvoiceFormService'
-import {addPurchaseOrder} from '../../redux/actions/PurchaseOrderAction'
+import {updatePurchaseOrder} from '../../redux/actions/PurchaseOrderAction'
+
 const PurchaseForm = () => {
+    const id = localStorage.getItem('id')
     const calculateSubTotal = (itemList = []) => {
         let subTotal = 0
         itemList.forEach((item) => {
@@ -43,7 +45,7 @@ const PurchaseForm = () => {
         console.log(values)
         const newpurchase = [];
         newpurchase.push(values);
-        dispatch(addPurchaseOrder(newpurchase))
+        dispatch(updatePurchaseOrder(newpurchase,id))
         console.log(newpurchase )
         history.push('/pages/purchaseorder-list')
     }

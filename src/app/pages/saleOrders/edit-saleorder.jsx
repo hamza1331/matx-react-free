@@ -1,5 +1,7 @@
 import React from 'react'
 import { Formik } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import {
     Grid,
     Card,
@@ -9,17 +11,18 @@ import {
     Button,
     Icon,
 } from '@material-ui/core'
-import { useHistory } from 'react-router-dom'
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers'
-import { useDispatch, useSelector } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns'
 import InvoiceItemTable from '../../views/forms/invoice-form/InvoiceItemTable'
 import { calculateAmount } from '../../views/forms/invoice-form/InvoiceFormService'
-import {addPurchaseOrder} from '../../redux/actions/PurchaseOrderAction'
-const PurchaseForm = () => {
+import {updatePurchaseOrder} from '../../redux/actions/SaleOrderAction'
+const InvoiceForm = () => {
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const id = localStorage.getItem('id')
     const calculateSubTotal = (itemList = []) => {
         let subTotal = 0
         itemList.forEach((item) => {
@@ -37,22 +40,18 @@ const PurchaseForm = () => {
 
         return total
     }
-    const dispatch = useDispatch()
-    const history=useHistory()
+
     const handleSubmit = async (values, { isSubmitting }) => {
-        console.log(values)
-        const newpurchase = [];
-        newpurchase.push(values);
-        dispatch(addPurchaseOrder(newpurchase))
-        console.log(newpurchase )
-        history.push('/pages/purchaseorder-list')
+        dispatch(updatePurchaseOrder(values,id)) 
+        localStorage.removeItem('id')
+        history.push('/pages/saleorder-list')
     }
 
     return (
         <div className="m-sm-30">
             <Card elevation={3}>
                 <div className="flex p-4">
-                    <h4 className="m-0">New Purchase Order</h4>
+                    <h4 className="m-0">New Sale Order</h4>
                 </div>
                 <Divider className="mb-2" />
 
@@ -75,7 +74,7 @@ const PurchaseForm = () => {
                         <form className="p-4" onSubmit={handleSubmit}>
                             <Grid container spacing={3} alignItems="center">
                                 <Grid item md={2} sm={4} xs={12}>
-                                    Vendor Name
+                                    Customer Name
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -97,7 +96,7 @@ const PurchaseForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    Bill#
+                                    Invoice#
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -110,6 +109,7 @@ const PurchaseForm = () => {
                                         onChange={handleChange}
                                     />
                                 </Grid>
+
                                 <Grid item md={2} sm={4} xs={12}>
                                     Order Number
                                 </Grid>
@@ -125,7 +125,7 @@ const PurchaseForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    Purchse Order Date
+                                    Sale Order Date
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <div className="flex flex-wrap m--2">
@@ -135,7 +135,7 @@ const PurchaseForm = () => {
                                             <KeyboardDatePicker
                                                 className="m-2"
                                                 margin="none"
-                                                label="Purchse order Date"
+                                                label="Sale order Date"
                                                 inputVariant="outlined"
                                                 type="text"
                                                 size="small"
@@ -172,6 +172,7 @@ const PurchaseForm = () => {
                                                 )
                                             )}
                                         </TextField>
+
                                         <MuiPickersUtilsProvider
                                             utils={DateFnsUtils}
                                         >
@@ -201,12 +202,12 @@ const PurchaseForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    Shippment Type
+                                    Salesperson
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
                                         className="min-w-188"
-                                        label="Shippment Type"
+                                        label="Salesperson"
                                         name="salesPersonName"
                                         size="small"
                                         variant="outlined"
@@ -214,7 +215,7 @@ const PurchaseForm = () => {
                                         onChange={handleChange}
                                         select
                                     >
-                                        {shippmenttypeList.map((item, ind) => (
+                                        {salespersonList.map((item, ind) => (
                                             <MenuItem value={item} key={item}>
                                                 {item}
                                             </MenuItem>
@@ -234,9 +235,10 @@ const PurchaseForm = () => {
                                     handleChange={handleChange}
                                 />
                             </div>
+
                             <div className="mb-8">
                                 <Grid container spacing={3}>
-                                    
+                                    <Grid item xs={6}></Grid>
                                     <Grid item xs={6}>
                                         <Card
                                             className="bg-default p-4"
@@ -352,6 +354,8 @@ const PurchaseForm = () => {
                                     </Grid>
                                 </Grid>
                             </div>
+
+
                             <div className="mt-6">
                                 <Button
                                     color="primary"
@@ -379,19 +383,19 @@ const paymentTermList = [
 ]
 
 const customerList = [
-    'vendor 1',
-    'vendor 2',
-    'vendor 3',
-    'vendor 4',
-    'vendor 5',
+    'customer 1',
+    'customer 2',
+    'customer 3',
+    'customer 4',
+    'customer 5',
 ]
 
-const shippmenttypeList = [
+const salespersonList = [
 
-    'Shippment Type 1',
-    'Shippment Type 2',
-    'Shippment Type 3',
-    'Shippment Type 4',
+    'salesperson 1',
+    'salesperson 2',
+    'salesperson 3',
+    'salesperson 4',
 ]
 
 const initialValues = {
@@ -399,4 +403,4 @@ const initialValues = {
     otherField: 'Adjustment',
 }
 
-export default PurchaseForm
+export default InvoiceForm

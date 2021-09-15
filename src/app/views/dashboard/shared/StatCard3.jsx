@@ -1,7 +1,18 @@
 import React from 'react'
 import { Grid, Card, IconButton, Icon } from '@material-ui/core'
-
+import { useDispatch, useSelector } from 'react-redux';
+import {getquantityOnHand} from '../../../redux/actions/ReportAction'
+let cartListLoaded = false;
 const StatCard3 = () => {
+    const dispatch = useDispatch()
+    const { reportList } = useSelector((state) => state.report)
+    console.log(reportList)
+    // const history = useHistory()
+  
+    if (!cartListLoaded) {
+        dispatch(getquantityOnHand())
+        cartListLoaded = true
+    }
     const statList = [
         {
             icon: 'people',
@@ -24,7 +35,8 @@ const StatCard3 = () => {
             title: 'Tags Used',
         },
     ]
-
+    
+  
     return (
         <div>
             <Grid container spacing={3}>

@@ -3,16 +3,14 @@ import { makeStyles } from '@material-ui/core/styles'
 import { DataGrid } from '@material-ui/data-grid';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    Grid, Card,
-    Divider, Icon, Button, IconButton, Fab
+    Grid, Icon, IconButton,
 } from '@material-ui/core'
 import { useTheme } from '@material-ui/styles'
 import { useHistory } from 'react-router-dom'
 import { Breadcrumb } from 'app/components'
 import { getProductList } from '../../redux/actions/ProductAction'
-import MUIDataTable from "mui-datatables";
-
-
+import MUIDataTable, { TableFilterList } from "mui-datatables";
+var id
 const columns = [
     {
         name: "name",
@@ -23,41 +21,43 @@ const columns = [
         }
     },
     {
-        name: "company",
-        label: "Company",
+        name: "suk",
+        label: "SUK",
         options: {
             filter: true,
             sort: false,
         }
     },
     {
-        name: "city",
-        label: "City",
+        name: "unit",
+        label: "UNIT",
         options: {
             filter: true,
             sort: false,
         }
     },
     {
-        name: "state",
-        label: "State",
+        name: "description",
+        label: "Description",
         options: {
             filter: true,
             sort: false,
         }
     },
-];
-
-const data = [
-    { name: "Joe James", company: "Test Corp", city: "Yonkers", state: "NY" },
-    { name: "John Walsh", company: "Test Corp", city: "Hartford", state: "CT" },
-    { name: "Bob Herm", company: "Test Corp", city: "Tampa", state: "FL" },
-    { name: "James Houston", company: "Test Corp", city: "Dallas", state: "TX" },
+    {
+        name: "Action",
+        label: "Action"
+    },
 ];
 
 const options = {
-    filterType: 'checkbox',
+    filter: true,
+    filterType: "dropdown",
+    responsive: true,
+    selectableRows: false,
+   
 };
+
 const useStyles = makeStyles((theme) => ({
     button: {
         margin: theme.spacing(1),
@@ -79,17 +79,16 @@ const ProductList = () => {
         cartListLoaded = true
     }
 
-    const rows = productList.map((customerList) => {
+    console.log(productList)
+    const rows = productList.map((productList) => {
         return {
             // assuming attributes
             name: <div> <div className="font-bold">{productList.name}
-            </div><div className="text-small">{productList.description}</div></div>,
-            quantity: productList.quantity,
-            price: productList.price,
-            productionDate: productList.productionDate,
-            expiryDate: productList.expiryDate,
-            suk: productList.suk,
+            </div><div className="text-small"></div></div>,
+            suk:productList.suk,
             unit: productList.unit,
+            email: productList.price,
+            description: productList.description,
             Action: <div>
                 <IconButton className={classes.button} onClick={
                     (e) =>{
@@ -108,8 +107,7 @@ const ProductList = () => {
                 </IconButton></div>
         }
     })
-
-
+ 
     return (
 
         <Fragment>
@@ -125,10 +123,10 @@ const ProductList = () => {
                     </div>
                 </div>
                 <Grid container spacing={3}>
-                    <Grid item lg={12} md={12} sm={12} xs={12}>
+                    <Grid item className="ml-30" lg={12} md={12} sm={12} xs={12}>
                         <MUIDataTable
-                            title={"Products List"}
-                            data={data}
+                            title={"Product List"}
+                            data={rows}
                             columns={columns}
                             options={options}
                         />

@@ -28,10 +28,11 @@ export const getCustomerList = () => (dispatch) => {
     })
 }
 
-export const getSingleCustomer = (uid, customerId) => (dispatch) => {
+export const getSingleCustomer = ( customerId) => (dispatch) => {
     api
-        .get('/customer/get-customer/:customerId', { uid, customerId })
+        .get(`/customer/get-customer/${customerId}`, {  customerId })
         .then((res) => {
+            console.log(res)
             dispatch({
                 type: GET_SINGLE_CUSTOMER,
                 payload: res.data,
@@ -48,7 +49,7 @@ export const deleteCustomer = (customerId) => (dispatch) => {
                 type: DELETE_CUSTOMER,
                 payload: res.data,
             })
-           
+            dispatch(getCustomerList())
         })
 }
 

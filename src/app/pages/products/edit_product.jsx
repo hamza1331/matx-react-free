@@ -15,11 +15,11 @@ import {
 import DateFnsUtils from '@date-io/date-fns'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateProduct } from '../../redux/actions/ProductAction'
-import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
-
+import { useHistory } from 'react-router-dom'
 const ProductForm = () => {
     const id = localStorage.getItem('id')
     const [state, setState] = useState({})
+    const history = useHistory()
     const dispatch = useDispatch()
     const { productList } = useSelector((state) => state.product)
     console.log(productList)
@@ -38,9 +38,12 @@ const ProductForm = () => {
         }
     }
   
+
     const handleSubmit = async (values, { isSubmitting }) => {
+        debugger
         dispatch(updateProduct(values, id))
         localStorage.removeItem('id')
+        history.push('/pages/product-list')
     }
 
     return (

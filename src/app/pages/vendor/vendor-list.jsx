@@ -11,7 +11,8 @@ import { useHistory } from 'react-router-dom'
 import { Breadcrumb } from 'app/components'
 import { getVendorList } from '../../redux/actions/VendorAction'
 import MUIDataTable, { TableFilterList } from "mui-datatables";
-var id
+var vendorid
+
 const columns = [
     {
         name: "first_name",
@@ -22,24 +23,24 @@ const columns = [
         }
     },
     {
+        name: "email",
+        label: "Email",
+        options: {
+            filter: true,
+            sort: false,
+        }
+    },
+    {
         name: "company_Name",
-        label: "Company",
+        label: "COMPANY NAME",
         options: {
             filter: true,
             sort: false,
         }
     },
     {
-        name: "city",
-        label: "City",
-        options: {
-            filter: true,
-            sort: false,
-        }
-    },
-    {
-        name: "state",
-        label: "State",
+        name: "work_phone_no",
+        label: "Work Phone Number",
         options: {
             filter: true,
             sort: false,
@@ -50,6 +51,7 @@ const columns = [
         label: "Action"
     },
 ];
+
 const options = {
     filter: true,
     filterType: "dropdown",
@@ -77,16 +79,17 @@ const VendorList = () => {
     }
 
     const rows = vendorList.map((vendorList) => {
+        
         return {
             // assuming attributes
-            first_name: <div> <div className="font-bold">{vendorList.firstName} 
-            </div><div className="text-small">{vendorList.email}</div></div>,
+            first_name: <div> <div>{vendorList.first_name} {vendorList.last_name} 
+            </div><div className="text-small"></div></div>,
             company_Name: vendorList.company_Name,
-            city: vendorList.city,
-            state: vendorList.state,
+            email: vendorList.email,
+            work_phone_no: vendorList.work_phone_no,
             Action: <div><IconButton className={classes.button} onClick={
                 (e) =>{
-                    localStorage.setItem('id',vendorList._id)
+                    localStorage.setItem('vendorid',vendorList._id)
                     console.log(vendorList._id)
                     history.push('/pages/edit-vendor')}
                 }>
@@ -95,7 +98,8 @@ const VendorList = () => {
             </IconButton>
                 <IconButton className={classes.button} onClick={(event) => {
                     console.log(columns)
-                    localStorage.setItem('id',vendorList._id)
+                    localStorage.setItem('vendorid',vendorList._id)
+                    localStorage.setItem('userdata',JSON.stringify(vendorList))
                     history.push('/pages/vendor-profile')}
                 }>
                     <Icon>arrow_forward</Icon>

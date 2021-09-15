@@ -7,14 +7,15 @@ export const CONVERT_PURCHASEORDER_TO_BILL = 'CONVERT_PURCHASEORDER_TO_BILL'
 export const DELETE_PURCHASEORDER = 'DELETE_PURCHASEORDER'
 export const UPDATE_PURCHASEORDER = 'UPDATE_PURCHASEORDER'
 
-export const addPurchaseOrder = (uid, data) => (dispatch) => {
+export const addPurchaseOrder = ( data ) => (dispatch) => {
     api
-        .patch('/purchase-order/insert-PO', { uid, data })
+        .post('/purchase-order/insert-PO', {  data })
         .then((res) => {
             dispatch({
                 type: INSERT_PURCHASEORDER,
                 payload: res.data,
             })
+            dispatch(getPurchaseOrderList())
         })
 }
 
@@ -28,9 +29,9 @@ export const getPurchaseOrderList = () => (dispatch) => {
     })
 }
 
-export const ConvertToBill = (uid, PurchaseOrderId) => (dispatch) => {
+export const ConvertToBill = (PurchaseOrderId) => (dispatch) => {
     api
-        .get('/purchase-order/convert-to-bill/:POId', { uid, PurchaseOrderId })
+        .get(`/purchase-order/convert-to-bill/${PurchaseOrderId}`, {  PurchaseOrderId })
         .then((res) => {
             dispatch({
                 type: CONVERT_PURCHASEORDER_TO_BILL,
@@ -39,9 +40,9 @@ export const ConvertToBill = (uid, PurchaseOrderId) => (dispatch) => {
         })
 }
 
-export const getSinglePurchaseOrder = (uid, PurchaseOrderId) => (dispatch) => {
+export const getSinglePurchaseOrder = (PurchaseOrderId) => (dispatch) => {
     api
-        .get('/purchase-order/:POId', { uid, PurchaseOrderId })
+        .get(`/purchase-order/${PurchaseOrderId}`, {  PurchaseOrderId })
         .then((res) => {
             dispatch({
                 type: GET_SINGLE_PURCHASEORDER,
@@ -52,22 +53,24 @@ export const getSinglePurchaseOrder = (uid, PurchaseOrderId) => (dispatch) => {
 
 export const deletePurchaseOrder = (uid, PurchaseOrderId) => (dispatch) => {
     api
-        .delete('/purchase-order/remove-PO/:POId', { uid, PurchaseOrderId })
+        .delete(`/purchase-order/remove-PO/${PurchaseOrderId}`, { uid, PurchaseOrderId })
         .then((res) => {
             dispatch({
                 type: DELETE_PURCHASEORDER,
                 payload: res.data,
             })
+            dispatch(getPurchaseOrderList())
         })
 }
 
-export const updatePurchaseOrder = (uid, PurchaseOrderId, data) => (dispatch) => {
+export const updatePurchaseOrder = (data ,PurchaseOrderId) => (dispatch) => {
     api
-        .patch('/purchase-order/update-PO/:POId', { uid, PurchaseOrderId, data })
+        .patch(`/purchase-order/update-PO/${PurchaseOrderId}`, { data ,PurchaseOrderId })
         .then((res) => {
             dispatch({
                 type: UPDATE_PURCHASEORDER,
                 payload: res.data,
             })
+            dispatch(getPurchaseOrderList())
         })
 }

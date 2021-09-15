@@ -1,78 +1,69 @@
-/* eslint-disable no-unused-expressions */
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-// import { customerValidationschema } from "../../pages/Validations/customerValidation"
+import { customerValidationschema } from "../../pages/Validations/customerValidation"
 import {
     Grid,
     Card,
     Divider,
-    Text,
     TextField,
-    MenuItem,
     Button,
 } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import { insertCustomer } from '../../redux/actions/CustomerAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
+import { history } from 'history.js';
+import { useHistory } from 'react-router-dom';
 const InvoiceForm = () => {
     
-    const initialValues = {
-        first_name: '',
-        last_name: '',
-        company_name:'',
-        email: '',
-        work_phone_no: '',
-        mobile_phone_no: '',
-        country: '',
-    }
-
-    const customerValidationschema = Yup.object().shape({
-        first_name: Yup.string().required('Required'),
-        last_name: Yup.string().required('Required'),
-        company_name: Yup.string().required('Required'),
-        email: Yup.string().email('Email is invalid').required('Required'),
-        work_phone_no: Yup.number().required('Required').positive().integer(),
-        mobile_phone_no: Yup.number().required('Required').positive().integer(),
-        country: Yup.string().required('Required'),
-        
-      });
-
     const dispatch = useDispatch()
+    const history = useHistory()
     const handleSubmit = async (values, { isSubmitting }) => {
         console.log(values)
+
+        let formData ={
+            fname: values.first_name,
+            lname: values.last_name,
+            cname: values.company_Name,
+            wphone: values.work_phone_no,
+            mphone: values.mobile_phone_no,
+            email: values.email,
+            country: values.country,
+            }
+        const isValid = await customerValidationschema.isValid(formData);
+        console.log(isValid)
         const newcustomer = [];
         newcustomer.push(values);
-        dispatch(insertCustomer(newcustomer))   
+        dispatch(insertCustomer(newcustomer))
+        debugger
+        history.push('/pages/customer-list')
     }
 
-        return (
-        < Formik
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        enableReinitialize={true}
-        Validationschema={customerValidationschema}
-        >   
-        {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            isSubmitting,
-            setSubmitting,
-            setFieldValue,
-                    }) => (
-    
+    return (
         <div className="m-sm-30">
             <Card elevation={3}>
                 <div className="flex p-4">
                     <h4 className="m-0">New Customer</h4>
                 </div>
                 <Divider className="mb-2" />
-                        
-                        <Form className="p-4" onSubmit={handleSubmit}>
+
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={handleSubmit}
+                    enableReinitialize={true}
+                >
+                    {({
+                        values,
+                        errors,
+                        touched,
+                        handleChange,
+                        handleBlur,
+                        handleSubmit,
+                        isSubmitting,
+                        setSubmitting,
+                        setFieldValue,
+                    }) => (
+                        <form className="p-4" onSubmit={handleSubmit}>
                             <Grid container spacing={3} alignItems="center">
                                 <Grid item md={2} sm={4} xs={12}>
                                     Customer Name
@@ -82,16 +73,14 @@ const InvoiceForm = () => {
                                         className="min-w-188"
                                         label="First Name"
                                         name="first_name"
+                                        type="text"
                                         size="small"
                                         variant="outlined"
                                         value={values.first_name || ''}
                                         onChange={handleChange}
-                                        error={touched.first_name && Boolean(errors.first_name)}
-                                        helperText={touched.first_name && errors.first_name}
                                         >
-                                        {errors.first_name ? <div>{errors.first_name}</div> : null}
                                      </TextField>
-                    
+                                
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
                                     <TextField
@@ -100,19 +89,16 @@ const InvoiceForm = () => {
                                         name="last_name"
                                         size="small"
                                         variant="outlined"
-                                        avalue={values.last_name || ''}
+                                        value={values.last_name || ''}
                                         onChange={handleChange}
-                                        error={touched.last_name && Boolean(errors.last_name)}
-                                        helperText={touched.last_name && errors.last_name}
-                                        >
-                                        {errors.last_name ? <div>{errors.last_name}</div> : null}
+                                    >
                                     </TextField>
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    company Name
+                                    Company Name
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -120,15 +106,13 @@ const InvoiceForm = () => {
                                         name="company_Name"
                                         size="small"
                                         variant="outlined"
-                                        value={values.company_name || ''}
+                                        value={values.company_Name}
                                         onChange={handleChange}
-                                        >
-                                        
-                                    </TextField>
+                                    />
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    email
+                                    Email
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -145,7 +129,7 @@ const InvoiceForm = () => {
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
-                                    phone
+                                    Phone
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
                                         <TextField
@@ -174,7 +158,7 @@ const InvoiceForm = () => {
 
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
-                                    country
+                                    Country
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -187,7 +171,7 @@ const InvoiceForm = () => {
                                     />
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
-                                    state
+                                    State
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -200,7 +184,7 @@ const InvoiceForm = () => {
                                     />
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
-                                    city
+                                    City
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
@@ -213,9 +197,7 @@ const InvoiceForm = () => {
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                
-                                <Divider />
-                                
+                                    <Divider />
                                 </Grid>
                             </Grid>
 
@@ -227,15 +209,14 @@ const InvoiceForm = () => {
                                 >
                                     Submit
                                 </Button>
-                             </div>
-                            </Form>
-                        </Card>
-                    </div>
-                    )}  
-           </Formik>
-     );
-    }
-
+                            </div>
+                        </form>
+                    )}
+                </Formik>
+            </Card>
+        </div>
+    )
+}
 
 const customerList = [
     'Mr.',
@@ -244,5 +225,8 @@ const customerList = [
     'Miss.',
     'Dr',
 ]
+
+const initialValues = {
+}
 
 export default InvoiceForm

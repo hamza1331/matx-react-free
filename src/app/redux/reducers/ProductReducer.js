@@ -11,6 +11,7 @@ const initialState = {
 }
 
 const ProductReducer = function (state = initialState, action) {
+    
     switch (action.type) {
         
         case INSERT_PRODUCT: {
