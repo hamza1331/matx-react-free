@@ -463,15 +463,6 @@ const SimpleForm = () => {
                                 </Grid>
                             </Card>
 
-                            <Button
-                                className=" m-4 py-2 flex"
-                                variant="contained"
-                                color="secondary"
-                                onClick={handleClickOpen}
-                                ><Icon >delete</Icon>
-                                Delete customer
-                            </Button>
-
                         </Grid>
 
                     </TabPanel>
@@ -559,17 +550,19 @@ const SimpleForm = () => {
                 </div>
 
                 <div className="mt-6">
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        type="submit"
-                    >
-                        Submit
-                    </Button>
-                </div>
-            </form>
+                
+                <Button
+                    className=" m-4 py-2 flex"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleClickOpen}
+                    ><Icon >delete</Icon>
+                    Delete customer
+                </Button> 
+            </div>
+        </form>
 
-
+       
         </div>
 
     )

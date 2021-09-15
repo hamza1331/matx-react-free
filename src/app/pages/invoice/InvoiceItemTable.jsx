@@ -169,7 +169,6 @@ const PaginationTable = () => {
                             </div>
 
 
-
                             <Divider className="mb-2" />
                             <div className="w-full overflow-auto">
                                 <Table className="whitespace-pre">
@@ -216,9 +215,9 @@ const PaginationTable = () => {
                                         <Grid container spacing={3} alignItems="right">
                                             <Grid item lg={6} md={6} sm={4} xs={12} >
                                                 <div className="mb-6">
-                                                    <p className="font-bold mb-4 text-left">sub Total</p>
-                                                    <p className="mt-0 mb-1 text-left">Vat</p>
-                                                    <p className="m-0 font-bold mb-4 text-left">Grand Total</p>
+                                                    <p className="font-bold mb-4 text-left">Sub Total</p>
+                                                    <p className="mt-0 mb-1 text-left">Tax</p>
+                                                    <p className="m-0 font-bold mb-4 text-left">Total</p>
                                                 </div>
                                             </Grid>
                                             <Grid item lg={6} md={6} sm={4} xs={12} >

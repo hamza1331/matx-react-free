@@ -1,3 +1,4 @@
+import Home from './Home'
 import NotFound from './NotFound'
 import ForgotPassword from './ForgotPassword'
 import JwtRegister from './register/JwtRegister'
@@ -28,6 +29,10 @@ const sessionRoutes = [
     {
         path: '/session/404',
         component: NotFound,
+    },
+    {
+        path: '/session/landing',
+        component: Home,
     },
 ]
 
