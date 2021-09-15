@@ -7,7 +7,7 @@ import {
    } from '../actions/VendorAction'
    
    const initialState = {
-       vendorList: [],
+    vendorList: [],
    }
    
    const VendorReducer = function (state = initialState, action) {
@@ -15,7 +15,7 @@ import {
            case INSERT_VENDOR: {
                return {
                    ...state,
-                   vendorList: [...action.payload],
+                   vendorList: [...action.payload.values],
                }
            }
            case GET_VENDOR_LIST: {
@@ -39,7 +39,7 @@ import {
            case UPDATE_VENDOR: {
                return {
                    ...state,
-                   vendorList: [...action.payload],
+                   vendorList: [...action.payload.values],
                }
            }
            default: {

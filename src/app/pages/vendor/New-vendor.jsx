@@ -1,30 +1,47 @@
 import React from 'react'
-import { Formik } from 'formik'
+import { useHistory } from 'react-router-dom'
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { customerValidationschema } from "../../pages/Validations/customerValidation"
 import {
     Grid,
     Card,
     Divider,
     TextField,
-    MenuItem,
     Button,
 } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import { insertVendor } from '../../redux/actions/VendorAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
-const InvoiceForm = () => {
+const VendorForm = () => {
+    const history = useHistory()
     const dispatch = useDispatch()
     const handleSubmit = async (values, { isSubmitting }) => {
         console.log(values)
+
+        let formData ={
+            fname: values.first_name,
+            lname: values.last_name,
+            cname: values.company_Name,
+            wphone: values.work_phone_no,
+            mphone: values.mobile_phone_no,
+            email: values.email,
+            country: values.country,
+            }
+            
+        const isValid = await customerValidationschema.isValid(formData);
+        console.log(isValid)
         const newvendor = [];
         newvendor.push(values);
         dispatch(insertVendor(newvendor))
+        history.push('/pages/vendor-list')
     }
 
     return (
         <div className="m-sm-30">
             <Card elevation={3}>
                 <div className="flex p-4">
-                    <h4 className="m-0">New Vendor</h4>
+                    <h4 className="m-0">New Vednor</h4>
                 </div>
                 <Divider className="mb-2" />
 
@@ -47,28 +64,34 @@ const InvoiceForm = () => {
                         <form className="p-4" onSubmit={handleSubmit}>
                             <Grid container spacing={3} alignItems="center">
                                 <Grid item md={2} sm={4} xs={12}>
-                                    Vendor Name
+                                     Name
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
-                                    <TextField
+                                <TextField
                                         className="min-w-188"
                                         label="First Name"
                                         name="firstName"
+                                        type="text"
                                         size="small"
                                         variant="outlined"
-                                        value={values.firstName || ''}
+                                        value={values.firstName }
                                         onChange={handleChange}
-                                    >
-                                    </TextField>
+                                        errorMessages={[
+                                            'this field is required',
+                                           
+                                        ]}
+                                        >
+                                     </TextField>
+                                
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
                                     <TextField
                                         className="min-w-188"
                                         label="Last Name"
-                                        name="lastName"
+                                        name="last_name"
                                         size="small"
                                         variant="outlined"
-                                        value={values.lastName || ''}
+                                        value={values.last_name }
                                         onChange={handleChange}
                                     >
                                     </TextField>
@@ -81,7 +104,7 @@ const InvoiceForm = () => {
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="company_Name"
+                                        label="company Name"
                                         name="company_Name"
                                         size="small"
                                         variant="outlined"
@@ -94,8 +117,7 @@ const InvoiceForm = () => {
                                     Email
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
-                                    <ValidatorForm>
-                                        <TextValidator
+                                    <TextField
                                             className="mb-6 "
                                             variant="outlined"
                                             size="small"
@@ -106,43 +128,35 @@ const InvoiceForm = () => {
                                             value={values.email}
                                         />
 
-                                    </ValidatorForm>
-
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
                                     Phone
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
-                                    <ValidatorForm>
-                                        <TextValidator
+                                        <TextField
                                             className="mb-6 "
                                             variant="outlined"
                                             size="small"
-                                            label="Work Phone"
+                                            label="work_phone_no"
                                             onChange={handleChange}
                                             type="number"
-                                            name="workPhone_no"
-                                            value={values.workPhone_no}
+                                            name="work_phone_no"
+                                            value={values.work_phone_no||''}
                                         />
-
-                                    </ValidatorForm>
 
                                 </Grid>
                                 <Grid item md={7} sm={8} xs={12}>
-                                    <ValidatorForm>
-                                        <TextValidator
+                                        <TextField
                                             className="mb-6 "
                                             variant="outlined"
                                             size="small"
-                                            label="Mobile Phone"
+                                            label="mobile_phone_no"
                                             onChange={handleChange}
                                             type="number"
-                                            name="mobile_no"
-                                            value={values.mobile_no}
+                                            name="mobile_phone_no"
+                                            value={values.mobile_phone_no}
                                         />
-
-                                    </ValidatorForm>
 
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
@@ -150,12 +164,13 @@ const InvoiceForm = () => {
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="Country"
+                                        label="country"
                                         name="country"
                                         size="small"
                                         variant="outlined"
                                         value={values.country}
                                         onChange={handleChange}
+                                    
                                     />
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
@@ -163,7 +178,7 @@ const InvoiceForm = () => {
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="State"
+                                        label="state"
                                         name="state"
                                         size="small"
                                         variant="outlined"
@@ -184,19 +199,6 @@ const InvoiceForm = () => {
                                         onChange={handleChange}
                                     />
                                 </Grid>
-                                <Grid item md={2} sm={4} xs={12}>
-                                    Street
-                                </Grid>
-                                <Grid item md={10} sm={8} xs={12}>
-                                    <TextField
-                                        label="Street"
-                                        name="street"
-                                        size="small"
-                                        variant="outlined"
-                                        value={values.street}
-                                        onChange={handleChange}
-                                    />
-                                </Grid>
                                 <Grid item xs={12}>
                                     <Divider />
                                 </Grid>
@@ -207,6 +209,19 @@ const InvoiceForm = () => {
                                     color="primary"
                                     variant="contained"
                                     type="submit"
+                                    disabled={
+                                        !values.last_name,
+                                        !values.email,
+                                        !values.first_name,
+                                        !values.company_Name,
+                                        !values.city,
+                                        !values.state,
+                                        !values.country,
+                                        !values.mobile_phone_no,
+                                        !values.work_phone_no 
+                                    }
+                                  
+                                   
                                 >
                                     Submit
                                 </Button>
@@ -219,17 +234,15 @@ const InvoiceForm = () => {
     )
 }
 
-
-const vendorList = [
-    'Vendor 1',
-    'Vendor 2',
-    'Vendor 3',
-    'Vendor 4',
-    'Vendor 5',
+const customerList = [
+    'Mr.',
+    'Mrs.',
+    'Ms',
+    'Miss.',
+    'Dr',
 ]
 
 const initialValues = {
-    
 }
 
-export default InvoiceForm
+export default VendorForm

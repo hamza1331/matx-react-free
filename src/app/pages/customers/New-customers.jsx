@@ -12,9 +12,12 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { insertCustomer } from '../../redux/actions/CustomerAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
+import { history } from 'history.js';
+import { useHistory } from 'react-router-dom';
 const InvoiceForm = () => {
     
     const dispatch = useDispatch()
+    const history = useHistory()
     const handleSubmit = async (values, { isSubmitting }) => {
         console.log(values)
 
@@ -32,7 +35,8 @@ const InvoiceForm = () => {
         const newcustomer = [];
         newcustomer.push(values);
         dispatch(insertCustomer(newcustomer))
-        
+        debugger
+        history.push('/pages/customer-list')
     }
 
     return (

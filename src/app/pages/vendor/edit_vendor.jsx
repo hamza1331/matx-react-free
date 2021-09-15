@@ -11,8 +11,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { updateVendor } from '../../redux/actions/VendorAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
+import { useHistory } from 'react-router-dom'
 const VendorForm = () => {
-    const id = localStorage.getItem('id')
+    const id = localStorage.getItem('vendorid')
+    const history = useHistory()
     const [state, setState] = useState({})
     const dispatch = useDispatch()
     const { vendorList } = useSelector((state) => state.vendor)
@@ -20,6 +22,7 @@ const VendorForm = () => {
    
     for (let i = 0; i < vendorList.length; i++) {
         if (vendorList[i]._id === id) {
+            console.log(id)
             state.first_name = vendorList[i].first_name
             state.email = vendorList[i].email
             state.work_phone_no = vendorList[i].work_phone_no
@@ -30,10 +33,17 @@ const VendorForm = () => {
             state.state = vendorList[i].city
         }
     }
+
+  const  handleChange = (e)=>{
+        this.setState = {
+            company_Name : e.target.value
+        }
+    }
   
     const handleSubmit = async (values, { isSubmitting }) => {
         dispatch(updateVendor(values, id))
         localStorage.removeItem('id')
+        history.push('/pages/vendor-list')
     }
 
     return (
@@ -72,7 +82,7 @@ const VendorForm = () => {
                                         name="firstName"
                                         size="small"
                                         variant="outlined"
-                                        value={values.firstName || ''}
+                                        value={values.firstName}
                                         onChange={handleChange}
                                     >
                                     </TextField>
@@ -84,7 +94,7 @@ const VendorForm = () => {
                                         name="lastName"
                                         size="small"
                                         variant="outlined"
-                                        value={values.lastName || ''}
+                                        value={state.lastName || ''}
                                         onChange={handleChange}
                                     >
                                     </TextField>
@@ -119,7 +129,7 @@ const VendorForm = () => {
                                             onChange={handleChange}
                                             type="email"
                                             name="email"
-                                            value={values.email}
+                                            value={state.email}
                                         />
 
                                     </ValidatorForm>
@@ -138,8 +148,8 @@ const VendorForm = () => {
                                             label="Work Phone"
                                             onChange={handleChange}
                                             type="number"
-                                            name="workPhone_no"
-                                            value={values.workPhone_no}
+                                            name="work_phone_no"
+                                            value={state.work_phone_no}
                                         />
 
                                     </ValidatorForm>
@@ -154,8 +164,8 @@ const VendorForm = () => {
                                             label="Mobile Phone"
                                             onChange={handleChange}
                                             type="number"
-                                            name="mobile_no"
-                                            value={values.mobile_no}
+                                            name="mobile_phone_no"
+                                            value={state.mobile_phone_no}
                                         />
 
                                     </ValidatorForm>
@@ -170,7 +180,7 @@ const VendorForm = () => {
                                         name="country"
                                         size="small"
                                         variant="outlined"
-                                        value={values.country}
+                                        value={state.country}
                                         onChange={handleChange}
                                     />
                                 </Grid>
@@ -183,7 +193,7 @@ const VendorForm = () => {
                                         name="state"
                                         size="small"
                                         variant="outlined"
-                                        value={values.state}
+                                        value={state.state}
                                         onChange={handleChange}
                                     />
                                 </Grid>
@@ -196,23 +206,11 @@ const VendorForm = () => {
                                         name="city"
                                         size="small"
                                         variant="outlined"
-                                        value={values.city}
+                                        value={state.city}
                                         onChange={handleChange}
                                     />
                                 </Grid>
-                                <Grid item md={2} sm={4} xs={12}>
-                                    Street
-                                </Grid>
-                                <Grid item md={10} sm={8} xs={12}>
-                                    <TextField
-                                        label="Street"
-                                        name="street"
-                                        size="small"
-                                        variant="outlined"
-                                        value={values.street}
-                                        onChange={handleChange}
-                                    />
-                                </Grid>
+                                
                                 <Grid item xs={12}>
                                     <Divider />
                                 </Grid>

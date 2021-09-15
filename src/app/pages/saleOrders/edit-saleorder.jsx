@@ -18,10 +18,11 @@ import {
 import DateFnsUtils from '@date-io/date-fns'
 import InvoiceItemTable from '../../views/forms/invoice-form/InvoiceItemTable'
 import { calculateAmount } from '../../views/forms/invoice-form/InvoiceFormService'
-import {addSaleOrder} from '../../redux/actions/SaleOrderAction'
+import {updatePurchaseOrder} from '../../redux/actions/SaleOrderAction'
 const InvoiceForm = () => {
     const dispatch = useDispatch()
     const history = useHistory()
+    const id = localStorage.getItem('id')
     const calculateSubTotal = (itemList = []) => {
         let subTotal = 0
         itemList.forEach((item) => {
@@ -41,7 +42,8 @@ const InvoiceForm = () => {
     }
 
     const handleSubmit = async (values, { isSubmitting }) => {
-        dispatch(addSaleOrder(values)) 
+        dispatch(updatePurchaseOrder(values,id)) 
+        localStorage.removeItem('id')
         history.push('/pages/saleorder-list')
     }
 

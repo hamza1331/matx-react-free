@@ -9,15 +9,17 @@ import {
     Button,
     Icon,
 } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers'
+import { useDispatch, useSelector } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns'
 import InvoiceItemTable from '../../views/forms/invoice-form/InvoiceItemTable'
 import { calculateAmount } from '../../views/forms/invoice-form/InvoiceFormService'
-
-const InvoiceForm = () => {
+import {addPurchaseOrder} from '../../redux/actions/PurchaseOrderAction'
+const PurchaseForm = () => {
     const calculateSubTotal = (itemList = []) => {
         let subTotal = 0
         itemList.forEach((item) => {
@@ -35,9 +37,15 @@ const InvoiceForm = () => {
 
         return total
     }
-
+    const dispatch = useDispatch()
+    const history=useHistory()
     const handleSubmit = async (values, { isSubmitting }) => {
         console.log(values)
+        const newpurchase = [];
+        newpurchase.push(values);
+        dispatch(addPurchaseOrder(newpurchase))
+        console.log(newpurchase )
+        history.push('/pages/purchaseorder-list')
     }
 
     return (
@@ -391,4 +399,4 @@ const initialValues = {
     otherField: 'Adjustment',
 }
 
-export default InvoiceForm
+export default PurchaseForm

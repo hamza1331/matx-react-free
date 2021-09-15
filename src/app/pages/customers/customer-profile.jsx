@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
-import { Breadcrumb,  } from 'app/components'
+import { Breadcrumb } from 'app/components'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     Button,
@@ -23,23 +23,21 @@ import {
     DialogTitle,
     TablePagination,
 } from '@material-ui/core'
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import { withStyles } from "@material-ui/core/styles";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import PropTypes from 'prop-types'
+import { makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
+import { withStyles } from '@material-ui/core/styles'
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import { deleteCustomer } from '../../redux/actions/CustomerAction'
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-} from '@material-ui/pickers'
+
 import 'date-fns'
-import DateFnsUtils from '@date-io/date-fns'
 import { useHistory } from 'react-router-dom'
+import { getSingleCustomer } from '../../redux/actions/CustomerAction'
+import CustomerList from './Customer-list'
 function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const { children, value, index, ...other } = props
 
     return (
         <div
@@ -55,7 +53,7 @@ function TabPanel(props) {
                 </Box>
             )}
         </div>
-    );
+    )
 }
 
 const subscribarList = [
@@ -124,18 +122,17 @@ const subscribarList = [
     },
 ]
 
-
 TabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.any.isRequired,
     value: PropTypes.any.isRequired,
-};
+}
 
 function a11yProps(index) {
     return {
         id: `simple-tab-${index}`,
         'aria-controls': `simple-tabpanel-${index}`,
-    };
+    }
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -143,14 +140,12 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         backgroundColor: theme.palette.secondary,
         tabBarOptions: {
-            pressColor: 'gray',//for click (ripple) effect color
+            pressColor: 'gray', //for click (ripple) effect color
             backgroundColor: 'white',
-            style: {
-
-            }
-        }
+            style: {},
+        },
     },
-}));
+}))
 
 var styles = {
     default_tab: {
@@ -161,11 +156,17 @@ var styles = {
 
 const SimpleForm = () => {
     const id = localStorage.getItem('id')
-    const [inputList, setInputList] = useState([{ firstName: "", lastName: "" }]);
+    const [inputList, setInputList] = useState([
+        { firstName: '', lastName: '' },
+    ])
     const [rowsPerPage, setRowsPerPage] = React.useState(5)
     const history = useHistory()
     const [page, setPage] = React.useState(0)
     const dispatch = useDispatch()
+
+    const customerList = JSON.parse(localStorage.getItem('userdata'))
+    console.log(customerList)
+
     const [open, setOpen] = React.useState(false)
     function handleClickOpen() {
         setOpen(true)
@@ -187,32 +188,32 @@ const SimpleForm = () => {
     }
     // handle input change
     const handleInputChange = (e, index) => {
-        const { name, value } = e.target;
-        const list = [...inputList];
-        list[index][name] = value;
-        setInputList(list);
-    };
+        const { name, value } = e.target
+        const list = [...inputList]
+        list[index][name] = value
+        setInputList(list)
+    }
 
     // handle click event of the Remove button
-    const handleRemoveClick = index => {
-        const list = [...inputList];
-        list.splice(index, 1);
-        setInputList(list);
-    };
+    const handleRemoveClick = (index) => {
+        const list = [...inputList]
+        list.splice(index, 1)
+        setInputList(list)
+    }
 
     // handle click event of the Add button
     const handleAddClick = () => {
-        setInputList([...inputList, { firstName: "", lastName: "" }]);
-    };
+        setInputList([...inputList, { firstName: '', lastName: '' }])
+    }
     const [state, setState] = useState({
         date: new Date(),
     })
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    const classes = useStyles()
+    const [value, setValue] = React.useState(0)
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+        setValue(newValue)
+    }
 
     useEffect(() => {
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
@@ -226,11 +227,7 @@ const SimpleForm = () => {
         return () => ValidatorForm.removeValidationRule('isPasswordMatch')
     }, [state.password])
 
-    const handleSubmit = (event) => {
-        // console.log("submitted");
-        // console.log(event);
-    }
-
+    const handleSubmit = (event) => {}
 
     const handleDateChange = (date) => {
         setState({ ...state, date })
@@ -251,34 +248,34 @@ const SimpleForm = () => {
     return (
         <div className="m-sm-30">
             <div className="m-sm-30">
-            <div>
-                <Dialog
-                    open={open}
-                    onClose={handleDialogClose}
-                    aria-labelledby="form-dialog-title"
-                >
-                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Sure You want to delete this customer!.
-                        </DialogContentText>
-                        
-                    </DialogContent>
-                    <DialogActions>
-                        <Button
-                            variant="outlined"
-                            color="secondary"
-                            onClick={handleDialogClose}
-                        >
-                            Cancel
-                        </Button>
-                        <Button onClick={handleDialogClose} color="primary">
-                            Delete
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
-
+                <div>
+                    <Dialog
+                        open={open}
+                        onClose={handleDialogClose}
+                        aria-labelledby="form-dialog-title"
+                    >
+                        <DialogTitle id="form-dialog-title">
+                            Subscribe
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Sure You want to delete this customer!.
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                onClick={handleDialogClose}
+                            >
+                                Cancel
+                            </Button>
+                            <Button onClick={handleDialogClose} color="primary">
+                                Delete
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
 
                 <div className="mb-sm-30">
                     <Breadcrumb
@@ -289,212 +286,339 @@ const SimpleForm = () => {
                     />
                 </div>
             </div>
-            <Card elevation={0}>
-            </Card>
+            <Card elevation={0}></Card>
             <Divider className="mb-2" />
 
             <form className="p-0" onSubmit={handleSubmit}>
-                <Grid className="mb-6" container spacing={3} alignItems="left">
-                </Grid>
+                <Grid
+                    className="mb-6"
+                    container
+                    spacing={3}
+                    alignItems="left"
+                ></Grid>
                 <div className="elevation-z0">
                     <AppBar elevation={0} position="static mt-6">
-                        <Tabs style={styles.default_tab} value={value} onChange={handleChange} aria-label="simple tabs example">
+                        <Tabs
+                            style={styles.default_tab}
+                            value={value}
+                            onChange={handleChange}
+                            aria-label="simple tabs example"
+                        >
                             <Tab label="Details" {...a11yProps(0)} />
                             <Tab label="Invoices" {...a11yProps(1)} />
                             <Tab label="transactions" {...a11yProps(2)} />
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>
-                        <Grid className="mb-6" container spacing={3} alignItems="left">
-                            <div
-                            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 " 
-                             />
-                            
-                        <Card className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 MuiGrid-grid-lg-4">
-                                  <Grid container >
-                                  <Grid item md={12} sm={12} xs={12}>
-                                  
-                                    <div class="flex-column items-center mb-6" >
-                                    <div class="MuiAvatar-root MuiAvatar-circle w-84 h-84"> 
-                                        <img
-                                            className="w-full"
-                                            src="/assets/images/Userprofile.png"
-                                            alt=""
+                        <Grid
+                            className="mb-6"
+                            container
+                            spacing={3}
+                            alignItems="left"
+                        >
+                            <div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 " />
+
+                            <Card className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 MuiGrid-grid-lg-4">
+                                <Grid container>
+                                    <Grid item md={12} sm={12} xs={12}>
+                                        <div class="flex-column items-center mb-6">
+                                            <div class="MuiAvatar-root MuiAvatar-circle w-84 h-84">
+                                                <img
+                                                    className="w-full"
+                                                    src="/assets/images/Userprofile.png"
+                                                    alt=""
                                                 />
-                                   </div>
-                                     </div>
-                                   </Grid>
+                                            </div>
+                                        </div>
+                                    </Grid>
 
-                                   <Grid item md={12} sm={12} xs={12}>
-                                       <div class="flex-column items-center mb-6">
-                                       <div className="text-20 font-bold"> Customer Full-name
-                                       </div>
-                                       </div>
-                                       
-                                     </Grid>
-                                     <Divider className="min-w-300" /> 
-                                    
-                                    <Grid container >
+                                    <Grid item md={12} sm={12} xs={12}>
+                                        <div class="flex-column items-center mb-6">
+                                            <div className="text-20 font-bold">
+                                                {' '}
+                                                <p>
+                                                    {customerList.first_name} {' '}
+                                                    {customerList.last_name}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </Grid>
+                                    <Divider className="min-w-300" />
+
+                                    <Grid container>
                                         <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-14 font-bold text-left"> CompanyName</p>
+                                            <Grid
+                                                item
+                                                md={5}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="left"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-14 font-bold text-left">
+                                                        {' '}
+                                                        CompanyName
+                                                    </p>
                                                 </div>
                                             </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">ZTE,PLC</p>
+                                            <Grid
+                                                item
+                                                md={7}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="right"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-13 text-right">
+                                                        {
+                                                            customerList.company_Name
+                                                        }
+                                                    </p>
                                                 </div>
                                             </Grid>
                                         </div>
                                     </Grid>
                                     <Divider className="min-w-300" />
 
-
-                                    <Grid container >
+                                    <Grid container>
                                         <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-14 font-bold  text-left"> Email</p>
+                                            <Grid
+                                                item
+                                                md={5}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="left"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-14 font-bold  text-left">
+                                                        {' '}
+                                                        Email
+                                                    </p>
                                                 </div>
                                             </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13  text-right">babikumelachew@gmail.com</p>
+                                            <Grid
+                                                item
+                                                md={7}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="right"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-13  text-right">
+                                                        {customerList.email}
+                                                    </p>
                                                 </div>
                                             </Grid>
                                         </div>
                                     </Grid>
                                     <Divider className="min-w-300" />
 
-                                    <Grid container >
+                                    <Grid container>
                                         <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-14 font-bold  text-left">WorkPhone</p>
+                                            <Grid
+                                                item
+                                                md={5}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="left"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-14 font-bold  text-left">
+                                                        WorkPhone
+                                                    </p>
                                                 </div>
                                             </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13  text-right">+25119890087</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-14 font-bold  text-left">MobilePhone</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                <p className="mx-4 text-13 text-right">+251912345678</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={6} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-14 font-bold text-left">Country</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={12} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13  text-right">ETHIOPIA</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-14 font-bold  text-left">State/Region</p>
-
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-
-                                                    <p className="mx-4 text-13  text-right">ETHIOPIA</p>
-
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-14 font-bold text-left">City</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13 text-right">AddisAbaba</p>
-                                                </div>
-                                            </Grid>
-                                        </div>
-                                    </Grid><Divider className="min-w-300" />
-
-                                    <Grid container >
-                                        <div className="flex justify-between">
-                                            <Grid item md={5} sm={12} xs={12} alignItems="left">
-                                                <div >
-                                                    <p className="mx-4 text-14 font-bold  text-left">Street</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item md={7} sm={12} xs={12} alignItems="right">
-                                                <div >
-                                                    <p className="mx-4 text-13  text-right">Piassa-12</p>
+                                            <Grid
+                                                item
+                                                md={7}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="right"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-13  text-right">
+                                                        {
+                                                            customerList.work_phone_no
+                                                        }
+                                                    </p>
                                                 </div>
                                             </Grid>
                                         </div>
                                     </Grid>
+                                    <Divider className="min-w-300" />
 
+                                    <Grid container>
+                                        <div className="flex justify-between">
+                                            <Grid
+                                                item
+                                                md={5}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="left"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-14 font-bold  text-left">
+                                                        MobilePhone
+                                                    </p>
+                                                </div>
+                                            </Grid>
+                                            <Grid
+                                                item
+                                                md={7}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="right"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-13 text-right">
+                                                        +
+                                                        {
+                                                            customerList.mobile_phone_no
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </Grid>
+                                        </div>
+                                    </Grid>
+                                    <Divider className="min-w-300" />
+
+                                    <Grid container>
+                                        <div className="flex justify-between">
+                                            <Grid
+                                                item
+                                                md={6}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="left"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-14 font-bold text-left">
+                                                        Country
+                                                    </p>
+                                                </div>
+                                            </Grid>
+                                            <Grid
+                                                item
+                                                md={12}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="right"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-13  text-right">
+                                                        {customerList.country}
+                                                    </p>
+                                                </div>
+                                            </Grid>
+                                        </div>
+                                    </Grid>
+                                    <Divider className="min-w-300" />
+
+                                    <Grid container>
+                                        <div className="flex justify-between">
+                                            <Grid
+                                                item
+                                                md={5}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="left"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-14 font-bold  text-left">
+                                                        State/Region
+                                                    </p>
+                                                </div>
+                                            </Grid>
+                                            <Grid
+                                                item
+                                                md={7}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="right"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-13  text-right">
+                                                        {customerList.state}
+                                                    </p>
+                                                </div>
+                                            </Grid>
+                                        </div>
+                                    </Grid>
+                                    <Divider className="min-w-300" />
+
+                                    <Grid container>
+                                        <div className="flex justify-between">
+                                            <Grid
+                                                item
+                                                md={5}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="left"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-14 font-bold text-left">
+                                                        City
+                                                    </p>
+                                                </div>
+                                            </Grid>
+                                            <Grid
+                                                item
+                                                md={10}
+                                                sm={12}
+                                                xs={12}
+                                                alignItems="right"
+                                            >
+                                                <div>
+                                                    <p className="mx-4 text-13 text-right">
+                                                        {customerList.city}
+                                                    </p>
+                                                </div>
+                                            </Grid>
+                                        </div>
+                                    </Grid>
+                                    <Divider className="min-w-300" />
                                 </Grid>
                             </Card>
-
-                            <Button
-                                className=" m-4 py-2 flex"
-                                variant="contained"
-                                color="secondary"
-                                onClick={handleClickOpen}
-                                ><Icon >delete</Icon>
-                                Delete customer
-                            </Button>
-
                         </Grid>
-
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         <Card className="py-0" elevation={2}>
-                            <Grid container className="mb-1" spacing={3} alignItems="center">
+                            <Grid
+                                container
+                                className="mb-1"
+                                spacing={3}
+                                alignItems="center"
+                            >
                                 <div className="w-full overflow-auto">
                                     <Table className="whitespace-pre">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell className="px-0">Name</TableCell>
-                                                <TableCell className="px-0">Company</TableCell>
-                                                <TableCell className="px-0">Start Date</TableCell>
-                                                <TableCell className="px-0">Status</TableCell>
-                                                <TableCell className="px-0">Amount</TableCell>
-                                                <TableCell className="px-0">Action</TableCell>
+                                                <TableCell className="px-0">
+                                                    Name
+                                                </TableCell>
+                                                <TableCell className="px-0">
+                                                    Company
+                                                </TableCell>
+                                                <TableCell className="px-0">
+                                                    Start Date
+                                                </TableCell>
+                                                <TableCell className="px-0">
+                                                    Status
+                                                </TableCell>
+                                                <TableCell className="px-0">
+                                                    Amount
+                                                </TableCell>
+                                                <TableCell className="px-0">
+                                                    Action
+                                                </TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
                                             {subscribarList
                                                 .slice(
                                                     page * rowsPerPage,
-                                                    page * rowsPerPage + rowsPerPage
+                                                    page * rowsPerPage +
+                                                        rowsPerPage
                                                 )
                                                 .map((subscriber, index) => (
                                                     <TableRow key={index}>
@@ -524,7 +648,9 @@ const SimpleForm = () => {
                                                         </TableCell>
                                                         <TableCell className="px-0">
                                                             <IconButton>
-                                                                <Icon color="error">close</Icon>
+                                                                <Icon color="error">
+                                                                    close
+                                                                </Icon>
                                                             </IconButton>
                                                         </TableCell>
                                                     </TableRow>
@@ -546,48 +672,31 @@ const SimpleForm = () => {
                                             'aria-label': 'Next Page',
                                         }}
                                         onChangePage={handleChangePage}
-                                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                                        onChangeRowsPerPage={
+                                            handleChangeRowsPerPage
+                                        }
                                     />
                                 </div>
                             </Grid>
-
                         </Card>
                     </TabPanel>
-                    <TabPanel value={value} index={2}>
-                    </TabPanel>
-
+                    <TabPanel value={value} index={2}></TabPanel>
                 </div>
 
                 <div className="mt-6">
                     <Button
-                        color="primary"
+                        className=" m-4 py-2 flex"
                         variant="contained"
-                        type="submit"
+                        color="secondary"
+                        onClick={handleClickOpen}
                     >
-                        Submit
+                        <Icon>delete</Icon>
+                        Delete customer
                     </Button>
                 </div>
             </form>
-
-
         </div>
-
     )
 }
 
 export default SimpleForm
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

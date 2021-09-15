@@ -19,18 +19,21 @@ export const insertProduct = ( data) => (dispatch) => {
             dispatch(getProductList())
         })
 }
+
 export const getProductList = () => (dispatch) => {
     api.get('/item/get-items').then((res) => {
+        console.log(res.data)
         dispatch({
             type: GET_PRODUCT_LIST,
             payload: res.data,
         })
+        
     })
 }
 
-export const getSingleProduct = (uid, productId) => (dispatch) => {
+export const getSingleProduct = (productId) => (dispatch) => {
     api
-        .get('/item/get-item/:itemId', { uid, productId })
+        .get(`/item/get-item/${ productId }`, { productId })
         .then((res) => {
             dispatch({
                 type: GET_SINGLE_PRODUCT,
@@ -48,10 +51,11 @@ export const deleteProduct = (productId ) => (dispatch) => {
                 type: DELETE_PRODUCT,
                 payload: res.data,
             })
-           
+            dispatch(getProductList())
         })
 }
 
+debugger
 export const updateProduct = ( data,productId  ) => (dispatch) => {
     api
         .patch(`/item/patch-item/${productId}`, { data, productId })
@@ -64,7 +68,7 @@ export const updateProduct = ( data,productId  ) => (dispatch) => {
             })
             dispatch(getProductList())
         })
-       
+     debugger  
 }
 
 

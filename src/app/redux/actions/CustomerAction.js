@@ -5,7 +5,7 @@ export const GET_CUSTOMER_LIST = 'GET_PRODUCT_LIST'
 export const GET_SINGLE_CUSTOMER = 'GET_SINGLE_CUSTOMER'
 export const DELETE_CUSTOMER = 'DELETE_CUSTOMER'
 export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER'
-
+debugger
 export const insertCustomer = ( data) => (dispatch) => {
     api
         .post('/customer/insert-customer', {data })
@@ -28,10 +28,11 @@ export const getCustomerList = () => (dispatch) => {
     })
 }
 
-export const getSingleCustomer = (uid, customerId) => (dispatch) => {
+export const getSingleCustomer = ( customerId) => (dispatch) => {
     api
-        .get('/customer/get-customer/:customerId', { uid, customerId })
+        .get(`/customer/get-customer/${customerId}`, {  customerId })
         .then((res) => {
+            console.log(res)
             dispatch({
                 type: GET_SINGLE_CUSTOMER,
                 payload: res.data,
@@ -48,7 +49,7 @@ export const deleteCustomer = (customerId) => (dispatch) => {
                 type: DELETE_CUSTOMER,
                 payload: res.data,
             })
-           
+            dispatch(getCustomerList())
         })
 }
 

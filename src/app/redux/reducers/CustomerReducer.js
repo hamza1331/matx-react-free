@@ -1,3 +1,4 @@
+import { values } from 'lodash'
 import {
     INSERT_CUSTOMER,
  GET_CUSTOMER_LIST,
@@ -27,9 +28,11 @@ const CustomerReducer = function (state = initialState, action) {
             }
         }
         case GET_SINGLE_CUSTOMER: {
+            console.log(action.payload.values)
             return {
                 ...state,
-                customerList: [...action.payload],
+                customerList: [...action.payload.values],
+                
             }
         }
         case DELETE_CUSTOMER: {

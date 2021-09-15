@@ -18,7 +18,7 @@ import { Breadcrumb } from 'app/components'
 import { getWarehouseList } from '../../redux/actions/WarehouseAction'
 import { ThemeProvider } from '@material-ui/core/styles'
 import MUIDataTable, { TableFilterList } from "mui-datatables";
-
+import { Formik } from 'formik'
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -37,12 +37,15 @@ function Item(warehouseList) {
     }
 
     function handleDialogClose() {
+
         setOpen(false)
     }
     function handleClick(event) {
         setAnchorEl(event.currentTarget)
     }
-
+    function handleSubmit(event) {
+        
+    }
     function handleClose() {
         setAnchorEl(null)
     }
@@ -60,17 +63,31 @@ function Item(warehouseList) {
                     <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            To subscribe to this website, please enter your email
-                            address here. We will send updates occasionally.
+                            
                         </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Email Address"
-                            type="email"
-                            fullWidth
-                        />
+                        <Formik
+                     
+                    onSubmit={handleSubmit}
+                    enableReinitialize={true}
+                >
+                    {({
+                        values,
+                       
+                    }) => (
+                       <form action="">
+                       <TextField
+                                            className="mb-6 "
+                                            variant="outlined"
+                                            size="small"
+                                            label="Email"
+                                            type="email"
+                                            name="email"
+                                            value={values.email}
+                                        />
+                       </form>
+                    )}
+                        </Formik>
+                    
                     </DialogContent>
                     <DialogActions>
                         <Button
@@ -80,7 +97,7 @@ function Item(warehouseList) {
                         >
                             Cancel
                         </Button>
-                        <Button onClick={handleDialogClose} color="primary">
+                        <Button onClick={handleDialogClose} color="primary" >
                             Subscribe
                         </Button>
                     </DialogActions>

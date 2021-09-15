@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom'
 import { Breadcrumb } from 'app/components'
 import { getCustomerList } from '../../redux/actions/CustomerAction'
 import MUIDataTable, { TableFilterList } from "mui-datatables";
+import {getSingleCustomer} from '../../redux/actions/CustomerAction'
 var id
 const columns = [
     {
@@ -21,24 +22,24 @@ const columns = [
         }
     },
     {
+        name: "email",
+        label: "Email",
+        options: {
+            filter: true,
+            sort: false,
+        }
+    },
+    {
         name: "company_Name",
-        label: "Company",
+        label: "COMPANY NAME",
         options: {
             filter: true,
             sort: false,
         }
     },
     {
-        name: "city",
-        label: "City",
-        options: {
-            filter: true,
-            sort: false,
-        }
-    },
-    {
-        name: "state",
-        label: "State",
+        name: "work_phone_no",
+        label: "Work Phone Number",
         options: {
             filter: true,
             sort: false,
@@ -86,8 +87,8 @@ const CustomerList = () => {
             first_name: <div> <div className="font-bold">{customerList.first_name}
             </div><div className="text-small">{customerList.email}</div></div>,
             company_Name: customerList.company_Name,
-            city: customerList.city,
-            state: customerList.state,
+            email: customerList.email,
+            work_phone_no: customerList.work_phone_no,
             Action: <div>
                 <IconButton className={classes.button} onClick={
                     (e) =>{
@@ -101,6 +102,11 @@ const CustomerList = () => {
                 <IconButton className={classes.button} onClick={(event) =>{ 
                     console.log(columns)
                     localStorage.setItem('id',customerList._id)
+                    const userId =   localStorage.getItem('id')
+                    dispatch(getSingleCustomer(userId))
+                    console.log();
+                    localStorage.setItem('userdata',JSON.stringify(customerList))
+                    console.log(customerList)
                     history.push('/pages/customer-profile')}}>
                     <Icon>arrow_forward</Icon>
                 </IconButton></div>
