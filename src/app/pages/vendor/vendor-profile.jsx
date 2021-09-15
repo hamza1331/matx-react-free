@@ -34,7 +34,7 @@ import { deleteCustomer } from '../../redux/actions/CustomerAction'
 
 import 'date-fns'
 import { useHistory } from 'react-router-dom'
-import { getSingleCustomer } from '../../redux/actions/CustomerAction'
+import { deleteVendor } from '../../redux/actions/VendorAction'
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props
@@ -155,7 +155,8 @@ var styles = {
 }
 
 const SimpleForm = () => {
-    const id = localStorage.getItem('id')
+    
+  
     const [inputList, setInputList] = useState([
         { firstName: '', lastName: '' },
     ])
@@ -173,13 +174,14 @@ const SimpleForm = () => {
     }
 
     function handleDialogClose() {
-        dispatch(deleteCustomer(id))
-        localStorage.removeItem('id')
+        const id = localStorage.getItem('vendorid')
+        dispatch(deleteVendor(id))
+        localStorage.removeItem('vendorid')
         history.push('/pages/vendor-list')
         setOpen(false)
     }
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage)
+    const handleCancell = (event, newPage) => {
+        setOpen(false)
     }
 
     const handleChangeRowsPerPage = (event) => {
@@ -255,18 +257,18 @@ const SimpleForm = () => {
                         aria-labelledby="form-dialog-title"
                     >
                         <DialogTitle id="form-dialog-title">
-                            Subscribe
+                            
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                Sure You want to delete this customer!.
+                                Sure You want to delete this Suplier!.
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
                             <Button
                                 variant="outlined"
                                 color="secondary"
-                                onClick={handleDialogClose}
+                                onClick={handleCancell}
                             >
                                 Cancel
                             </Button>
@@ -671,7 +673,7 @@ const SimpleForm = () => {
                                         nextIconButtonProps={{
                                             'aria-label': 'Next Page',
                                         }}
-                                        onChangePage={handleChangePage}
+                                     
                                         onChangeRowsPerPage={
                                             handleChangeRowsPerPage
                                         }
@@ -691,7 +693,7 @@ const SimpleForm = () => {
                         onClick={handleClickOpen}
                     >
                         <Icon>delete</Icon>
-                        Delete customer
+                        Delete Suplier
                     </Button>
                 </div>
             </form>

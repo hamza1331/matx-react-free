@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage ,useFormik} from "formik";
 import * as Yup from "yup";
 import { customerValidationschema } from "../../pages/Validations/customerValidation"
 import {
@@ -10,10 +10,13 @@ import {
     TextField,
     Button,
 } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import { useDispatch, useSelector } from 'react-redux';
 import { insertVendor } from '../../redux/actions/VendorAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
+import { values } from 'lodash';
 const VendorForm = () => {
+    
     const history = useHistory()
     const dispatch = useDispatch()
     const handleSubmit = async (values, { isSubmitting }) => {
@@ -33,10 +36,15 @@ const VendorForm = () => {
         console.log(isValid)
         const newvendor = [];
         newvendor.push(values);
+        console.log(values)
         dispatch(insertVendor(newvendor))
+
         history.push('/pages/vendor-list')
     }
+  
 
+     
+     
     return (
         <div className="m-sm-30">
             <Card elevation={3}>
@@ -49,6 +57,55 @@ const VendorForm = () => {
                     initialValues={initialValues}
                     onSubmit={handleSubmit}
                     enableReinitialize={true}
+                    validate={values => {
+                        const errors = {};
+                        if (!values.email) {
+                          errors.email = 'Required';
+                        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email) ) {
+                          errors.email = 'Invalid email address';
+                        }
+                        if (!values.firstName) {
+                            errors.firstName = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.firstName) ) {
+                            errors.firstName = 'Invalid  Input';
+                          }
+                          if (!values.lastName) {
+                            errors.lastName = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.lastName) ) {
+                            errors.lastName = 'Invalid  Input';
+                          }
+                          if (!values.company_Name) {
+                            errors.company_Name = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.company_Name) ) {
+                            errors.company_Name = 'Invalid  Input';
+                          }
+                          if (!values.country) {
+                            errors.country = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.country) ) {
+                            errors.country = 'Invalid  Input';
+                          }
+                          if (!values.state) {
+                            errors.state = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.state) ) {
+                            errors.state = 'Invalid  Input';
+                          }
+                          if (!values.city) {
+                            errors.city = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.city) ) {
+                            errors.city = 'Invalid  Input';
+                          }
+                          if (!values.mobile_phone_no) {
+                            errors.mobile_phone_no = 'Required';
+                          } else if (!/^[0-9]*$/.test(values.mobile_phone_no) ) {
+                            errors.mobile_phone_no = 'Invalid  Input';
+                          }
+                          if (!values.work_phone_no) {
+                            errors.work_phone_no = 'Required';
+                          } else if (!/^[0-9]*$/.test(values.work_phone_no) ) {
+                            errors.work_phone_no = 'Invalid  Input';
+                          }
+                        return errors;
+                      }}    
                 >
                     {({
                         values,
@@ -57,6 +114,7 @@ const VendorForm = () => {
                         handleChange,
                         handleBlur,
                         handleSubmit,
+                        validate,
                         isSubmitting,
                         setSubmitting,
                         setFieldValue,
@@ -76,13 +134,10 @@ const VendorForm = () => {
                                         variant="outlined"
                                         value={values.firstName }
                                         onChange={handleChange}
-                                        errorMessages={[
-                                            'this field is required',
-                                           
-                                        ]}
                                         >
+ 
                                      </TextField>
-                                
+                                     <div className="text-error" >  {errors.firstName && touched.firstName && errors.firstName}</div>
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
                                     <TextField
@@ -95,6 +150,7 @@ const VendorForm = () => {
                                         onChange={handleChange}
                                     >
                                     </TextField>
+                                    <div className="text-error" >  {errors.lastName && touched.lastName && errors.lastName}</div>
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
                                 </Grid>
@@ -111,25 +167,28 @@ const VendorForm = () => {
                                         value={values.company_Name}
                                         onChange={handleChange}
                                     />
+                                      <div className="text-error" >  {errors.company_Name && touched.company_Name && errors.company_Name}</div>
                                 </Grid>
 
-                                <Grid item md={2} sm={4} xs={12}>
-                                    Email
-                                </Grid>
+                                    <Grid item md={2} sm={4} xs={12}>
+                                        Email
+                                    </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
+                                    
                                     <TextField
                                             className="mb-6 "
                                             variant="outlined"
                                             size="small"
                                             label="Email"
                                             onChange={handleChange}
-                                            type="email"
+                                          
                                             name="email"
                                             value={values.email}
                                         />
-
-                                </Grid>
-
+                              
+                         <div className="text-error" >  {errors.email && touched.email && errors.email}</div>
+                              
+</Grid>
                                 <Grid item md={2} sm={4} xs={12}>
                                     Phone
                                 </Grid>
@@ -140,11 +199,11 @@ const VendorForm = () => {
                                             size="small"
                                             label="work_phone_no"
                                             onChange={handleChange}
-                                            type="number"
+                                            type="text"
                                             name="work_phone_no"
-                                            value={values.work_phone_no||''}
+                                            value={values.work_phone_no}
                                         />
-
+ <div className="text-error" >  {errors.work_phone_no && touched.work_phone_no && errors.work_phone_no}</div>
                                 </Grid>
                                 <Grid item md={7} sm={8} xs={12}>
                                         <TextField
@@ -153,11 +212,11 @@ const VendorForm = () => {
                                             size="small"
                                             label="mobile_phone_no"
                                             onChange={handleChange}
-                                            type="number"
+                                            type="text"
                                             name="mobile_phone_no"
                                             value={values.mobile_phone_no}
                                         />
-
+ <div className="text-error" >  {errors.mobile_phone_no && touched.mobile_phone_no && errors.mobile_phone_no}</div>
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
                                     Country
@@ -172,6 +231,7 @@ const VendorForm = () => {
                                         onChange={handleChange}
                                     
                                     />
+                                      <div className="text-error" >  {errors.country && touched.country && errors.country}</div>
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
                                     State
@@ -185,6 +245,7 @@ const VendorForm = () => {
                                         value={values.state}
                                         onChange={handleChange}
                                     />
+                                      <div className="text-error" >  {errors.state && touched.state && errors.state}</div>
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
                                     City
@@ -198,6 +259,7 @@ const VendorForm = () => {
                                         value={values.city}
                                         onChange={handleChange}
                                     />
+                                     <div className="text-error" >  {errors.city && touched.city && errors.city}</div>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Divider />
@@ -209,18 +271,6 @@ const VendorForm = () => {
                                     color="primary"
                                     variant="contained"
                                     type="submit"
-                                    disabled={
-                                        !values.last_name,
-                                        !values.email,
-                                        !values.first_name,
-                                        !values.company_Name,
-                                        !values.city,
-                                        !values.state,
-                                        !values.country,
-                                        !values.mobile_phone_no,
-                                        !values.work_phone_no 
-                                    }
-                                  
                                    
                                 >
                                     Submit
@@ -243,6 +293,7 @@ const customerList = [
 ]
 
 const initialValues = {
+
 }
 
 export default VendorForm

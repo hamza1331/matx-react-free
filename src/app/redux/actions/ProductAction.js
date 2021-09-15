@@ -55,7 +55,7 @@ export const deleteProduct = (productId ) => (dispatch) => {
         })
 }
 
-debugger
+
 export const updateProduct = ( data,productId  ) => (dispatch) => {
     api
         .patch(`/item/patch-item/${productId}`, { data, productId })
@@ -68,7 +68,7 @@ export const updateProduct = ( data,productId  ) => (dispatch) => {
             })
             dispatch(getProductList())
         })
-     debugger  
+       
 }
 
 

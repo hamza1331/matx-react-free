@@ -8,12 +8,13 @@ export const CONVERT_SALEORDER_TO_INVOICE = 'CONVERT_SALEORDER_TO_BILL'
 export const DELETE_SALEORDER = 'DELETE_SALEORDER'
 export const UPDATE_SALEORDER = 'UPDATE_SALEORDER'
 
-debugger
+
 export const addSaleOrder = ( data) => (dispatch) => {
     console.log(data)
-    
+    console.log("api works")
     api.post('/sale-order/insert-SO', {  data })
         .then((res) => {
+            console.log(res)
             dispatch({
                 type: INSERT_SALEORDER,
                 payload: res.data,

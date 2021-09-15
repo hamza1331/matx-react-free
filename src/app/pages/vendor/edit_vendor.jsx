@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateVendor } from '../../redux/actions/VendorAction'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import { useHistory } from 'react-router-dom'
+import { values } from 'lodash';
 const VendorForm = () => {
     const id = localStorage.getItem('vendorid')
     const history = useHistory()
@@ -23,14 +24,15 @@ const VendorForm = () => {
     for (let i = 0; i < vendorList.length; i++) {
         if (vendorList[i]._id === id) {
             console.log(id)
-            state.first_name = vendorList[i].first_name
-            state.email = vendorList[i].email
-            state.work_phone_no = vendorList[i].work_phone_no
-            state.mobile_phone_no = vendorList[i].mobile_phone_no
-            state.country = vendorList[i].country
-            state.city = vendorList[i].city
-            state.company_Name = vendorList[i].company_Name
-            state.state = vendorList[i].city
+            var first_name = vendorList[i].first_name
+            var last_name = vendorList[i].last_name
+            var  email = vendorList[i].email
+            var work_phone_no = vendorList[i].work_phone_no
+            var mobile_phone_no = vendorList[i].mobile_phone_no
+            var country = vendorList[i].country
+            var city = vendorList[i].city
+            var company_Name = vendorList[i].company_Name
+            var states = vendorList[i].city
         }
     }
 
@@ -45,8 +47,21 @@ const VendorForm = () => {
         localStorage.removeItem('id')
         history.push('/pages/vendor-list')
     }
+    const initialValues = {
+        email:email,
+        company_Name:company_Name,
+        first_name:first_name,
+        last_name:last_name,
+        mobile_phone_no:mobile_phone_no,
+        country:country,
+        work_phone_no:work_phone_no,
+        city:city,
+        states:states,
 
+     }
+     
     return (
+
         <div className="m-sm-30">
             <Card elevation={3}>
                 <div className="flex p-4">
@@ -79,10 +94,10 @@ const VendorForm = () => {
                                     <TextField
                                         className="min-w-188"
                                         label="First Name"
-                                        name="firstName"
+                                        name="first_name"
                                         size="small"
                                         variant="outlined"
-                                        value={values.firstName}
+                                        value={values.first_name}
                                         onChange={handleChange}
                                     >
                                     </TextField>
@@ -91,10 +106,10 @@ const VendorForm = () => {
                                     <TextField
                                         className="min-w-188"
                                         label="Last Name"
-                                        name="lastName"
+                                        name="last_name"
                                         size="small"
                                         variant="outlined"
-                                        value={state.lastName || ''}
+                                        value={values.last_name || ''}
                                         onChange={handleChange}
                                     >
                                     </TextField>
@@ -129,7 +144,7 @@ const VendorForm = () => {
                                             onChange={handleChange}
                                             type="email"
                                             name="email"
-                                            value={state.email}
+                                            value={values.email}
                                         />
 
                                     </ValidatorForm>
@@ -149,7 +164,7 @@ const VendorForm = () => {
                                             onChange={handleChange}
                                             type="number"
                                             name="work_phone_no"
-                                            value={state.work_phone_no}
+                                            value={values.work_phone_no}
                                         />
 
                                     </ValidatorForm>
@@ -165,7 +180,7 @@ const VendorForm = () => {
                                             onChange={handleChange}
                                             type="number"
                                             name="mobile_phone_no"
-                                            value={state.mobile_phone_no}
+                                            value={values.mobile_phone_no}
                                         />
 
                                     </ValidatorForm>
@@ -180,7 +195,7 @@ const VendorForm = () => {
                                         name="country"
                                         size="small"
                                         variant="outlined"
-                                        value={state.country}
+                                        value={values.country}
                                         onChange={handleChange}
                                     />
                                 </Grid>
@@ -193,7 +208,7 @@ const VendorForm = () => {
                                         name="state"
                                         size="small"
                                         variant="outlined"
-                                        value={state.state}
+                                        value={values.states}
                                         onChange={handleChange}
                                     />
                                 </Grid>
@@ -206,7 +221,7 @@ const VendorForm = () => {
                                         name="city"
                                         size="small"
                                         variant="outlined"
-                                        value={state.city}
+                                        value={values.city}
                                         onChange={handleChange}
                                     />
                                 </Grid>
@@ -231,6 +246,7 @@ const VendorForm = () => {
             </Card>
         </div>
     )
+  
 }
 
 
@@ -242,9 +258,5 @@ const vendorList = [
     'Vendor 5',
 ]
 
-const initialValues = {
-    customerType: '',
-    otherField: 'Adjustment',
-}
 
 export default VendorForm

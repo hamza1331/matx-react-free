@@ -12,9 +12,10 @@ import { Breadcrumb } from 'app/components'
 import { getVendorList } from '../../redux/actions/VendorAction'
 import MUIDataTable, { TableFilterList } from "mui-datatables";
 var vendorid
+
 const columns = [
     {
-        name: "firstName",
+        name: "first_name",
         label: "Name",
         options: {
             filter: true,
@@ -78,11 +79,11 @@ const VendorList = () => {
     }
 
     const rows = vendorList.map((vendorList) => {
-        debugger
+        
         return {
             // assuming attributes
-            firstName: <div> <div className="font-bold">{vendorList.firstName} 
-            </div><div className="text-small">{vendorList.email}</div></div>,
+            first_name: <div> <div>{vendorList.first_name} {vendorList.last_name} 
+            </div><div className="text-small"></div></div>,
             company_Name: vendorList.company_Name,
             email: vendorList.email,
             work_phone_no: vendorList.work_phone_no,

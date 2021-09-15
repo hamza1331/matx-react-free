@@ -5,7 +5,7 @@ export const GET_CUSTOMER_LIST = 'GET_PRODUCT_LIST'
 export const GET_SINGLE_CUSTOMER = 'GET_SINGLE_CUSTOMER'
 export const DELETE_CUSTOMER = 'DELETE_CUSTOMER'
 export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER'
-debugger
+
 export const insertCustomer = ( data) => (dispatch) => {
     api
         .post('/customer/insert-customer', {data })
