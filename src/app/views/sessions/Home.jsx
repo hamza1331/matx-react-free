@@ -57,11 +57,11 @@ const JwtRegister = () => {
                         </div>
                     </Grid>
 
-                    <Grid item lg={2} md={5} sm={5} xs={12}>
+                    <Grid item lg={3} md={5} sm={5} xs={12}>
                    
                     </Grid>
 
-                    <Grid item lg={2} md={5} sm={5} xs={12}>
+                    <Grid item lg={3} md={5} sm={5} xs={12}>
                     <div className="flex items-center">
                     <Link to="/session/signup">
                         <Button
