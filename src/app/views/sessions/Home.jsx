@@ -48,14 +48,13 @@ const JwtRegister = () => {
             }
             
                 <Grid container>
-
                 <Grid item lg={3} md={5} sm={5} xs={12}>
                 
                     </Grid>
                     <Grid item lg={5} md={5} sm={5} xs={12}>
                     <div className="text-32 font-bold">  Orbit Inventory Control System.
-                                       <div className="text-14"> Timely, Efficent and Reliable</div>
-                                       </div>
+                        <div className="text-14"> Timely, Efficent and Reliable</div>
+                        </div>
                     </Grid>
 
                     <Grid item lg={2} md={5} sm={5} xs={12}>
@@ -64,28 +63,26 @@ const JwtRegister = () => {
 
                     <Grid item lg={2} md={5} sm={5} xs={12}>
                     <div className="flex items-center">
-                             <Link to="/session/signup">
-                                    <Button
-                                        className="capitalize"
+                    <Link to="/session/signup">
+                        <Button
+                            className="capitalize"
+                            variant="contained"
+                            color="primary"
+                        >
+                            Sign up
+                        </Button>
+                        </Link>
+                        <span className="mx-2 ml-5"> </span>
+                        <Link to="/session/signin">
+                            <Button className="capitalize"
                                         variant="contained"
                                         color="primary"
-                                    
-                                    >
-                                        Sign up
-                                    </Button>
-                                    </Link>
-                                    <span className="mx-2 ml-5"> </span>
-                                    <Link to="/session/signin">
-                                        <Button className="capitalize"
-                                                 variant="contained"
-                                                 color="primary"
-                                        
-                                         >
-
-                                            Sign in
-                                        </Button>
-                                    </Link>
-                                </div>
+                            
+                                >
+                                Sign in
+                            </Button>
+                        </Link>
+                    </div>
                     </Grid>
 
                     
@@ -103,10 +100,10 @@ const JwtRegister = () => {
                         <div className="p-2 h-full">
                             
                         <div className="text-28 font-bold">  Make your Inventory Better.
-                                       <br/> <div className="text-16"> Save your time, Manage your product efficently!</div>
-                                       <div className="text-32 font-bold">  Make your Inventory Better, Fast and Great.</div>
-                                       </div> <br/> <br/> 
-                                       <div className="p- flex justify-right items-right h-small">
+                                <br/> <div className="text-16"> Save your time, Manage your product efficently!</div>
+                                <div className="text-32 font-bold">  Make your Inventory Better, Fast and Great.</div>
+                                </div> <br/> <br/> 
+                                <div className="p- flex justify-right items-right h-small">
                             <img
                                 className="w-small"
                                 src="/assets/images/iinve.jpg"
@@ -134,13 +131,10 @@ const JwtRegister = () => {
                                     </Button>
                                 </Link>
                                 </div>
-                                       </div>
-                                
+                             </div>    
                             
                         </div>
                     </Grid>
-
-
                 </Grid>
             
         </div>
