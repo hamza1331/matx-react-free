@@ -60,7 +60,39 @@ const InvoiceForm = () => {
                     initialValues={initialValues}
                     onSubmit={handleSubmit}
                     enableReinitialize={true}
-                >
+                    validate={values => {
+                        const errors = {};
+                    
+                          if (!values.name) {
+                            errors.name = 'Required';
+                          } 
+
+                          if (!values.suk) {
+                            errors.suk = 'Required';
+                          } else if (!/^[0-9]*$/.test(values.suk) ) {
+                            errors.suk= 'Invalid  Input';
+                          }
+                          if (!values.unit) {
+                            errors.unit = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.unit) ) {
+                            errors.unit = 'Invalid  Input';
+                          }
+
+                          if (!values.quantity) {
+                            errors.quantity = 'Required';
+                          } else if (!/^[0-9]*$/.test(values.quantity) ) {
+                            errors.quantity = 'Invalid  Input';
+                          }
+
+                          if (!values.price) {
+                            errors.price = 'Required';
+                          } else if (!/^[0-9]*$/.test(values.price) ) {
+                            errors.qprice = 'Invalid  Input';
+                          }
+                    
+                        return errors;
+                      }} 
+                 >
                     {({
                         values,
                         errors,
@@ -89,6 +121,7 @@ const InvoiceForm = () => {
                                         value={values.name || ''}
                                         onChange={handleChange}
                                     />
+                                <div className="text-error" >  {errors.name && touched.name && errors.name}</div>
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
@@ -119,6 +152,7 @@ const InvoiceForm = () => {
                                         value={values.suk || ''}
                                         onChange={handleChange}
                                     />
+                                    <div className="text-error" >  {errors.suk && touched.suk && errors.suk}</div>
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
@@ -132,10 +166,11 @@ const InvoiceForm = () => {
                                         variant="outlined"
                                         defaultValue=" "
                                         value={values.unit || ''}
-                                        type="number"
+                                        type="text"
                                         unique={true}
                                         onChange={handleChange}
                                     />
+                                    <div className="text-error" >  {errors.unit && touched.unit && errors.unit}</div>
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
@@ -152,6 +187,7 @@ const InvoiceForm = () => {
                                         value={values.quantity || ''}
                                         onChange={handleChange}
                                     />
+                                    <div className="text-error" >  {errors.quantity && touched.quantity && errors.quantity}</div>
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
@@ -186,6 +222,7 @@ const InvoiceForm = () => {
                                         unique={true}
                                         onChange={handleChange}
                                     />
+                                    <div className="text-error" >  {errors.price && touched.price && errors.price}</div>
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
@@ -205,8 +242,8 @@ const InvoiceForm = () => {
                                                 type="text"
                                                 size="small"
                                                 autoOk={true}
-                                                value={values.productionDate || ''}
-                                                format="MMMM dd, yyyy"
+                                                value={values.productionDate}
+                                                format="MMMM, dd, yyyy"
                                                 onChange={(date) =>
                                                     setFieldValue(
                                                         'productionDate',
@@ -230,7 +267,7 @@ const InvoiceForm = () => {
                                                 size="small"
                                                 autoOk={true}
                                                 value={values.expiryDate}
-                                                format="MMMM dd, yyyy"
+                                                format="MMMM, dd, yyyy"
                                                 onChange={(date) =>
                                                     setFieldValue(
                                                         'ExpirationDate',

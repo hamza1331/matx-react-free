@@ -2,7 +2,6 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Formik, Form, Field, ErrorMessage ,useFormik} from "formik";
 import * as Yup from "yup";
-import { customerValidationschema } from "../../pages/Validations/customerValidation"
 import {
     Grid,
     Card,
@@ -21,19 +20,7 @@ const VendorForm = () => {
     const dispatch = useDispatch()
     const handleSubmit = async (values, { isSubmitting }) => {
         console.log(values)
-
-        let formData ={
-            fname: values.first_name,
-            lname: values.last_name,
-            cname: values.company_Name,
-            wphone: values.work_phone_no,
-            mphone: values.mobile_phone_no,
-            email: values.email,
-            country: values.country,
-            }
-            
-        const isValid = await customerValidationschema.isValid(formData);
-        console.log(isValid)
+        
         const newvendor = [];
         newvendor.push(values);
         console.log(values)
@@ -42,8 +29,6 @@ const VendorForm = () => {
         history.push('/pages/vendor-list')
     }
   
-
-     
      
     return (
         <div className="m-sm-30">
@@ -186,9 +171,9 @@ const VendorForm = () => {
                                             value={values.email}
                                         />
                               
-                         <div className="text-error" >  {errors.email && touched.email && errors.email}</div>
+                                  <div className="text-error" >  {errors.email && touched.email && errors.email}</div>
                               
-</Grid>
+                                </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
                                     Phone
                                 </Grid>
@@ -203,7 +188,7 @@ const VendorForm = () => {
                                             name="work_phone_no"
                                             value={values.work_phone_no}
                                         />
- <div className="text-error" >  {errors.work_phone_no && touched.work_phone_no && errors.work_phone_no}</div>
+                                 <div className="text-error" >  {errors.work_phone_no && touched.work_phone_no && errors.work_phone_no}</div>
                                 </Grid>
                                 <Grid item md={7} sm={8} xs={12}>
                                         <TextField
@@ -216,7 +201,7 @@ const VendorForm = () => {
                                             name="mobile_phone_no"
                                             value={values.mobile_phone_no}
                                         />
- <div className="text-error" >  {errors.mobile_phone_no && touched.mobile_phone_no && errors.mobile_phone_no}</div>
+          <div className="text-error" >  {errors.mobile_phone_no && touched.mobile_phone_no && errors.mobile_phone_no}</div>
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
                                     Country

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { customerValidationschema } from "../../pages/Validations/customerValidation"
+
 import {
     Grid,
     Card,
@@ -21,17 +21,7 @@ const InvoiceForm = () => {
     const handleSubmit = async (values, { isSubmitting }) => {
         console.log(values)
 
-        let formData ={
-            fname: values.first_name,
-            lname: values.last_name,
-            cname: values.company_Name,
-            wphone: values.work_phone_no,
-            mphone: values.mobile_phone_no,
-            email: values.email,
-            country: values.country,
-            }
-        const isValid = await customerValidationschema.isValid(formData);
-        console.log(isValid)
+       
         const newcustomer = [];
         newcustomer.push(values);
         dispatch(insertCustomer(newcustomer))
@@ -51,6 +41,56 @@ const InvoiceForm = () => {
                     initialValues={initialValues}
                     onSubmit={handleSubmit}
                     enableReinitialize={true}
+                    validate={values => {
+                        const errors = {};
+                        if (!values.email) {
+                          errors.email = 'Required';
+                        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email) ) {
+                          errors.email = 'Invalid email address';
+                        }
+                        if (!values.first_name) {
+                            errors.first_name = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.first_name) ) {
+                            errors.first_name = 'Invalid  Input';
+                          }
+                          if (!values.last_name) {
+                            errors.last_name = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.last_name) ) {
+                            errors.last_name = 'Invalid  Input';
+                          }
+                          if (!values.company_Name) {
+                            errors.company_Name = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.company_Name) ) {
+                            errors.company_Name = 'Invalid  Input';
+                          }
+                          if (!values.country) {
+                            errors.country = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.country) ) {
+                            errors.country = 'Invalid  Input';
+                          }
+                          if (!values.state) {
+                            errors.state = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.state) ) {
+                            errors.state = 'Invalid  Input';
+                          }
+                          if (!values.city) {
+                            errors.city = 'Required';
+                          } else if (!/^[A-Za-z]+$/.test(values.city) ) {
+                            errors.city = 'Invalid  Input';
+                          }
+                          if (!values.mobile_phone_no) {
+                            errors.mobile_phone_no = 'Required';
+                          } else if (!/^[0-9]*$/.test(values.mobile_phone_no) ) {
+                            errors.mobile_phone_no = 'Invalid  Input';
+                          }
+                          if (!values.work_phone_no) {
+                            errors.work_phone_no = 'Required';
+                          } else if (!/^[0-9]*$/.test(values.work_phone_no) ) {
+                            errors.work_phone_no = 'Invalid  Input';
+                          }
+                        return errors;
+                      }}    
+
                 >
                     {({
                         values,
@@ -80,7 +120,7 @@ const InvoiceForm = () => {
                                         onChange={handleChange}
                                         >
                                      </TextField>
-                                
+                                     <div className="text-error" >  {errors.first_name && touched.first_name && errors.first_name}</div>                          
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
                                     <TextField
@@ -93,6 +133,7 @@ const InvoiceForm = () => {
                                         onChange={handleChange}
                                     >
                                     </TextField>
+                                    <div className="text-error" >  {errors.last_name && touched.last_name && errors.last_name}</div>
                                 </Grid>
                                 <Grid item md={3} sm={8} xs={12}>
                                 </Grid>
@@ -109,6 +150,7 @@ const InvoiceForm = () => {
                                         value={values.company_Name}
                                         onChange={handleChange}
                                     />
+                                     <div className="text-error" >  {errors.company_Name && touched.company_Name && errors.company_Name}</div>
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
@@ -121,10 +163,11 @@ const InvoiceForm = () => {
                                             size="small"
                                             label="Email"
                                             onChange={handleChange}
-                                            type="email"
+                                            
                                             name="email"
                                             value={values.email}
                                         />
+                                    <div className="text-error" >  {errors.email && touched.email && errors.email}</div>
 
                                 </Grid>
 
@@ -138,10 +181,11 @@ const InvoiceForm = () => {
                                             size="small"
                                             label="work_phone_no"
                                             onChange={handleChange}
-                                            type="number"
+                                            type="text"
                                             name="work_phone_no"
                                             value={values.work_phone_no}
                                         />
+                                 <div className="text-error" >  {errors.work_phone_no && touched.work_phone_no && errors.work_phone_no}</div>
 
                                 </Grid>
                                 <Grid item md={7} sm={8} xs={12}>
@@ -151,10 +195,11 @@ const InvoiceForm = () => {
                                             size="small"
                                             label="mobile_phone_no"
                                             onChange={handleChange}
-                                            type="number"
+                                            type="text"
                                             name="mobile_phone_no"
                                             value={values.mobile_phone_no}
                                         />
+                                <div className="text-error" >  {errors.mobile_phone_no && touched.mobile_phone_no && errors.mobile_phone_no}</div>
 
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
@@ -169,6 +214,7 @@ const InvoiceForm = () => {
                                         value={values.country}
                                         onChange={handleChange}
                                     />
+                                    <div className="text-error" >  {errors.country && touched.country && errors.country}</div>
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
                                     State
@@ -182,6 +228,7 @@ const InvoiceForm = () => {
                                         value={values.state}
                                         onChange={handleChange}
                                     />
+                                 <div className="text-error" >  {errors.state && touched.state && errors.state}</div>
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
                                     City
@@ -195,6 +242,7 @@ const InvoiceForm = () => {
                                         value={values.city}
                                         onChange={handleChange}
                                     />
+                                    <div className="text-error" >  {errors.city && touched.city && errors.city}</div>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Divider />

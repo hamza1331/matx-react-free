@@ -58,6 +58,23 @@ const InvoiceForm = () => {
                     initialValues={initialValues}
                     onSubmit={handleSubmit}
                     enableReinitialize={true}
+                    validate={values => {
+                        const errors = {};
+                         
+                          if (!values.invoiceNo) {
+                            errors.invoiceNo = 'Required';
+                          } else if (!/^[0-9]*$/.test(values.invoiceNo) ) {
+                            errors.invoiceNo = 'Invalid  Input';
+                          }
+
+                          if (!values.orderNo) {
+                            errors.orderNo = 'Required';
+                          } else if (!/^[0-9]*$/.test(values.orderNo) ) {
+                            errors.orderNo = 'Invalid  Input';
+                          }
+                          
+                        return errors;
+                      }} 
                 >
                     {({
                         values,
@@ -99,7 +116,7 @@ const InvoiceForm = () => {
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="Invoice No"
+                                        label="Invoice Number"
                                         name="invoiceNo"
                                         size="small"
                                         variant="outlined"
@@ -107,6 +124,7 @@ const InvoiceForm = () => {
                                         value={values.invoiceNo}
                                         onChange={handleChange}
                                     />
+                                    <div className="text-error" >  {errors.invoiceNo && touched.invoiceNo && errors.invoiceNo}</div>
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
@@ -114,13 +132,14 @@ const InvoiceForm = () => {
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
-                                        label="Invoice No"
+                                        label="Order Number"
                                         name="orderNo"
                                         size="small"
                                         variant="outlined"
                                         value={values.orderNo}
                                         onChange={handleChange}
                                     />
+                                 <div className="text-error" >  {errors.orderNo && touched.orderNo && errors.orderNo}</div>
                                 </Grid>
 
                                 <Grid item md={2} sm={4} xs={12}>
