@@ -18,7 +18,7 @@ import { Breadcrumb } from 'app/components'
 import { getBranchList } from '../../redux/actions/BranchAction'
 import { ThemeProvider } from '@material-ui/core/styles'
 import MUIDataTable, { TableFilterList } from "mui-datatables";
-
+import { Formik } from 'formik'
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -37,43 +37,57 @@ function Item(branchList) {
     }
 
     function handleDialogClose() {
+
         setOpen(false)
     }
     function handleClick(event) {
         setAnchorEl(event.currentTarget)
     }
-
+    function handleSubmit(event) {
+        
+    }
     function handleClose() {
         setAnchorEl(null)
     }
     const classes = useStyles()
     return (
-
         <Card className="w-full  flex justify-between py-2 px-2 mx-2 mb-4 bg-light-gray" elevation={3}>
+
+
             <div>
                 <Dialog
                     open={open}
                     onClose={handleDialogClose}
                     aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">Edit Branch</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
                     <DialogContent>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="email"
-                            label="Email Address"
-                            type="email"
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="email"
-                            label="Email Address"
-                            type="email"
-                            fullWidth
-                        />
+                        <DialogContentText>
+                            
+                        </DialogContentText>
+                        <Formik
+                     
+                    onSubmit={handleSubmit}
+                    enableReinitialize={true}
+                >
+                    {({
+                        values,
+                       
+                    }) => (
+                       <form action="">
+                       <TextField
+                                        className="mb-6 "
+                                        variant="outlined"
+                                        size="small"
+                                        label="Email"
+                                        type="email"
+                                        name="email"
+                                        value={values.email}
+                                    />
+                       </form>
+                    )}
+                        </Formik>
+                    
                     </DialogContent>
                     <DialogActions>
                         <Button
@@ -83,7 +97,7 @@ function Item(branchList) {
                         >
                             Cancel
                         </Button>
-                        <Button onClick={handleDialogClose} color="primary">
+                        <Button onClick={handleDialogClose} color="primary" >
                             Subscribe
                         </Button>
                     </DialogActions>
@@ -91,7 +105,7 @@ function Item(branchList) {
             </div>
 
 
-            <div className="w-full  flex justify-between" >
+            <div className="w-full  flex justify-between">
                 <div className="w-full  flex justify-between">
                     <div className="w-full text-muted">
                         {branchList.message.branch_name}
@@ -177,7 +191,7 @@ const CustomerList = () => {
 
                 <Card className="w-full" elevation={3}>
                     <div className="flex p-4">
-                        <h4 className="mr-6">Branches</h4>
+                        <h4 className="mr-6">Warehouses</h4>
 
                         <Button
                             variant="contained"
@@ -194,27 +208,11 @@ const CustomerList = () => {
                             onClose={handleDialogClose}
                             aria-labelledby="form-dialog-title"
                         >
-                            <DialogTitle id="form-dialog-title">New Branch</DialogTitle>
+                            <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
                                 </DialogContentText>
                                 <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="name"
-                                    label="Email Address"
-                                    type="email"
-                                    fullWidth
-                                />
-                                 <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="name"
-                                    label="Email Address"
-                                    type="email"
-                                    fullWidth
-                                />
-                                 <TextField
                                     autoFocus
                                     margin="dense"
                                     id="name"
@@ -237,13 +235,6 @@ const CustomerList = () => {
                             </DialogActions>
                         </Dialog>
                     </div>
-
-
-
-
-
-
-
 
 
                     <Divider className="mb-2" />
