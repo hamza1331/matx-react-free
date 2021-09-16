@@ -130,7 +130,7 @@ const PurchaseForm = () => {
                                     <div className="text-error" >  {errors.billNo && touched.billNo && errors.billNo}</div>
                                 </Grid>
                                 <Grid item md={2} sm={4} xs={12}>
-                                    Order Number
+                                    JRB Number
                                 </Grid>
                                 <Grid item md={10} sm={8} xs={12}>
                                     <TextField
