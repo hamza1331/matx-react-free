@@ -250,10 +250,10 @@ const InvoiceForm = () => {
                             </Grid>
 
                             <div className="mt-6">
-                                <Button
+                                <Button 
                                     color="primary"
                                     variant="contained"
-                                    type="submit"
+                                    type="submit" 
                                 >
                                     Submit
                                 </Button>

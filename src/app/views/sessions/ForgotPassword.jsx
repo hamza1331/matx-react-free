@@ -62,6 +62,7 @@ const ForgotPassword = () => {
                             />
                         </div>
                     </Grid>
+
                     <Grid item lg={7} md={7} sm={7} xs={12}>
                         <div className="p-8 h-full bg-light-gray relative">
                             <ValidatorForm onSubmit={handleFormSubmit}>
@@ -98,6 +99,12 @@ const ForgotPassword = () => {
                                         </Button>
                                     </Link>
                                 </div>
+
+                                <br/>
+                                    <div className="text-green font-bold">
+                                        Check your email for verification code.
+                                    </div>
+                    
                             </ValidatorForm>
                         </div>
                     </Grid>

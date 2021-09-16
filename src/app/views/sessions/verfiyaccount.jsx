@@ -88,6 +88,10 @@ const VerfiyCode = (props) => {
                                    
                                     
                                 </div>
+                                <br/>
+                                    <div className="text-green font-bold">
+                                        Check your email for verification code.
+                                    </div>
                             </ValidatorForm>
                         </div>
                     </Grid>
